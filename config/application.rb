@@ -20,7 +20,6 @@ module Be
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.api_only = false
-    config.session_store = :mem_cache_store
-    config.middleware.use Rack::SessionManagement
+    config.session_store = :cookie_store
   end
 end

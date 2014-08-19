@@ -41,9 +41,10 @@ role :db,  %w{nsn@bebras01.csie.ntnu.edu.tw}
 # Global options
 # --------------
 set :ssh_options, {
-  keys: %w(~/.ssh/mbpr),
-  forward_agent: false,
-  auth_methods: %w(publickey password)
+  keys: %w(~/.ssh/id_rsa),
+  forward_agent: true,
+  port: 18324,
+  auth_methods: %w(publickey)
 }
 
 #
