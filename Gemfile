@@ -23,7 +23,12 @@ end
 
 group :development, :test do
   gem "sqlite3"
+
   gem "capistrano", "~> 3.2.1"
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+
   gem "pry", "~> 0.10.1"
   gem "pry-rails", "~> 0.3.2"
   gem "pry-doc", "~> 0.6.0"
