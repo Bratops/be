@@ -11,6 +11,7 @@ class Task < ActiveRecord::Base
     old_id             -1
     timestamps
   end
+  scope :in_year, lambda {|y| where("created_at >= ? and created_at < ?", Time.mktime(y, 1), Time.mktime(y+1, 1)) }
 #  ttype      :string(255)
 #  tid        :string(255)
 #  slug       :string(255)
