@@ -1,11 +1,11 @@
 class Task < ActiveRecord::Base
   structure do
     name               " New Task                  "
-    body               " A question context.       "
-    quest              " What should be solved?    "
-    explain            " This is what the task is. "
-    info               " Some information          "
-    link               " http://bebras.tw/newtask  "
+    body               :text, " A question context.       "
+    quest              :text, " What should be solved?    "
+    explain            :text, " This is what the task is. "
+    info               :text, " Some information          "
+    link               :text, " http://bebras.tw/newtask  "
     region             " TW                        "
     tid                "AA-bbbb-cc"
     old_id             -1
