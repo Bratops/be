@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
+    resources :task, only: [:show]
+  end
 
   # You can have the root of your site routed with "root"
   root 'application#landing'
