@@ -5,11 +5,10 @@ gem "rails-api", "0.2.1"
 gem "active_model_serializers", "0.8.1"
 gem "versionist", "~> 1.3.0"
 
+# model
+gem "migrant", "~> 1.5.0"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
-
-# To use Jbuilder templates for JSON
-# gem "jbuilder"
 
 # Use unicorn as the app server
 group :production do
@@ -19,6 +18,7 @@ end
 
 group :development do
   gem "spring"
+  gem "annotate", "~> 2.6.5"
 end
 
 group :development, :test do
@@ -35,9 +35,10 @@ group :development, :test do
   gem "pry-doc", "~> 0.6.0"
   gem "pry-git", "~> 0.2.3"
   gem "pry-stack_explorer", "~> 0.4.9"
+  gem "pry-clipboard"
   gem "pry-remote", ">= 0.1.8"
   gem "pry-byebug", "~> 1.3.3"
-  gem "hirb", "~> 0.7.2"
+  #gem "hirb", "~> 0.7.2"
   gem "coolline", ">= 0.4.4"
   gem "awesome_print", "~> 1.2"
   gem "railties", ">= 3.0", "< 5.0"
