@@ -1,3 +1,10 @@
+# == Route Map
+#
+# Prefix Verb URI Pattern         Controller#Action
+#   task GET  /task/:id(.:format) v1/task#show
+#   root GET  /                   application#landing
+#
+
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
