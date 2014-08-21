@@ -1,8 +1,8 @@
 class SimpleTaskSerializer < ActiveModel::Serializer
   root false
-  attributes :task_id
+  attributes :qid, :name
 
-  def task_id
+  def qid
     "#{year}-#{object.region}-#{object.tid}"
   end
 
