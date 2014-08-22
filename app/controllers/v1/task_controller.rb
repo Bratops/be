@@ -3,6 +3,12 @@ class V1::TaskController < V1::BaseController
   self.perform_caching = true
   self.cache_store = ActionController::Base.cache_store
 
+  def_param_group :task do
+    param :id, String, "Task public id in format \"year-region-id\"", required: true
+  end
+
+  api :GET, "/task/:id", "Show task by given :id"
+  param_group :task
   def show
     ck = "#{controller_name}.#{action_name}.#{params[:id]}"
     task = Rails.cache.fetch ck do
@@ -14,6 +20,8 @@ class V1::TaskController < V1::BaseController
     render json: task
   end
 
+  api :GET, "/task/list", "Get task information for list use"
+  example " [ { task_id: '2013-xx-cc', name: 'example' } ] "
   def list
     # TODO sweep after create
     ck = "#{controller_name}.#{action_name}"
@@ -23,6 +31,8 @@ class V1::TaskController < V1::BaseController
     render json: tl
   end
 
+  api :GET, "/task/sweep", "Sweep task cache for update use"
+  example " report sweep status "
   def sweep
     sk = "#{controller_name}.show.#{params[:id]}"
     Rails.cache.delete(sk)

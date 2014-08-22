@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/Apipie/apipie-rails.git
+  revision: 7e8402c99d1ac726e2c92d16dcc33a3fe1019255
+  specs:
+    apipie-rails (0.2.5)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -82,6 +89,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    maruku (0.7.2)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -192,6 +200,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (= 0.8.1)
   annotate (~> 2.6.5)
+  apipie-rails!
   awesome_print (~> 1.2)
   better_errors (~> 1.1.0)
   binding_of_caller (~> 0.7.2)
@@ -201,6 +210,7 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano3-nginx_unicorn
   coolline (>= 0.4.4)
+  maruku
   meta_request (~> 0.3.4)
   migrant (~> 1.5.0)
   pg (~> 0.17.1)

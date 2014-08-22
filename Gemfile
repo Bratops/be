@@ -10,6 +10,10 @@ gem "migrant", "~> 1.5.0"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 
+# doc
+gem "apipie-rails", git: "https://github.com/Apipie/apipie-rails.git"
+gem "maruku" # for apipie-rails
+
 # Use unicorn as the app server
 group :production do
   gem "pg", "~> 0.17.1"
