@@ -20,13 +20,17 @@
 - TODO
 
 ### Session ref
-- http://www.soryy.com/blog/2014/apis-with-devise/
-- https://gist.github.com/danielgatis/5666941
-- http://billpatrianakos.me/blog/2013/10/14/api-sessions-with-redis-in-rails/
-- http://lucatironi.github.io/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/
-- https://gist.github.com/josevalim/fb706b1e933ef01e4fb6
-- https://gist.github.com/jwo/1255275
-- http://jimmyislive.tumblr.com/post/80440738483/architecture-of-a-single-page-app-with-a-rest-api
+- [Original](https://gist.github.com/josevalim/fb706b1e933ef01e4fb6)
+- [Main idea](http://soryy.com/blog/2014/apis-with-devise/)
+- [A brief mock up](https://gist.github.com/jwo/1255275)
+- [Completenes](http://www.emilsoman.com/blog/2013/05/18/building-a-tested/)
+- [Security Concern](http://rockyj.in/2013/11/04/angular_rails_2.html)
+- [Rails-API + Devise respond_to issue](https://github.com/rails-api/rails-api/issues/24)
+- [Finally a gem(...no)](https://github.com/gonzalo-bulnes/simple_token_authentication)
+- TODO [Multiple Auth keys](https://github.com/plataformatec/devise/wiki/How-To%3a-Allow-users-to-sign-in-using-their-username-or-email-address)
+- TODO [Redis speedup](http://billpatrianakos.me/blog/2013/10/14/api-sessions-with-redis-in-rails/)
+- TODO [TTL support](http://resistor.io/blog/2013/08/07/mimimal-api-authentication-on-rails/)
+- [ruby IOS](http://lucatironi.github.io/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/)
 
 ### APi ref
 - http://collectiveidea.com/blog/archives/2013/06/13/building-awesome-rails-apis-part-1/
@@ -35,3 +39,6 @@
 
 - test
   - http://matthewlehner.net/rails-api-testing-guidelines/
+
+## More
+- [Timing Attacks](http://codahale.com/a-lesson-in-timing-attacks/)

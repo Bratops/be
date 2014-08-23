@@ -5,6 +5,9 @@ gem "rails-api", "0.2.1"
 gem "active_model_serializers", "0.8.1"
 gem "versionist", "~> 1.3.0"
 
+# auth
+gem "devise", "~> 3.2.0"
+
 # model
 gem "migrant", "~> 1.5.0"
 # To use ActiveModel has_secure_password
