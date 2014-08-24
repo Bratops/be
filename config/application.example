@@ -1,0 +1,8 @@
+host: ""
+notifier_address: ""
+notified_address: ""
+login_key: ""
+token_key: ""
+hipchat_room: ""
+hipchat_from: ""
+hipchat_token: ""

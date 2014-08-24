@@ -1,0 +1,6 @@
+token: ""
+room: ""
+user: "user id" # Default to `whoami`
+notify: true  # Defaults to false
+api_version: v2  # optional, defaults to v1
+color: gray

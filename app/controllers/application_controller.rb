@@ -14,9 +14,6 @@ class ApplicationController < ActionController::API
   before_filter :authenticate_user_from_token!
 
   def landing
-    1/0
- #   e= 1
- #   ExceptionNotifier.notify_exception(e, :data => {:msg => "Cannot divide by zero!"})
     render json: { console: "ok" }
   end
 
