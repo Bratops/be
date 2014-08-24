@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/Apipie/apipie-rails.git
   revision: 7e8402c99d1ac726e2c92d16dcc33a3fe1019255
+  ref: 7e8402c99d1ac726e2c92d16dcc33a3fe1019255
   specs:
     apipie-rails (0.2.5)
       json
@@ -8,6 +9,7 @@ GIT
 GIT
   remote: https://github.com/smartinez87/exception_notification.git
   revision: f5dd6ebe508fe008a999790de348a9d69f073728
+  ref: f5dd6ebe508fe008a999790de348a9d69f073728
   specs:
     exception_notification (4.1.0.rc1)
       actionmailer (>= 3.0.4)

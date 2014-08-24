@@ -2,10 +2,11 @@
 
 ### TODO
 - build constant models
-  - County
+  - Level
+  - Holder
+  - Location
   - School
   - Group
-  - Klass
 - db:seeds
   - Constant models
 - Provide api to access

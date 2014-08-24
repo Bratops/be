@@ -1,5 +1,17 @@
-module TokenAuthenticable
+module Concerns::TokenAuthenticable
   extend ActiveSupport::Concern
+
+  include do
+    before_save :ensure_authentication_token!
+    private :ensure_authentication_token!
+  end
+
+  module ClassMethods
+    def reset_authentication_token!
+      self.authentication_token = generate_authentication_token
+      save
+    end
+  end
 
   # TODO combined with device info
   def ensure_authentication_token!
@@ -11,13 +23,8 @@ module TokenAuthenticable
   def generate_authentication_token
     loop do
       token = generate_secure_token_string
-      break token unless User.where(authentication_token: token).first
+      break token unless self.class.exists?(authentication_token: token)
     end
-  end
-
-  def reset_authentication_token!
-    self.authentication_token = generate_authentication_token
-    save
   end
 
   def generate_secure_token_string

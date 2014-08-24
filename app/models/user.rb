@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-  include TokenAuthenticable
-  before_save :ensure_authentication_token!
+  include Concerns::TokenAuthenticable
   before_save :ensure_login_alias!
 
   # Include default devise modules. Others available are:
