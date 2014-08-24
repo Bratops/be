@@ -85,6 +85,9 @@ GEM
     erubis (2.7.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     grit (2.5.0)
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
@@ -221,6 +224,7 @@ DEPENDENCIES
   capistrano3-nginx_unicorn
   coolline (>= 0.4.4)
   devise (~> 3.2.0)
+  figaro (~> 0.7.0)
   maruku
   meta_request (~> 0.3.4)
   migrant (~> 1.5.0)

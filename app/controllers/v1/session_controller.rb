@@ -57,7 +57,8 @@ class V1::SessionController < Devise::SessionsController
     status: 401, { message: 'Invalid Token.' success: false }
   "
   def destroy
-    resource = resource_class.find_by_authentication_token(request.headers['HTTP_X_AUTH_TOKEN'])
+    token = request.headers[ENV["token_key"]]
+    resource = resource_class.find_by_authentication_token(token)
     if resource
       resource.reset_authentication_token!
       signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))

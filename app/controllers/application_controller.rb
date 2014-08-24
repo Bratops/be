@@ -14,13 +14,13 @@ class ApplicationController < ActionController::API
   before_filter :authenticate_user_from_token!
 
   def landing
-    render json: { cool: "ok" }
+    render json: { console: "ok" }
   end
 
   protected
   def authenticate_user_from_token!
-    login = request.headers["HTTP_X_AUTH_LOGIN"].presence
-    token = request.headers["HTTP_X_AUTH_TOKEN"].presence
+    login = request.headers[ENV["login_key"]].presence
+    token = request.headers[ENV["token_key"]].presence
     # TODO fix to accept normal name account
     user = login && User.find_by(login_alias: login)
 
