@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #:timeoutable, :omniauthable
 
+  belongs_to :group
+  counter_culture [:group, :school, :location]
+  counter_culture [:group, :school, :holder]
+  counter_culture [:group, :school, :age_level]
+  counter_culture [:group, :school]
+  counter_culture [:group]
   structure do
     email "", index: true,
       validates: { format: /\A[^@]+@[^@]+\z/,

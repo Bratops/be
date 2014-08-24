@@ -1,8 +1,7 @@
-class Location < ActiveRecord::Base
+class AgeLevel < ActiveRecord::Base
   include Concerns::SchoolSummary
   structure do
     name "", validates: {presence: true}
-    #loc_level 0 # N.E.W.S.
 
     schools_count 0
     groups_count 0

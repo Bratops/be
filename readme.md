@@ -16,6 +16,9 @@
 ### Cache schema
 - rails
 
+### Multiple layer relations
+- [Find all](http://stackoverflow.com/questions/5134723/rails-associations-through-multiple-levels)
+
 ### Session ref
 - [Original](https://gist.github.com/josevalim/fb706b1e933ef01e4fb6)
 - [Main idea](http://soryy.com/blog/2014/apis-with-devise/)
