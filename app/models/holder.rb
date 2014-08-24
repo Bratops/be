@@ -16,7 +16,7 @@
 class Holder < ActiveRecord::Base
   include Concerns::SchoolSummary
   structure do
-    name "", validates: {presence: true}
+    name "", validates: [ :presence, :uniqueness ]
 
     schools_count 0
     groups_count 0

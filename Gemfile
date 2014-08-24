@@ -53,7 +53,7 @@ group :development, :test do
   gem "pry-clipboard"
   gem "pry-remote", ">= 0.1.8"
   gem "pry-byebug", "~> 1.3.3"
-  #gem "hirb", "~> 0.7.2"
+  gem "hirb", "~> 0.7.2"
   gem "coolline", ">= 0.4.4"
   gem "awesome_print", "~> 1.2"
   gem "railties", ">= 3.0", "< 5.0"

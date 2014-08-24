@@ -16,7 +16,7 @@
 class Location < ActiveRecord::Base
   include Concerns::SchoolSummary
   structure do
-    name "", validates: {presence: true}
+    name "", validates: [ :presence, :uniqueness ]
     #loc_level 0 # N.E.W.S.
 
     schools_count 0

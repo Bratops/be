@@ -28,7 +28,7 @@ class School < ActiveRecord::Base
   counter_culture [:holder]
   counter_culture [:age_level]
   structure do
-    name "", validates: {presence: true}
+    name "", validates: [ :presence, :uniqueness ]
     moeid "", validates: {presence: true, format: /\A\w{6}\z/  }
 
     users_count 0
