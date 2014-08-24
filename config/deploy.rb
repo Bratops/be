@@ -30,7 +30,7 @@ set :log_level, :info
 set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml, config/application.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -40,6 +40,19 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 # Default value for keep_releases is 5
 set :keep_releases, 20
+
+# Required
+set :hipchat_token, "UxADLEuL94bXRHEq4ZyLnM4W4PeE4HWia17cAOjO"
+set :hipchat_room_name, "brasbe" # If you pass an array such as ["room_a", "room_b"] you can send announcements to multiple rooms.
+# Optional
+set :hipchat_announce, true # notify users
+set :hipchat_color, "grey" #normal message color
+set :hipchat_success_color, "green" #finished deployment message color
+set :hipchat_failed_color, "red" #cancelled deployment message color
+set :hipchat_message_format, "html" # Sets the deployment message format, see https://www.hipchat.com/docs/api/method/rooms/message
+set :hipchat_options, {
+  api_version: "v2" # Set "v2" to send messages with API v2
+}
 
 namespace :deploy do
 

@@ -2,8 +2,16 @@ source "https://rubygems.org"
 
 gem "rails", "4.1.5"
 gem "rails-api", "0.2.1"
+gem "figaro", "~> 0.7.0"
 gem "active_model_serializers", "0.8.1"
 gem "versionist", "~> 1.3.0"
+
+# notify
+gem "hipchat", "~> 1.3.0"
+gem "exception_notification", git: "https://github.com/smartinez87/exception_notification.git", ref: "f5dd6ebe508fe008a999790de348a9d69f073728"
+
+# auth
+gem "devise", "~> 3.2.0"
 
 # model
 gem "migrant", "~> 1.5.0"
@@ -11,7 +19,7 @@ gem "migrant", "~> 1.5.0"
 # gem "bcrypt-ruby", "~> 3.1.2"
 
 # doc
-gem "apipie-rails", git: "https://github.com/Apipie/apipie-rails.git"
+gem "apipie-rails", git: "https://github.com/Apipie/apipie-rails.git", ref: "7e8402c99d1ac726e2c92d16dcc33a3fe1019255"
 gem "maruku" # for apipie-rails
 
 # Use unicorn as the app server

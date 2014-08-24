@@ -6,9 +6,20 @@
 #
 
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    sessions:  "v1/session",
+    passwords:  "v1/password",
+    registrations: "v1/registration"
+  }, skip: [:sessions, :registrations, :passwords]
   apipie
   # The priority is based upon order of creation: first created -> highest priority.
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
+    devise_scope :user do
+      post "/session" => "session#create"
+      delete "/session" => "session#destroy"
+      post "/user" => "registration#create"
+      delete "/user" => "registration#destroy"
+    end
     resources :task, only: [:show] do
       member do
         get "sweep" => "task#sweep"
