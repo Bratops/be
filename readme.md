@@ -1,23 +1,19 @@
 #backend stuff
 
-## Preparation
-
-### Seeds tasks
-- csv:dump
-
-## Controllers
-
-### Task
-  Name |Routes       | Descriptions              | Cached
-  ---: |---:         | :-----                    | :---:
-  list |`/task/list` | All tasks' ids with names | O
-  show |`/task/[:id]`| Show task data by given id| O
-  sweep |`/task/sweep`| Clear task cached by #show | -
-- `Session`
-- `User`
+### TODO
+- build constant models
+  - County
+  - School
+  - Group
+  - Klass
+- db:seeds
+  - Constant models
+- Provide api to access
+  - Show
+  - cud/ for authed user
 
 ### Cache schema
-- TODO
+- rails
 
 ### Session ref
 - [Original](https://gist.github.com/josevalim/fb706b1e933ef01e4fb6)
@@ -31,6 +27,7 @@
 - TODO [Redis speedup](http://billpatrianakos.me/blog/2013/10/14/api-sessions-with-redis-in-rails/)
 - TODO [TTL support](http://resistor.io/blog/2013/08/07/mimimal-api-authentication-on-rails/)
 - [ruby IOS](http://lucatironi.github.io/tutorial/2012/10/15/ruby_rails_android_app_authentication_devise_tutorial_part_one/)
+- [Timing Attacks](http://codahale.com/a-lesson-in-timing-attacks/)
 
 ### APi ref
 - http://collectiveidea.com/blog/archives/2013/06/13/building-awesome-rails-apis-part-1/
@@ -41,4 +38,3 @@
   - http://matthewlehner.net/rails-api-testing-guidelines/
 
 ## More
-- [Timing Attacks](http://codahale.com/a-lesson-in-timing-attacks/)
