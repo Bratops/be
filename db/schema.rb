@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140824153417) do
+ActiveRecord::Schema.define(version: 20140824160548) do
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -19,7 +19,28 @@ ActiveRecord::Schema.define(version: 20140824153417) do
     t.integer  "year"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.integer  "school_id"
   end
+
+  add_index "groups", ["school_id"], name: "index_groups_on_school_id"
+
+  create_table "locations", force: true do |t|
+    t.string  "name"
+    t.integer "loc_level"
+    t.integer "groups_count",  null: false
+    t.integer "schools_count", null: false
+  end
+
+  create_table "schools", force: true do |t|
+    t.string   "name"
+    t.string   "moeid"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.integer  "groups_count"
+    t.integer  "location_id"
+  end
+
+  add_index "schools", ["location_id"], name: "index_schools_on_location_id"
 
   create_table "tasks", force: true do |t|
     t.string   "name"

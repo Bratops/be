@@ -15,6 +15,7 @@ gem "devise", "~> 3.2.0"
 
 # model
 gem "migrant", "~> 1.5.0"
+gem "counter_culture", "~> 0.1.23"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 
