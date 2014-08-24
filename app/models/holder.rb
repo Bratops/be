@@ -1,3 +1,18 @@
+# ## Schema Information
+#
+# Table name: `holders`
+#
+# ### Columns
+#
+# Name                 | Type               | Attributes
+# -------------------- | ------------------ | ---------------------------
+# **`id`**             | `integer`          | `not null, primary key`
+# **`name`**           | `string(255)`      |
+# **`schools_count`**  | `integer`          |
+# **`groups_count`**   | `integer`          |
+# **`users_count`**    | `integer`          |
+#
+
 class Holder < ActiveRecord::Base
   include Concerns::SchoolSummary
   structure do

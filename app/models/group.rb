@@ -1,3 +1,20 @@
+# ## Schema Information
+#
+# Table name: `groups`
+#
+# ### Columns
+#
+# Name               | Type               | Attributes
+# ------------------ | ------------------ | ---------------------------
+# **`id`**           | `integer`          | `not null, primary key`
+# **`name`**         | `string(255)`      |
+# **`group_type`**   | `integer`          |
+# **`updated_at`**   | `datetime`         |
+# **`created_at`**   | `datetime`         |
+# **`school_id`**    | `integer`          |
+# **`users_count`**  | `integer`          |
+#
+
 class Group < ActiveRecord::Base
   has_many :users
   belongs_to :school

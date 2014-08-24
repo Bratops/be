@@ -1,3 +1,18 @@
+# ## Schema Information
+#
+# Table name: `locations`
+#
+# ### Columns
+#
+# Name                 | Type               | Attributes
+# -------------------- | ------------------ | ---------------------------
+# **`id`**             | `integer`          | `not null, primary key`
+# **`name`**           | `string(255)`      |
+# **`groups_count`**   | `integer`          | `not null`
+# **`schools_count`**  | `integer`          | `not null`
+# **`users_count`**    | `integer`          |
+#
+
 class Location < ActiveRecord::Base
   include Concerns::SchoolSummary
   structure do

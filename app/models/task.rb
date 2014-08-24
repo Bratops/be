@@ -1,3 +1,25 @@
+# ## Schema Information
+#
+# Table name: `tasks`
+#
+# ### Columns
+#
+# Name              | Type               | Attributes
+# ----------------- | ------------------ | ---------------------------
+# **`id`**          | `integer`          | `not null, primary key`
+# **`name`**        | `string(255)`      |
+# **`body`**        | `text`             |
+# **`quest`**       | `text`             |
+# **`explain`**     | `text`             |
+# **`info`**        | `text`             |
+# **`link`**        | `text`             |
+# **`region`**      | `string(255)`      |
+# **`tid`**         | `string(255)`      |
+# **`old_id`**      | `integer`          |
+# **`updated_at`**  | `datetime`         |
+# **`created_at`**  | `datetime`         |
+#
+
 class Task < ActiveRecord::Base
   structure do
     name               " New Task                  "
