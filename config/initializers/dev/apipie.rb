@@ -9,7 +9,7 @@ Apipie.configure do |config|
   config.reload_controllers = Rails.env.development?
   config.api_controllers_matcher = File.join(Rails.root, "app", "controllers", "**","*.rb")
   config.api_routes = Rails.application.routes
-  config.app_info = "This is where you can inform user about your application and API in general.  "
+  config.app_info = "Bebras cross platform API"
   config.languages = ['en']
   config.default_locale = 'en'
   config.authenticate = Proc.new do

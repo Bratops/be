@@ -31,7 +31,7 @@ class ApplicationController < ActionController::API
       sign_in(user, store: false)
     else
       warden.custom_failure!
-      render json: { success: false, message: 'Error with your login or password' },
+      render json: { success: false, message: "Error with your login or password" },
         status: 401
     end
   end

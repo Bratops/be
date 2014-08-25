@@ -3,9 +3,6 @@ class V1::SessionController < Devise::SessionsController
   #skip_before_filter :authenticate_user!, :only => [:create, :new]
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
   prepend_before_filter :require_no_authentication, :only => [:create]
-  respond_to :json
-  respond_to :html, only: []
-  respond_to :xml, only: []
 
   #before_filter :ensure_json_request
 

@@ -1,6 +1,33 @@
+# ## Schema Information
+#
+# Table name: `users`
+#
+# ### Columns
+#
+# Name                          | Type               | Attributes
+# ----------------------------- | ------------------ | ---------------------------
+# **`id`**                      | `integer`          | `not null, primary key`
+# **`email`**                   | `string(255)`      | `default(""), not null`
+# **`encrypted_password`**      | `string(255)`      | `default(""), not null`
+# **`reset_password_token`**    | `string(255)`      |
+# **`reset_password_sent_at`**  | `datetime`         |
+# **`remember_created_at`**     | `datetime`         |
+# **`sign_in_count`**           | `integer`          | `default(0), not null`
+# **`current_sign_in_at`**      | `datetime`         |
+# **`last_sign_in_at`**         | `datetime`         |
+# **`current_sign_in_ip`**      | `string(255)`      |
+# **`last_sign_in_ip`**         | `string(255)`      |
+# **`created_at`**              | `datetime`         |
+# **`updated_at`**              | `datetime`         |
+# **`authentication_token`**    | `string(255)`      |
+# **`login_alias`**             | `string(255)`      |
+# **`name`**                    | `string(255)`      |
+# **`suid`**                    | `string(255)`      |
+# **`group_id`**                | `integer`          |
+#
+
 class User < ActiveRecord::Base
-  include TokenAuthenticable
-  before_save :ensure_authentication_token!
+  include Concerns::TokenAuthenticable
   before_save :ensure_login_alias!
 
   # Include default devise modules. Others available are:
@@ -9,10 +36,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #:timeoutable, :omniauthable
 
+  has_one :user_info
+  belongs_to :group
+  counter_culture [:group, :school, :location]
+  counter_culture [:group, :school, :holder]
+  counter_culture [:group, :school, :age_level]
+  counter_culture [:group, :school]
+  counter_culture [:group]
   structure do
-    email "", index: true,
-      validates: { format: /\A[^@]+@[^@]+\z/,
-                   uniqueness: { :case_sensitive => false } }
     encrypted_password ""
     reset_password_token ""
     reset_password_sent_at :datetime
@@ -24,7 +55,9 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
-    name ""
+    email "", index: true,
+      validates: { format: /\A[^@]+@[^@]+\z/,
+                   uniqueness: { :case_sensitive => false } }
     suid "", index: true,
       validates: { allow_blank: true, unless: :suid_blank?,
                    format: /\A\w+-{1}\w+\z/,

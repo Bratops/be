@@ -1,19 +1,15 @@
-#backend stuff
+# Deploy Check
+- [] Ask for contact email
 
 ### TODO
-- build constant models
-  - County
-  - School
-  - Group
-  - Klass
-- db:seeds
-  - Constant models
-- Provide api to access
-  - Show
-  - cud/ for authed user
+- Controller i18n
+- Fix user registration with school/user_info model
 
 ### Cache schema
 - rails
+
+### Multiple layer relations
+- [Find all](http://stackoverflow.com/questions/5134723/rails-associations-through-multiple-levels)
 
 ### Session ref
 - [Original](https://gist.github.com/josevalim/fb706b1e933ef01e4fb6)
@@ -38,3 +34,7 @@
   - http://matthewlehner.net/rails-api-testing-guidelines/
 
 ## More
+
+- [be](http://www.bebras.be/contest/2013/main)
+- [au](http://www.bebras.edu.au/)
+- [auc](http://challenge.bebras.edu.au/index.php?action=welcome)

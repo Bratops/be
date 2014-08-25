@@ -10,11 +10,16 @@ gem "versionist", "~> 1.3.0"
 gem "hipchat", "~> 1.3.0"
 gem "exception_notification", git: "https://github.com/smartinez87/exception_notification.git", ref: "f5dd6ebe508fe008a999790de348a9d69f073728"
 
+# mailer
+gem "slim-rails"
+
 # auth
 gem "devise", "~> 3.2.0"
 
 # model
 gem "migrant", "~> 1.5.0"
+gem "counter_culture", "~> 0.1.23"
+gem "seedbank", "~> 0.3.0"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 
@@ -30,6 +35,7 @@ end
 
 group :development do
   gem "spring"
+  gem "kramdown"
   gem "annotate", "~> 2.6.5"
 end
 
@@ -50,7 +56,7 @@ group :development, :test do
   gem "pry-clipboard"
   gem "pry-remote", ">= 0.1.8"
   gem "pry-byebug", "~> 1.3.3"
-  #gem "hirb", "~> 0.7.2"
+  gem "hirb", "~> 0.7.2"
   gem "coolline", ">= 0.4.4"
   gem "awesome_print", "~> 1.2"
   gem "railties", ">= 3.0", "< 5.0"

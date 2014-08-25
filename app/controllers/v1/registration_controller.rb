@@ -6,13 +6,7 @@ class V1::RegistrationController < Devise::RegistrationsController
     EOS
     api_versions "1.0"
     formats ["json"]
-    meta author: { name: "Nelson" }
-    param :id, Integer, show: false
   end
-
-  respond_to :json
-  respond_to :html, only: []
-  respond_to :xml, only: []
 
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
   skip_before_filter :verify_authenticity_token, if: :json_request?
