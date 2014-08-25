@@ -1,8 +1,4 @@
-class V1::TaskController < V1::BaseController
-  include ActionController::Caching
-  self.perform_caching = true
-  self.cache_store = ActionController::Base.cache_store
-
+class V1::TaskController < V1::CacheController
   def_param_group :task do
     param :id, String, "Task public id in format \"year-region-id\"", required: true
   end
