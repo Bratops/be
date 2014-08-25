@@ -35,6 +35,7 @@ server {
     access_log <%= shared_path %>/log/nginx.access.log;
     error_log <%= shared_path %>/log/nginx.error.log;
 
+<% if fetch(:use_nginx_cors) %>
     # from https://gist.github.com/alexjs/4165271
     if ($http_origin ~* (localhost:9000|devi7\.us\.to|other\.else\.com)) {
       set $cors "true";
@@ -57,14 +58,14 @@ server {
     if ($cors = "trueget") {
       add_header 'Access-Control-Allow-Origin' "$http_origin";
       add_header 'Access-Control-Allow-Credentials' 'true';
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+      add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, PATCH, OPTIONS, DELETE';
       add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
     }
     if ($cors = "trueoptions") {
       add_header 'Access-Control-Allow-Origin' "$http_origin";
       # Om nom nom cookies
       add_header 'Access-Control-Allow-Credentials' 'true';
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+      add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, PATCH, OPTIONS, DELETE';
       # Custom headers and headers various browsers *should* be OK with but aren't
       add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
       # Tell client that this pre-flight info is valid for 20 days
@@ -76,9 +77,10 @@ server {
     if ($cors = "truepost") {
       add_header 'Access-Control-Allow-Origin' "$http_origin";
       add_header 'Access-Control-Allow-Credentials' 'true';
-      add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+      add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, PATCH, OPTIONS, DELETE';
       add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
     }
+<% end %>
   }
 
   location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {

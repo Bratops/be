@@ -3,6 +3,7 @@ set :branch, "master"
 
 set :deploy_to, "/home/#{fetch(:deployer)}/app/#{fetch(:application)}"
 
+set :nginx_server_name, "bebras01.csie.ntnu.edu.tw"
 # dont try and infer something as important as environment from
 # stage name.
 set :rails_env, :production

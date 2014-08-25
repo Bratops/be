@@ -4,6 +4,7 @@
 ### TODO
 - Controller i18n
 - Fix user registration with school/user_info model
+- Check api well documented
 
 ### Cache schema
 - rails

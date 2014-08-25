@@ -2,6 +2,7 @@ class V1::TaskController < V1::CacheController
   def_param_group :task do
     param :id, String, "Task public id in format \"year-region-id\"", required: true
   end
+  skip_before_filter :authenticate_user_from_token!, :only => [:list]
 
   api :GET, "/task/:id", "Show task by given :id"
   param_group :task

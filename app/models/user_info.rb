@@ -3,7 +3,6 @@ class UserInfo < ActiveRecord::Base
     name ""
     phone ""
     gender 0
-    password_outdated true
 
     timestamps
   end
