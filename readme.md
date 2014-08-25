@@ -2,17 +2,8 @@
 - [] Ask for contact email
 
 ### TODO
-- build constant models
-  - Level
-  - Holder
-  - Location
-  - School
-  - Group
-- db:seeds
-  - Constant models
-- Provide api to access
-  - Show
-  - cud/ for authed user
+- Controller i18n
+- Fix user registration with school/user_info model
 
 ### Cache schema
 - rails

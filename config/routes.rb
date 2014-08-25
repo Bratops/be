@@ -30,11 +30,6 @@ Rails.application.routes.draw do
   apipie
   # The priority is based upon order of creation: first created -> highest priority.
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
-    resources :password, only: [] do
-      collection do
-        get "mail_test" => "password#mail_test"
-      end
-    end
     resources :group, only: [] do
       collection do
         get "publist/:res" => "group#publist"
@@ -45,6 +40,12 @@ Rails.application.routes.draw do
       delete "/session" => "session#destroy"
       post "/user" => "registration#create"
       delete "/user" => "registration#destroy"
+      resource :password, only: [] do
+        get "/edit" => "password#edit", as: :edit_user
+        post "/forget" => "password#request_reset"
+        put "/reset" => "password#reset"
+        get "/mail_test" => "password#mail_test"
+      end
     end
     resources :task, only: [:show] do
       member do
