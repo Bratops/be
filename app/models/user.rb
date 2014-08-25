@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #:timeoutable, :omniauthable
 
+  has_one :user_info
   belongs_to :group
   counter_culture [:group, :school, :location]
   counter_culture [:group, :school, :holder]
@@ -43,9 +44,6 @@ class User < ActiveRecord::Base
   counter_culture [:group, :school]
   counter_culture [:group]
   structure do
-    email "", index: true,
-      validates: { format: /\A[^@]+@[^@]+\z/,
-                   uniqueness: { :case_sensitive => false } }
     encrypted_password ""
     reset_password_token ""
     reset_password_sent_at :datetime
@@ -57,7 +55,9 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
-    name ""
+    email "", index: true,
+      validates: { format: /\A[^@]+@[^@]+\z/,
+                   uniqueness: { :case_sensitive => false } }
     suid "", index: true,
       validates: { allow_blank: true, unless: :suid_blank?,
                    format: /\A\w+-{1}\w+\z/,

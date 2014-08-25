@@ -10,6 +10,9 @@ gem "versionist", "~> 1.3.0"
 gem "hipchat", "~> 1.3.0"
 gem "exception_notification", git: "https://github.com/smartinez87/exception_notification.git", ref: "f5dd6ebe508fe008a999790de348a9d69f073728"
 
+# mailer
+gem "slim-rails"
+
 # auth
 gem "devise", "~> 3.2.0"
 

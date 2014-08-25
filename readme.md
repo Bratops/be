@@ -1,4 +1,5 @@
-#backend stuff
+# Deploy Check
+- [] Ask for contact email
 
 ### TODO
 - build constant models
@@ -42,3 +43,7 @@
   - http://matthewlehner.net/rails-api-testing-guidelines/
 
 ## More
+
+- [be](http://www.bebras.be/contest/2013/main)
+- [au](http://www.bebras.edu.au/)
+- [auc](http://challenge.bebras.edu.au/index.php?action=welcome)

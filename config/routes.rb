@@ -30,6 +30,11 @@ Rails.application.routes.draw do
   apipie
   # The priority is based upon order of creation: first created -> highest priority.
   api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
+    resources :password, only: [] do
+      collection do
+        get "mail_test" => "password#mail_test"
+      end
+    end
     resources :group, only: [] do
       collection do
         get "publist/:res" => "group#publist"

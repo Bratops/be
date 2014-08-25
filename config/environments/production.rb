@@ -80,13 +80,17 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: ENV["host"], port: 80 }
+  config.action_mailer.default_url_options = { host: ENV["host_email"], port: 80 }
   config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = {
+    :location => '/usr/sbin/exim4',
+    :arguments => '-i -t'
+  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
   Be::Application.config.middleware.use ExceptionNotification::Rack,
-    email: {  # TODO fix email notification
+    email: {
       email_prefix: "[Brasbe - Exception]",
       sender_address: [ENV["notifier_address"]],
       exception_recipients: [ENV["notified_address"]]
