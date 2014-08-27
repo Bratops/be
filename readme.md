@@ -20,6 +20,7 @@
 - [Security Concern](http://rockyj.in/2013/11/04/angular_rails_2.html)
 - [Rails-API + Devise respond_to issue](https://github.com/rails-api/rails-api/issues/24)
 - [Finally a gem(...no)](https://github.com/gonzalo-bulnes/simple_token_authentication)
+- [cors with failure auth](http://kellishaver.tumblr.com/post/40758797489/cors-headers-with-devise)
 - TODO [Multiple Auth keys](https://github.com/plataformatec/devise/wiki/How-To%3a-Allow-users-to-sign-in-using-their-username-or-email-address)
 - TODO [Redis speedup](http://billpatrianakos.me/blog/2013/10/14/api-sessions-with-redis-in-rails/)
 - TODO [TTL support](http://resistor.io/blog/2013/08/07/mimimal-api-authentication-on-rails/)

@@ -13,7 +13,7 @@ module Be
         # regular expressions can be used here
         origins ENV["host_front"], ENV["host_dev_front"]
             # /http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
-        resource '*', headers: :any, methods: [:get, :put, :post, :patch, :options, :delete]
+        resource "*", headers: :any, methods: [:get, :put, :post, :patch, :options, :delete]
       end
     end
     # Settings in config/environments/* take precedence over those specified here.

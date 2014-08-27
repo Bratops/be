@@ -35,7 +35,7 @@ server {
     access_log <%= shared_path %>/log/nginx.access.log;
     error_log <%= shared_path %>/log/nginx.error.log;
 
-<% if fetch(:use_nginx_cors) %>
+<% if fetch(:nginx_use_cors) %>
     # from https://gist.github.com/alexjs/4165271
     if ($http_origin ~* (localhost:9000|devi7\.us\.to|other\.else\.com)) {
       set $cors "true";
