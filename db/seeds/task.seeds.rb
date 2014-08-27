@@ -1,15 +1,8 @@
-require "csv"
-
-namespace :csv do
-  desc "Load data from csv"
-  task :read => [:environment] do
-    read_task
-    puts "yes"
-  end
-
+class << self
   # t.ttitle, t.tbody, t.tquest, t.texplain, t.tinfo, t.created_at, t.tid, t.region, t.weblinks, t.id
-  def read_task
-    CSV.foreach("tmp/task.csv", :row_sep => :auto, :col_sep => "\t|") do |r|
+  def read_task_body year
+    fs = "db/seeds/data/bebras/task_body_#{year}.csv"
+    CSV.foreach(fs, row_sep: :auto, col_sep: "\t|") do |r|
       next if r.size < 10
       make_task r
     end
@@ -28,3 +21,5 @@ namespace :csv do
     end
   end
 end
+
+read_task_body 2013

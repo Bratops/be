@@ -32,9 +32,12 @@ Location.mock(name: "宜蘭縣").save
 Location.mock(name: "臺東縣").save
 Location.mock(name: "花蓮縣").save
 Location.mock(name: "澎湖縣").save
+Location.mock(name: "金門縣").save
+Location.mock(name: "連江縣").save
 
 class << self
   def holder_val data
+    data = "" unless data
     case data
     when "國立" then hv = Holder.find_by(name: data)
     when "縣立" then hv = Holder.find_by(name: data)
@@ -45,34 +48,48 @@ class << self
     hv
   end
 
-  def level_val data
-    rs = /(高農|高工|餐旅|附工|家職|商水|海事水產|海事|農工|高商|商工|家商|工商|工家|商海|工農|護家|餐飲|藝校)/.match(data)
-    val = "高職" unless rs.nil?
-    rs = /(中學|女中|高中|附中|一中|二中)/.match(data)
-    val = "高中" unless rs.nil?
-    AgeLevel.find_by(name: val)
+  def level_val kls
+    km = { ele: "國小", sen: "國中", jun: "高中", voc: "高職", uni: "大學"}
+    AgeLevel.find_by(name: km[kls])
   end
 
-  def seed_school klass # "hs", "hv"
-    reghs = /(?<holder>國立|市立|私立|財團法人|天主教|縣立)(?<name>\D{2,8})(?<level>中學|女中|高中|附中|一中|二中)/
-    reghv = /(?<holder>國立|市立|私立|財團法人)(?<name>\D{2,8})(?<level>高農|高工|餐旅|附工|家職|商水|海事水產|海事|農工|高商|商工|家商|工商|工家|商海|工農|護家|餐飲|藝校)/
-    regs = { "hs" => reghs, "hv" => reghv }
-    cnt = 1
-    File.open("db/seeds/raw/#{klass}_list.txt", "r").each_line do |ln|
-      data = ln.chomp.split(/,| |\t/)  # moeid, name, location
-      rk = regs[klass].match(data[1])
-      ss = School.mock( moeid: data[0], name: data[1])
-      ss.holder = holder_val(rk[:holder])
-      ss.age_level = level_val(rk[:level])
-      ss.location = Location.find_by(name: data[2][4..-1])
-      cnt = cnt +1
-      if ss.save then next else
-        puts "[#{cnt}:#{data[1]}]Errrrrrrrrrrrrrr..."
-        puts ss.errors.messages
+  @@kls_reg = {
+    ele: /(?<holder>國立|市立|私立|財團法人|天主教|縣立)(?<name>\D{2,8})(?<level>小學|國小|小|國\(中\)小)/,
+    jun: /(?<holder>國立|市立|私立|財團法人|天主教|縣立)(?<name>\D{2,8})(?<level>中學|國中|國\(小\)中)/,
+    sen: /(?<holder>國立|市立|私立|財團法人|天主教|縣立)(?<name>\D{2,9})(?<level>中學|女中|高中|附中|一中|二中)/,
+    voc: /(?<holder>國立|市立|私立|財團法人)(?<name>\D{2,8})(?<level>高農|高工|餐旅|附工|家職|商水|海事水產|海事|農工|高商|商工|家商|工商|工家|商海|附農|工農|護家|餐飲|藝校)/,
+    uni: /(?<holder>國立)?(?<name>\D{2,8})(?<level>大學|學院|專科學校)/,
+  }
+
+  def create_school row, kls
+    rg = @@kls_reg[kls].match(row["name"])
+    ss = School.mock(moeid: row["moeid"], name: row["name"])
+    ss.holder = holder_val(rg[:holder])
+    ss.age_level = level_val(kls)
+    ss.location = Location.find_by(name: row["county"][4..-1])
+    ss.save
+    ss
+  end
+
+  def get_file(kls, region, year)
+    "db/seeds/data/#{kls}_#{region}_#{year}.txt"
+  end
+
+  def seed_school(kls, region, year) # "ele", "jun", "sen", "voc", "uni"
+    fs = get_file(kls, region, year)
+    cnt = 0
+    CSV.read(fs, headers: true, col_sep: "\t").each do |row|
+      cnt += 1
+      st = create_school row, kls.to_sym
+      if !st
+        puts "---> #{cnt}:#{row["name"]}- #{st.errors.messages}"
       end
     end
   end
 end
 
-seed_school "hs"
-seed_school "hv"
+seed_school "ele", "tw", 2014
+seed_school "jun", "tw", 2014
+seed_school "sen", "tw", 2014
+seed_school "voc", "tw", 2014
+seed_school "uni", "tw", 2014
