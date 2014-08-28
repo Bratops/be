@@ -30,12 +30,13 @@ class V1::RegistrationController < Devise::RegistrationsController
     update_resource(resource)
     # resource.skip_confirmation!  # must be confirmable
     if resource.save
+      resource_class.send_reset_password_instructions(resource)
       sign_in(resource, store: false)
       render status: 200,
         json: {
           success: true,
           redirect: "dashboard",
-          info: "Registered",
+          console: "Registered",
           user: resource,
       }
     else
@@ -43,7 +44,7 @@ class V1::RegistrationController < Devise::RegistrationsController
       render status: :unprocessable_entity,
         json: {
           success: false,
-          info: resource.errors,
+          console: resource.errors,
           data: {}
       }
     end
@@ -88,8 +89,16 @@ class V1::RegistrationController < Devise::RegistrationsController
     resource.password = rk
     resource.password_confirmation = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
-    resource.user_info = Userinfo.mock(user_info_params)
-    resource.school = School.mock(school_params)
-    resource
+    resource.user_info = UserInfo.mock(user_info_params)
+    sa = School.find_by(school_params).alumnus
+    sa.users << resource
+    if sa.save
+      if params[:user][:as_teacher]
+        resource.add_role :teacher_applicant
+      end
+      return resource
+    else
+      return nil
+    end
   end
 end

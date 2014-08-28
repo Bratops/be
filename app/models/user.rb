@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_one :user_info
   belongs_to :group
+  delegate :school, to: :group, allow_nil: true
   counter_culture [:group, :school, :location]
   counter_culture [:group, :school, :holder]
   counter_culture [:group, :school, :age_level]

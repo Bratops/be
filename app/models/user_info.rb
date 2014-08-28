@@ -1,4 +1,5 @@
 class UserInfo < ActiveRecord::Base
+  belongs_to :user, touch: true
   structure do
     name ""
     phone ""

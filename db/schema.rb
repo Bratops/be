@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828075503) do
+ActiveRecord::Schema.define(version: 20140828143948) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -94,7 +94,10 @@ ActiveRecord::Schema.define(version: 20140828075503) do
     t.integer  "gender"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.integer  "user_id"
   end
+
+  add_index "user_infos", ["user_id"], name: "index_user_infos_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
