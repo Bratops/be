@@ -27,16 +27,16 @@ class V1::RegistrationController < Devise::RegistrationsController
   meta message: "TODO Add example"
   def create
     resource = resource_class.new(user_params)
+    update_resource(resource)
     # resource.skip_confirmation!  # must be confirmable
     if resource.save
-      sign_in(resource, :store => false)
+      sign_in(resource, store: false)
       render status: 200,
         json: {
           success: true,
+          redirect: "dashboard",
           info: "Registered",
-          data: {
-            user: resource,
-          }
+          user: resource,
       }
     else
       warden.custom_failure!
@@ -68,12 +68,28 @@ class V1::RegistrationController < Devise::RegistrationsController
 
   private
   def user_params
-    params.require(:user).permit(
-      :email, :password, :password_confirmation,
-      :name, :suid, :login_alias)
+    params.require(:user).permit( :email, :suid, :login_alias)
   end
 
   def json_request?
     request.format.json?
+  end
+
+  def user_info_params
+    params.require(:user).permit(:name, :phone)
+  end
+
+  def school_params
+    params.require(:user).permit(:moeid)
+  end
+
+  def update_resource(resource)
+    rk = resource.generate_secure_token_string
+    resource.password = rk
+    resource.password_confirmation = rk
+    resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
+    resource.user_info = Userinfo.mock(user_info_params)
+    resource.school = School.mock(school_params)
+    resource
   end
 end

@@ -27,6 +27,7 @@
 #
 
 class User < ActiveRecord::Base
+  rolify
   include Concerns::TokenAuthenticable
   before_save :ensure_login_alias!
 
