@@ -1,4 +1,5 @@
 class V1::RegistrationController < Devise::RegistrationsController
+  include FrontendHelper
   resource_description do
     short "Registration"
     desc <<-EOS
@@ -29,25 +30,20 @@ class V1::RegistrationController < Devise::RegistrationsController
     resource = resource_class.new(user_params)
     update_resource(resource)
     # resource.skip_confirmation!  # must be confirmable
-    if resource.save
-      resource_class.send_reset_password_instructions(resource)
+    ret = resource.save
+    if ret
+      resource = resource_class.send_reset_password_instructions(resource)
       sign_in(resource, store: false)
-      render status: 200,
-        json: {
-          success: true,
-          redirect: "dashboard",
-          console: "Registered",
-          user: resource,
-      }
     else
       warden.custom_failure!
-      render status: :unprocessable_entity,
-        json: {
-          success: false,
-          console: resource.errors,
-          data: {}
-      }
     end
+    render status: ret ? 200 : :unprocessable_entity,
+      json: {
+      status: ret ? "success" : "error",
+        user: ret ? UserSerializer.new(resource).as_json : nil,
+        redirect: ret ? "dashboard" : "",
+        msg: msg(ret)[:msg]
+    }
   end
 
   api :DELETE, "/user", "Delete a user by given params"
@@ -60,11 +56,11 @@ class V1::RegistrationController < Devise::RegistrationsController
     if resource
       resource.destroy
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      render json: { console: "Successful logged out" },
-        status: :unauthorized
-    else
-      render json: { console: "Invalid Request" }, status: 401
     end
+    render json: {
+      status: resource ? "success": "error",
+      msg: msg(resource ? true : false)[:msg]
+    }, status: :unauthorized
   end
 
   private

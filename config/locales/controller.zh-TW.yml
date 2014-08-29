@@ -1,0 +1,62 @@
+"zh-TW":
+  password:
+    request_link:
+      success:
+        title: 密碼重設信件已寄出
+        body: 信件將於5至15分鐘內寄出
+      fail:
+        title: 密碼重設失敗
+        body: 請確認Email或賬號輸入正確
+    reset:
+      success:
+        title: 密碼變更成功
+        body: 將導入主畫面
+      fail:
+        title: 密碼變更失敗
+        body: 變更連結已失效，請重新申請
+  application:
+    landing:
+      success:
+        title: 驗證 成功
+        body: "" #登入上次最後頁面
+    auth:
+      success:
+        title: 驗證成功
+        body: ""
+      error:
+        title: 驗證失敗
+        body: 請登入
+  session:
+    create:
+      success:
+        title: 登入成功
+        body: 將導入主畫面
+      fail:
+        title: 登入失敗
+        body: 請檢查密碼與賬號是否一致
+    destroy:
+      success:
+        title: 登出成功
+        body: "See you next time"
+      fail:
+        title: 登出失敗
+        body: 請確認已登入
+  registration:
+    create:
+      success:
+        title: 註冊成功
+        body: 將導入主畫面
+      fail:
+        title: 註冊失敗
+        body: 請檢查資料是否正確
+    destroy:
+      success:
+        title: 登出成功
+        body: "See you next time"
+      fail:
+        title: 登出失敗
+        body: 請確認已登入
+  devise:
+    fail_app:
+      title: 登入失敗
+      body: 請檢查密碼與賬號是否一致

@@ -79,4 +79,6 @@ class User < ActiveRecord::Base
       self.login_alias = (self.suid.presence || self.email)
     end
   end
+
+  scope :find_by_alias, ->(ali){where(login_alias: ali)}
 end

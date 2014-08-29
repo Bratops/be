@@ -14,7 +14,10 @@ class ApplicationController < ActionController::API
   before_filter :authenticate_user_from_token!
 
   def landing
-    render json: { console: "ok" }
+    render json: {
+      status: "success",
+      msg: msg("success")[:msg]
+    }, status: 200
   end
 
   protected
@@ -31,8 +34,19 @@ class ApplicationController < ActionController::API
       sign_in(user, store: false)
     else
       warden.custom_failure!
-      render json: { success: false, message: "Error with your login or password" },
-        status: 401
+      render json: {
+        status: "error",
+        msg: msg("error")[:msg]
+      }, status: 401
     end
+  end
+
+  def msg mtype
+    { status: mtype,
+      msg: {
+        body: I18n.t(:body, scope: "application.auth.#{mtype}"),
+        title: I18n.t(:title, scope: "application.auth.#{mtype}"),
+      }
+    }
   end
 end

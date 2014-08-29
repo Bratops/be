@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       delete "/user" => "registration#destroy"
       resource :password, only: [] do
         get "/edit" => "password#edit", as: :edit_user
-        post "/forget" => "password#request_reset"
+        post "/forget" => "password#request_link"
         put "/reset" => "password#reset"
         get "/mail_test" => "password#mail_test"
       end
