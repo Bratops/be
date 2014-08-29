@@ -1,8 +1,10 @@
 class V1::SessionController < Devise::SessionsController
+  include V1::FrontendHelper
   include Devise::Controllers::Helpers
   #skip_before_filter :authenticate_user!, :only => [:create, :new]
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
   prepend_before_filter :require_no_authentication, :only => [:create]
+  skip_before_filter :authenticate_user_from_token!
 
   #before_filter :ensure_json_request
 
@@ -18,11 +20,11 @@ class V1::SessionController < Devise::SessionsController
   example "
   # Success
     status: :created,
-    success: true,
+    status: success,
     user: { email: resource.email, auth_token: resource.authentication_token }
   # Fail
     status: 401,
-    success: false,
+    status: error,
     user: { email: guest, auth_token: resource.authentication_token }
   "
   def create
@@ -32,11 +34,17 @@ class V1::SessionController < Devise::SessionsController
     res = resource_class.
       find_for_database_authentication(login_alias: user_params[:login_alias])
     if res
-      if res.valid_password?(user_params[:password])
+      valid = res.valid_password?(user_params[:password])
+      if valid
+        res.reset_authentication_token!
+        res.ensure_authentication_token!
+        res.save
         render json: {
-          user: res,
-          success: res ? true : false
-        }, status: res ? :created : :unauthorized
+          user: UserSerializer.new(res).as_json,
+          redirect: "dashboard",
+          msg: msg(valid)[:msg],
+          status: "success",
+        }, status: :created
       else
         invalid_login_attempt
       end
@@ -59,18 +67,26 @@ class V1::SessionController < Devise::SessionsController
     if resource
       resource.reset_authentication_token!
       signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-      render json: { message: "Session deleted." },
-        success: signed_out, status: 204
+      render json: {
+        msg: msg(true)[:msg],
+        status: "success"
+      }, status: 200
     else
-      render json: { message: "Invalid token." },
-        status: 404
+      render json: {
+        msg: msg(false)[:msg],
+        status: "error",
+        redirect: "landing"
+      }, status: 404
     end
   end
 
   protected
   def ensure_json_request
     if request.format != :json
-      render status: 406, json: { message: "The request must be JSON." }
+      render status: 406, json: {
+        msg: msg(false)[:msg],
+        status: "error",
+      }
       return
     end
   end
@@ -81,13 +97,17 @@ class V1::SessionController < Devise::SessionsController
 
   def ensure_params_exist
     return unless user_params[:login_alias].blank?
-    render json: { success: false,
-                   message: "missing login parameter"
+    render json: {
+      status: "error",
+      msg: msg(false)[:msg]
     }, status: 422
   end
 
   def invalid_login_attempt
     warden.custom_failure!
-    render json: { success: false, message: 'Error with your login or password' }, status: 401
+    render json: {
+      status: "error",
+      msg: msg(false)[:msg]
+    }, status: 401
   end
 end

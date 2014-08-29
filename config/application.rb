@@ -8,10 +8,10 @@ Bundler.require(*Rails.groups)
 
 module Be
   class Application < Rails::Application
-    config.middleware.use Rack::Cors do
+    config.middleware.insert 0, Rack::Cors do
       allow do
         # regular expressions can be used here
-        origins ENV["host_front"], ENV["host_dev_front"]
+        origins ENV["host_front"]
             # /http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
         resource "*", headers: :any, methods: [:get, :put, :post, :patch, :options, :delete]
       end
@@ -26,7 +26,7 @@ module Be
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.default_locale = :"zh-TW"
     #config.session_store = :cookie_store
     #config.api_only = false
   end

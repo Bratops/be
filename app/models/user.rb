@@ -27,6 +27,7 @@
 #
 
 class User < ActiveRecord::Base
+  rolify
   include Concerns::TokenAuthenticable
   before_save :ensure_login_alias!
 
@@ -38,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_one :user_info
   belongs_to :group
+  delegate :school, to: :group, allow_nil: true
   counter_culture [:group, :school, :location]
   counter_culture [:group, :school, :holder]
   counter_culture [:group, :school, :age_level]
@@ -77,4 +79,6 @@ class User < ActiveRecord::Base
       self.login_alias = (self.suid.presence || self.email)
     end
   end
+
+  scope :find_by_alias, ->(ali){where(login_alias: ali)}
 end

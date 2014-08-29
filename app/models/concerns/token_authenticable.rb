@@ -9,7 +9,7 @@ module Concerns::TokenAuthenticable
   module ClassMethods
     def reset_authentication_token!
       self.authentication_token = generate_authentication_token
-      save
+      self.save
     end
   end
 

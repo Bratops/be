@@ -29,11 +29,26 @@ class School < ActiveRecord::Base
   counter_culture [:age_level]
   structure do
     name "", validates: [ :presence, :uniqueness ]
-    moeid "", validates: {presence: true, format: /\A\w{6}\z/  }
+    moeid "", validates: {presence: true, format: /\A\w{4,6}\z/  }
 
     users_count 0
     groups_count 0
     timestamps
+  end
+
+  def alumnus
+    self.groups.where(name: "alumnus").first
+  end
+
+  before_create :ensure_default_group
+  def ensure_default_group
+    gp = Group.mock(name: "alumnus")
+    gp.save
+    self.groups << gp
+  end
+
+  def update_counter
+    self.counter_culture_fix_counts
   end
 end
 

@@ -1,4 +1,5 @@
 class V1::RegistrationController < Devise::RegistrationsController
+  include FrontendHelper
   resource_description do
     short "Registration"
     desc <<-EOS
@@ -27,26 +28,22 @@ class V1::RegistrationController < Devise::RegistrationsController
   meta message: "TODO Add example"
   def create
     resource = resource_class.new(user_params)
+    update_resource(resource)
     # resource.skip_confirmation!  # must be confirmable
-    if resource.save
-      sign_in(resource, :store => false)
-      render status: 200,
-        json: {
-          success: true,
-          info: "Registered",
-          data: {
-            user: resource,
-          }
-      }
+    ret = resource.save
+    if ret
+      resource = resource_class.send_reset_password_instructions(resource)
+      sign_in(resource, store: false)
     else
       warden.custom_failure!
-      render status: :unprocessable_entity,
-        json: {
-          success: false,
-          info: resource.errors,
-          data: {}
-      }
     end
+    render status: ret ? 200 : :unprocessable_entity,
+      json: {
+      status: ret ? "success" : "error",
+        user: ret ? UserSerializer.new(resource).as_json : nil,
+        redirect: ret ? "dashboard" : "",
+        msg: msg(ret)[:msg]
+    }
   end
 
   api :DELETE, "/user", "Delete a user by given params"
@@ -59,21 +56,45 @@ class V1::RegistrationController < Devise::RegistrationsController
     if resource
       resource.destroy
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      render json: { console: "Successful logged out" },
-        status: :unauthorized
-    else
-      render json: { console: "Invalid Request" }, status: 401
     end
+    render json: {
+      status: resource ? "success": "error",
+      msg: msg(resource ? true : false)[:msg]
+    }, status: :unauthorized
   end
 
   private
   def user_params
-    params.require(:user).permit(
-      :email, :password, :password_confirmation,
-      :name, :suid, :login_alias)
+    params.require(:user).permit( :email, :suid, :login_alias)
   end
 
   def json_request?
     request.format.json?
+  end
+
+  def user_info_params
+    params.require(:user).permit(:name, :phone)
+  end
+
+  def school_params
+    params.require(:user).permit(:moeid)
+  end
+
+  def update_resource(resource)
+    rk = resource.generate_secure_token_string
+    resource.password = rk
+    resource.password_confirmation = rk
+    resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
+    resource.user_info = UserInfo.mock(user_info_params)
+    sa = School.find_by(school_params).alumnus
+    sa.users << resource
+    if sa.save
+      if params[:user][:as_teacher]
+        resource.add_role :teacher_applicant
+      end
+      return resource
+    else
+      return nil
+    end
   end
 end

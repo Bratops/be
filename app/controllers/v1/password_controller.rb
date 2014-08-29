@@ -1,6 +1,7 @@
 class V1::PasswordController < Devise::SessionsController
   include Devise::Controllers::Helpers
-  skip_before_filter :authenticate_user_from_token!, :only => [:request_reset, :reset]
+  include V1::FrontendHelper
+  skip_before_filter :authenticate_user_from_token!, :only => [:request_link, :reset]
 
   resource_description do
     api_versions "1.0"
@@ -15,18 +16,18 @@ class V1::PasswordController < Devise::SessionsController
   api :POST, "/password/forget", "Post a request for asking reset password email."
   param :login_alias, String, "Email or suid"
   see link: "registration#create", desc: "User registration parameter settings"
-  def request_reset
-    resource = resource_class.send_reset_password_instructions(resource_params)
-    if successfully_sent?(resource)
-      render json: {
-        console: "request sent",
-        info: "The password reset email has been sent.",
-      }
-    else
-      render json: { console: "error",
-                     info: "Sorry, we cannot sent email for given request"
-      }
+  def request_link
+    ret = false
+    resource = resource_class.find_by_alias(params[:login_alias]).first
+    if resource
+      resource = resource_class.send_reset_password_instructions(resource)
+      ret = successfully_sent?(resource)
     end
+    render json: {
+      status: ret ? "success" : "error",
+      redirect: (ret ? "landing" : ""),
+      msg: msg(ret)[:msg],
+    }, status: (ret ? 200 : :non_authoritative_information)
   end
 
   api :PUT, "/password/reset", "Reset current password and force user relogin"
@@ -34,21 +35,25 @@ class V1::PasswordController < Devise::SessionsController
   param :password, String, "New password"
   param :password_confirmation, String, "New password confirmation"
   def reset
-    resource = resource_class.reset_password_by_token(resource_params)
-
-    if resource.errors.empty?
+    resource = resource_class.reset_password_by_token(reset_params)
+    ret = resource.errors.empty?
+    if ret
       # resource.unlock_access! if unlockable?(resource)
       resource.reset_authentication_token!
+      resource.ensure_authentication_token!
+      resource.save
       sign_in(resource_name, resource)
-      render json: {
-        console: "success to reset passwords",
-        notify: "Password update successful. Please login again."
-      }, status: :temporary_redirect
-    else
-      render json: {
-        console: "fail to reset passwords",
-        notify: "Password update failed."
-      }, status: :non_authoritative_information
     end
+    render json: {
+      status: ret ? "success" : "error",
+      user: ret ? UserSerializer.new(resource).as_json : nil,
+      redirect: (ret ? "dashboard" : ""),
+      msg: msg(ret)[:msg],
+    }, status: (ret ? 200 : :non_authoritative_information)
+  end
+
+  protected
+  def reset_params
+    params.permit(:reset_password_token, :password, :password_confirmation)
   end
 end
