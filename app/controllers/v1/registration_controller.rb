@@ -1,5 +1,5 @@
 class V1::RegistrationController < Devise::RegistrationsController
-  include FrontendHelper
+  include V1::FrontendHelper
   resource_description do
     short "Registration"
     desc <<-EOS
