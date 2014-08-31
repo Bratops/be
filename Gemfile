@@ -18,6 +18,10 @@ gem "slim-rails"
 gem "devise", "~> 3.2.0"
 gem "cancan", "~> 1.6.10"
 gem "rolify", "~> 3.4.0"
+gem "omniauth", "~> 1.2.2"
+gem "omniauth-facebook", "~> 2.0.0"
+gem "omniauth-oauth2", "~> 1.2.0"
+gem "omniauth-google-oauth2", "~> 0.2.5"
 
 # model
 gem "migrant", "~> 1.5.0"
