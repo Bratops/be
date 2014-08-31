@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :google]
          #:timeoutable,
 
   has_one :user_info
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  # update session for registration
+  # update session for registration, for omniauth gem
   def self.new_with_session(params, session)
     super.tap do |user|
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]

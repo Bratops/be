@@ -40,3 +40,10 @@
 - [be](http://www.bebras.be/contest/2013/main)
 - [au](http://www.bebras.edu.au/)
 - [auc](http://challenge.bebras.edu.au/index.php?action=welcome)
+
+# omniouth
+- [ ] [facebook](https://developers.facebook.com/apps//settings/advanced/)
+  - logo
+  - complete settings
+- [ ] [google](https://console.developers.google.com/project//apiui/consent?authuser=0)
+  - tos
