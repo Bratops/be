@@ -6,6 +6,7 @@ class V1::GroupController < V1::CacheController
   skip_before_filter :authenticate_user_from_token!, :only => [:publist]
 
   def publist
+    #redirect_to "https://www.facebook.com/dialog/oauth?client_id=437619129714738&redirect_uri=http%3A%2F%2Fbrasbe.dev%2Fusers%2Fauth%2Ffacebook%2Fcallback&response_type=code&scope=email&state=72d37e37d563ea27390b4bb7da1df2341518a2c39a006271"
     Rails.cache.delete(publist_key)
     mem = Rails.cache.fetch publist_key do
       if params[:res] == "school"

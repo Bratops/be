@@ -29,7 +29,7 @@ end
 def widths_of routes
   {
     names: (routes.map { |route| route.name.to_s.length }.max),
-    verbs: (6),
+    verbs: (routes.map { |route| route.verb.source.length - 2 }.max),
     paths: (routes.map { |route| route.path.spec.to_s.length }.max),
     controllers: (routes.map { |route| route.defaults[:controller].to_s.length }.max),
     actions: (routes.map { |route| route.defaults[:action].to_s.length }.max)

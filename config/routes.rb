@@ -25,17 +25,21 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions:  "v1/session",
     passwords:  "v1/password",
-    registrations: "v1/registration"
+    registrations: "v1/registration",
+    omniauth_callbacks: "v1/omniauth_callbacks"
   }, skip: [:sessions, :registrations, :passwords]
   apipie
   # The priority is based upon order of creation: first created -> highest priority.
-  api_version(:module => "V1", :header => {:name => "Accept", :value => "application/bebras.tw; ver=1"}) do
+  api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
     resources :group, only: [] do
       collection do
         get "publist/:res" => "group#publist"
       end
     end
     devise_scope :user do
+      #resources :omniauth_callbacks
+      #match "/auth/:provider", to: "omniauth_callbacks#passthru", via: [:get, :post], as: :user_omniauth_authorize
+      #match "/auth/:provider/callback", to: nil, via: [:get, :post], as: :user_omniauth_callback
       post "/session" => "session#create"
       delete "/session" => "session#destroy"
       post "/user" => "registration#create"

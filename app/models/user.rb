@@ -34,8 +34,9 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-         #:timeoutable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:facebook]
+         #:timeoutable,
 
   has_one :user_info
   belongs_to :group
@@ -45,6 +46,7 @@ class User < ActiveRecord::Base
   counter_culture [:group, :school, :age_level]
   counter_culture [:group, :school]
   counter_culture [:group]
+
   structure do
     encrypted_password ""
     reset_password_token ""
@@ -57,6 +59,8 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
+    provider ""
+    uid "", index: true, validates: { uniqueness: { :case_sensitive => true } }
     email "", index: true,
       validates: { format: /\A[^@]+@[^@]+\z/,
                    uniqueness: { :case_sensitive => false } }
@@ -81,4 +85,20 @@ class User < ActiveRecord::Base
   end
 
   scope :find_by_alias, ->(ali){where(login_alias: ali)}
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+    end
+  end
+
+  # update session for registration
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
 end

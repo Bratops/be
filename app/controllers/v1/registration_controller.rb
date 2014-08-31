@@ -81,7 +81,7 @@ class V1::RegistrationController < Devise::RegistrationsController
   end
 
   def update_resource(resource)
-    rk = resource.generate_secure_token_string
+    rk = Devise.friendly_token[0,20]
     resource.password = rk
     resource.password_confirmation = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"

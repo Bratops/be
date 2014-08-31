@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828143948) do
+ActiveRecord::Schema.define(version: 20140830134844) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(version: 20140828143948) do
     t.string   "login_alias"
     t.string   "suid"
     t.integer  "group_id"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
@@ -124,6 +126,7 @@ ActiveRecord::Schema.define(version: 20140828143948) do
   add_index "users", ["login_alias"], name: "index_users_on_login_alias"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["suid"], name: "index_users_on_suid"
+  add_index "users", ["uid"], name: "index_users_on_uid"
 
   create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"
