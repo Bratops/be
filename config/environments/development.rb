@@ -46,4 +46,10 @@ Rails.application.configure do
     authentication:       "plain",
     enable_starttls_auto: true  }
   config.action_mailer.raise_delivery_errors = true
+  Be::Application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: "[Brasbe - Exception]",
+      sender_address: [ENV["notifier_address"]],
+      exception_recipients: [ENV["notified_address"]]
+    }
 end

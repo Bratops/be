@@ -21,7 +21,7 @@ gem "rolify", "~> 3.4.0"
 gem "omniauth", "~> 1.2.2"
 gem "omniauth-facebook", "~> 2.0.0"
 gem "omniauth-oauth2", "~> 1.2.0"
-gem "omniauth-google-oauth2", "~> 0.2.5"
+gem "omniauth-google-oauth2", git: "https://github.com/zquestz/omniauth-google-oauth2", ref: "a40a748be080cd3a83808ef98afcbf590d7ffbba"
 
 # model
 gem "migrant", "~> 1.5.0"

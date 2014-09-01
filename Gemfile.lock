@@ -7,6 +7,15 @@ GIT
       json
 
 GIT
+  remote: https://github.com/zquestz/omniauth-google-oauth2
+  revision: a40a748be080cd3a83808ef98afcbf590d7ffbba
+  ref: a40a748be080cd3a83808ef98afcbf590d7ffbba
+  specs:
+    omniauth-google-oauth2 (0.2.5)
+      omniauth (> 1.0)
+      omniauth-oauth2 (~> 1.1)
+
+GIT
   remote: https://github.com/smartinez87/exception_notification.git
   revision: f5dd6ebe508fe008a999790de348a9d69f073728
   ref: f5dd6ebe508fe008a999790de348a9d69f073728
@@ -183,9 +192,6 @@ GEM
       rack (~> 1.0)
     omniauth-facebook (2.0.0)
       omniauth-oauth2 (~> 1.2)
-    omniauth-google-oauth2 (0.2.5)
-      omniauth (> 1.0)
-      omniauth-oauth2 (~> 1.1)
     omniauth-oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       multi_json (~> 1.3)
@@ -324,7 +330,7 @@ DEPENDENCIES
   migrant (~> 1.5.0)
   omniauth (~> 1.2.2)
   omniauth-facebook (~> 2.0.0)
-  omniauth-google-oauth2 (~> 0.2.5)
+  omniauth-google-oauth2!
   omniauth-oauth2 (~> 1.2.0)
   pg (~> 0.17.1)
   pry (~> 0.10.1)

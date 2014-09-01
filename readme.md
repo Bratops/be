@@ -47,3 +47,4 @@
   - complete settings
 - [ ] [google](https://console.developers.google.com/project//apiui/consent?authuser=0)
   - tos
+  - use localhost:3000 to debug

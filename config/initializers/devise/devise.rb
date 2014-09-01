@@ -257,15 +257,11 @@ Devise.setup do |config|
     provider_ignores_state: false, display: "page", image_size: "normal",
     callback_url: "http://#{ENV["host_current_front"]}/oauth/facebook"
   config.omniauth :google_oauth2, ENV["g_client_id"], ENV["g_client_secret"],
-    {
-      provider_ignores_state: true,
-      redirect_uri: "http://#{ENV["host_current_front"]}/oauth/google",
-      name: "google",
-      scope: "email, profile",
-      prompt: "select_account",
-      image_aspect_ratio: "square",
-      image_size: 100,
-    }
+    redirect_uri: "http://#{ENV["host_googl_back"]}/users/auth/google/callback",
+    name: "google",
+    scope: "email, profile",
+    access_type: "offline",
+    authorize_params: { approval_prompt: ""}
 
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:

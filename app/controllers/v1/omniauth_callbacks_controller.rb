@@ -7,22 +7,25 @@ class V1::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     user = User.from_omniauth(request.env["omniauth.auth"])
-    render json: post_auth(user), status: :created
+    render json: post_auth(user, "facebook"), status: :created
   end
 
   def google
     user = User.from_omniauth(request.env["omniauth.auth"])
-    render json: post_auth(user), status: :created
+    json = post_auth(user, "google")
+    jqr = { key: user.authentication_token, login: user.login_alias }
+    redirect_to "http://#{ENV["host_current_front"]}/gauth?#{jqr.to_query}"
+    #render json: , status: :created
   end
 
   protected
-  def post_auth user
+  def post_auth user, provider
     login = user.persisted?
     if login
       user.ensure_authentication_token!
       sign_in(user, store: false)
     else
-      session["devise.auth_data"] = request.env["omniauth.auth"]
+      session["devise.#{provider}_auth_data"] = request.env["omniauth.auth"]
     end
     {
       user: UserSerializer.new(user).as_json,

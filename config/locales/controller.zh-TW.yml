@@ -15,10 +15,20 @@
         title: 密碼變更失敗
         body: 變更連結已失效，請重新申請
   omniauth_callbacks:
-    facebook:
+    google:
+      fail:
+        title: Google
+        body: 登入錯誤
       success:
-        title: 登入成功
-        body: 由Facebook登入
+        title: Google
+        body: 已登入
+    facebook:
+      fail:
+        title: Facebook
+        body: 登入錯誤
+      success:
+        title: Facebook
+        body: 已登入
   application:
     landing:
       success:
