@@ -1,0 +1,14 @@
+"zh-TW":
+  activerecord:
+    errors:
+      models:
+        common: &common
+          taken: "已被使用"
+        user:
+          attributes:
+            uid:
+              <<: *common
+            email:
+              <<: *common
+            login_alias:
+              <<: *common

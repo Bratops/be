@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140830134844) do
+ActiveRecord::Schema.define(version: 20140902084429) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20140830134844) do
     t.integer  "group_id"
     t.string   "provider"
     t.string   "uid"
+    t.string   "xrole"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"

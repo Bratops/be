@@ -29,6 +29,8 @@
 class User < ActiveRecord::Base
   rolify
   include Concerns::TokenAuthenticable
+  include Concerns::Omniauthable
+  include Concerns::User::AttributeCheckers
   before_save :ensure_login_alias!
 
   # Include default devise modules. Others available are:
@@ -47,6 +49,8 @@ class User < ActiveRecord::Base
   counter_culture [:group, :school]
   counter_culture [:group]
 
+  scope :find_by_alias, ->(ali){where(login_alias: ali)}
+
   structure do
     encrypted_password ""
     reset_password_token ""
@@ -59,46 +63,28 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
+    xrole ""
     provider ""
-    uid "", index: true, validates: { uniqueness: { :case_sensitive => true } }
-    email "", index: true,
-      validates: { format: /\A[^@]+@[^@]+\z/,
-                   uniqueness: { :case_sensitive => false } }
-    suid "", index: true,
-      validates: { allow_blank: true, unless: :suid_blank?,
-                   format: /\A\w+-{1}\w+\z/,
-                   uniqueness: { case_sensitive: false } }
-    login_alias "", index: true,
-      validates: { allow_blank: false,
-                   uniqueness: { :case_sensitive => false } }
+    uid "", index: true, validates: {
+      uniqueness: { case_sensitive: true }, unless: :provider_blank? }
+    email "", index: true, validates: {
+      format: /\A[^@]+@[^@]+\z/,
+      uniqueness: { case_sensitive: false } }
+    suid "", index: true, validates: {
+      allow_blank: true, unless: :suid_blank?,
+      format: /\A\w+-{1}\w+\z/,
+      uniqueness: { case_sensitive: false } }
+    login_alias "", index: true, validates: {
+      allow_blank: false,
+      uniqueness: { :case_sensitive => false } }
     authentication_token "", index: true
   end
 
-  def suid_blank?
-    self.suid.blank?
+  def current_role? role
+    self.xrole == role.to_s
   end
 
-  def ensure_login_alias!
-    if self.login_alias.blank?
-      self.login_alias = (self.suid.presence || self.email)
-    end
-  end
-
-  scope :find_by_alias, ->(ali){where(login_alias: ali)}
-
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
-    end
-  end
-
-  # update session for registration, for omniauth gem
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
-    end
+  def has_many_roles?
+    self.roles.count > 1
   end
 end

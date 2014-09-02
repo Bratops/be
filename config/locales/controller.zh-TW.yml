@@ -29,6 +29,10 @@
       success:
         title: Facebook
         body: 已登入
+    failure:
+      fail:
+        title: 登入錯誤
+        body: 請稍後再嘗試登入
   application:
     landing:
       success:
