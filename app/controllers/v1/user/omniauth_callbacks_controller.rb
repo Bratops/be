@@ -13,7 +13,9 @@ class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   def google
     user = User.from_omniauth(request.env["omniauth.auth"])
     json = post_auth(user, "google")
-    jqr = { key: user.authentication_token, login: user.login_alias }
+    jqr = { key: user.authentication_token, login: user.login_alias,
+            role: user.xrole.name, role_id: user.xrole.id
+    }
     redirect_to "http://#{ENV["host_current_front"]}/gauth?#{jqr.to_query}"
     #render json: , status: :created
   end
@@ -26,7 +28,9 @@ class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       status: "error"
     }
   end
+
   protected
+
   def post_auth user, provider
     login = user.persisted?
     if login

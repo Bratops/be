@@ -27,10 +27,13 @@
 #
 
 class User < ActiveRecord::Base
-  rolify after_add: :update_roles_count, after_remove: :update_roles_count
+  include Concerns::User::Rolify
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
   include Concerns::User::AttributeCheckers
+  user_rolify
+  auth_token
+  ensure_attr
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -79,22 +82,5 @@ class User < ActiveRecord::Base
       allow_blank: false,
       uniqueness: { :case_sensitive => false } }
     authentication_token "", index: true
-  end
-
-  def current_role? role
-    self.xrole_id == role.id
-  end
-
-  def xrole_named? role_name
-    !self.xrole.nil? && self.xrole.name == role.to_s
-  end
-
-  def has_many_roles?
-    self.roles.count > 1
-  end
-
-  private
-  def update_roles_count
-    self.roles_count = self.roles.count
   end
 end

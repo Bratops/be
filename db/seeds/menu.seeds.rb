@@ -41,3 +41,9 @@ p.desc = "參加迷你測驗"; p.save!; p.move_to_child_of(um)
 p = Menu.create!(name: "設定", icon: "cog", pos: 2, link: "pref")
 p.desc = "個人設定"; p.save!; p.move_to_child_of(um)
 root.reload
+
+um = Menu.create!(name: "dashboard_user", desc: "user available menu items", klass: "user")
+um.move_to_child_of(root)
+p = Menu.create!(name: "設定", icon: "cog", pos: 2, link: "pref")
+p.desc = "個人設定"; p.save!; p.move_to_child_of(um)
+root.reload

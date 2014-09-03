@@ -2,11 +2,13 @@ module Concerns::TokenAuthenticable
   extend ActiveSupport::Concern
 
   include do
-    before_save :ensure_authentication_token!
-    private :ensure_authentication_token!
   end
 
   module ClassMethods
+    def auth_token
+      before_save :ensure_authentication_token!
+    end
+
     def reset_authentication_token!
       self.authentication_token = generate_authentication_token
       self.save
