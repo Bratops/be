@@ -19,50 +19,24 @@
 #        list_task_index GET    /task/list(.:format)                                v1/task#list
 #                   task GET    /task/:id(.:format)                                 v1/task#show
 #                   root GET    /                                                   application#landing
-#
+
+
+class ActionDispatch::Routing::Mapper
+  def draw(routes_name)
+    instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
+  end
+end
 
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    sessions:  "v1/session",
-    passwords:  "v1/password",
-    registrations: "v1/registration",
-    omniauth_callbacks: "v1/omniauth_callbacks"
-  }, skip: [:sessions, :registrations, :passwords]
-  apipie
   # The priority is based upon order of creation: first created -> highest priority.
+  draw :common
+  draw :session
+  draw :dashboard
   api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
-    resources :group, only: [] do
-      collection do
-        get "publist/:res" => "group#publist"
-      end
-    end
-    devise_scope :user do
-      #resources :omniauth_callbacks
-      #match "/auth/:provider", to: "omniauth_callbacks#passthru", via: [:get, :post], as: :user_omniauth_authorize
-      #match "/auth/:provider/callback", to: nil, via: [:get, :post], as: :user_omniauth_callback
-      post "/session" => "session#create"
-      delete "/session" => "session#destroy"
-      post "/user" => "registration#create"
-      delete "/user" => "registration#destroy"
-      resource :password, only: [] do
-        get "/edit" => "password#edit", as: :edit_user
-        post "/forget" => "password#request_link"
-        put "/reset" => "password#reset"
-        get "/mail_test" => "password#mail_test"
-      end
-    end
-    resources :task, only: [:show] do
-      member do
-        get "sweep" => "task#sweep"
-      end
-      collection do
-        get "list" => "task#list"
-      end
-    end
+    # for generator
   end
 
   # You can have the root of your site routed with "root"
-  root 'application#landing'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

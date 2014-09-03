@@ -27,6 +27,8 @@ gem "omniauth-google-oauth2", git: "https://github.com/zquestz/omniauth-google-o
 gem "migrant", "~> 1.5.0"
 gem "counter_culture", "~> 0.1.23"
 gem "seedbank", "~> 0.3.0"
+gem "faker", "~> 1.4.3"
+gem "awesome_nested_set", "~> 3.0.1"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 

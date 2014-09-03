@@ -27,9 +27,10 @@
 #
 
 class User < ActiveRecord::Base
-  rolify
+  rolify after_add: :update_roles_count, after_remove: :update_roles_count
   include Concerns::TokenAuthenticable
-  before_save :ensure_login_alias!
+  include Concerns::Omniauthable
+  include Concerns::User::AttributeCheckers
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -38,6 +39,7 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:facebook, :google]
          #:timeoutable,
 
+  belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
   has_one :user_info
   belongs_to :group
   delegate :school, to: :group, allow_nil: true
@@ -46,6 +48,8 @@ class User < ActiveRecord::Base
   counter_culture [:group, :school, :age_level]
   counter_culture [:group, :school]
   counter_culture [:group]
+
+  scope :find_by_alias, ->(ali){where(login_alias: ali)}
 
   structure do
     encrypted_password ""
@@ -59,46 +63,38 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
+    roles_count 0
+    xrole_id
     provider ""
-    uid "", index: true, validates: { uniqueness: { :case_sensitive => true } }
-    email "", index: true,
-      validates: { format: /\A[^@]+@[^@]+\z/,
-                   uniqueness: { :case_sensitive => false } }
-    suid "", index: true,
-      validates: { allow_blank: true, unless: :suid_blank?,
-                   format: /\A\w+-{1}\w+\z/,
-                   uniqueness: { case_sensitive: false } }
-    login_alias "", index: true,
-      validates: { allow_blank: false,
-                   uniqueness: { :case_sensitive => false } }
+    uid "", index: true, validates: {
+      uniqueness: { case_sensitive: true }, unless: :provider_blank? }
+    email "", index: true, validates: {
+      format: /\A[^@]+@[^@]+\z/,
+      uniqueness: { case_sensitive: false } }
+    suid "", index: true, validates: {
+      allow_blank: true, unless: :suid_blank?,
+      format: /\A\w+-{1}\w+\z/,
+      uniqueness: { case_sensitive: false } }
+    login_alias "", index: true, validates: {
+      allow_blank: false,
+      uniqueness: { :case_sensitive => false } }
     authentication_token "", index: true
   end
 
-  def suid_blank?
-    self.suid.blank?
+  def current_role? role
+    self.xrole_id == role.id
   end
 
-  def ensure_login_alias!
-    if self.login_alias.blank?
-      self.login_alias = (self.suid.presence || self.email)
-    end
+  def xrole_named? role_name
+    !self.xrole.nil? && self.xrole.name == role.to_s
   end
 
-  scope :find_by_alias, ->(ali){where(login_alias: ali)}
-
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
-    end
+  def has_many_roles?
+    self.roles.count > 1
   end
 
-  # update session for registration, for omniauth gem
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
-    end
+  private
+  def update_roles_count
+    self.roles_count = self.roles.count
   end
 end

@@ -29,6 +29,10 @@
       success:
         title: Facebook
         body: 已登入
+    failure:
+      fail:
+        title: 登入錯誤
+        body: 請稍後再嘗試登入
   application:
     landing:
       success:
@@ -56,6 +60,13 @@
       fail:
         title: 登出失敗
         body: 請確認已登入
+    role:
+      success:
+        title: 切換身份完成
+        body: ""
+      error:
+        title: 切換身份失敗
+        body: 請確認您有足夠權限
   registration:
     create:
       success:

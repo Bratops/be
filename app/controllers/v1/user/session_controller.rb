@@ -1,10 +1,10 @@
-class V1::SessionController < Devise::SessionsController
+class V1::User::SessionController < Devise::SessionsController
   include V1::FrontendHelper
   include Devise::Controllers::Helpers
   #skip_before_filter :authenticate_user!, :only => [:create, :new]
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
-  prepend_before_filter :require_no_authentication, :only => [:create]
-  skip_before_filter :authenticate_user_from_token!
+  prepend_before_filter :require_no_authentication, only: [:create]
+  skip_before_filter :authenticate_user_from_token!, only: [:create]
 
   #before_filter :ensure_json_request
 
@@ -78,6 +78,24 @@ class V1::SessionController < Devise::SessionsController
         redirect: "landing"
       }, status: 404
     end
+  end
+
+  api :GET, "/session/role", "switch current user's current role"
+  param :role_id, Integer, "the role based id switch to"
+  def role
+    oldr = current_user.xrole
+    xrole = current_user.roles.find(params[:role_id])
+    current_user.xrole = xrole || oldr
+    state = "success"
+    if !current_user.save
+      state = "error"
+      logger.error current_user.errors.messages
+    end
+    render status: 200, json: {
+      user: UserSerializer.new(current_user).as_json,
+      redirect: "dashboard",
+      msg: jmsg(state), status: state,
+    }
   end
 
   protected

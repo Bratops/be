@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140830134844) do
+ActiveRecord::Schema.define(version: 20140903094014) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -44,6 +44,26 @@ ActiveRecord::Schema.define(version: 20140830134844) do
     t.integer "schools_count", null: false
     t.integer "users_count"
   end
+
+  create_table "menus", force: true do |t|
+    t.integer  "parent_id"
+    t.string   "klass"
+    t.string   "name"
+    t.string   "desc"
+    t.string   "icon"
+    t.string   "link"
+    t.integer  "pos"
+    t.integer  "children_count"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "menus", ["lft"], name: "index_menus_on_lft"
+  add_index "menus", ["parent_id"], name: "index_menus_on_parent_id"
+  add_index "menus", ["rgt"], name: "index_menus_on_rgt"
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -118,6 +138,8 @@ ActiveRecord::Schema.define(version: 20140830134844) do
     t.integer  "group_id"
     t.string   "provider"
     t.string   "uid"
+    t.string   "xrole_id"
+    t.integer  "roles_count"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
@@ -127,6 +149,7 @@ ActiveRecord::Schema.define(version: 20140830134844) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["suid"], name: "index_users_on_suid"
   add_index "users", ["uid"], name: "index_users_on_uid"
+  add_index "users", ["xrole_id"], name: "index_users_on_xrole_id"
 
   create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"

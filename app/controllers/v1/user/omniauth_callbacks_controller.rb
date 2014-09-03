@@ -1,4 +1,4 @@
-class V1::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include V1::FrontendHelper
   include V1::DeviseJsonAdapter
 
@@ -18,6 +18,14 @@ class V1::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     #render json: , status: :created
   end
 
+  def failure
+    puts failure_message
+    render status: 200, json: {
+      msg: msg(false)[:msg],
+      redirect: "landing",
+      status: "error"
+    }
+  end
   protected
   def post_auth user, provider
     login = user.persisted?
