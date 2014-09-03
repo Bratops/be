@@ -69,6 +69,8 @@ GEM
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
+    awesome_nested_set (3.0.1)
+      activerecord (>= 4.0.0, < 5)
     awesome_print (1.2.0)
     bcrypt (3.1.7)
     better_errors (1.1.0)
@@ -308,6 +310,7 @@ DEPENDENCIES
   active_model_serializers (= 0.8.1)
   annotate (~> 2.6.5)
   apipie-rails!
+  awesome_nested_set (~> 3.0.1)
   awesome_print (~> 1.2)
   better_errors (~> 1.1.0)
   binding_of_caller (~> 0.7.2)

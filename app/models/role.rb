@@ -7,4 +7,5 @@ class Role < ActiveRecord::Base
     name       "", index: true
     timestamps
   end
+
 end

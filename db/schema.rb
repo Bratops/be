@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902084429) do
+ActiveRecord::Schema.define(version: 20140902164823) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -44,6 +44,26 @@ ActiveRecord::Schema.define(version: 20140902084429) do
     t.integer "schools_count", null: false
     t.integer "users_count"
   end
+
+  create_table "menus", force: true do |t|
+    t.integer  "parent_id"
+    t.integer  "klass"
+    t.string   "name"
+    t.string   "desc"
+    t.string   "icon"
+    t.string   "link"
+    t.integer  "pos"
+    t.integer  "children_count"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "menus", ["lft"], name: "index_menus_on_lft"
+  add_index "menus", ["parent_id"], name: "index_menus_on_parent_id"
+  add_index "menus", ["rgt"], name: "index_menus_on_rgt"
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -118,7 +138,7 @@ ActiveRecord::Schema.define(version: 20140902084429) do
     t.integer  "group_id"
     t.string   "provider"
     t.string   "uid"
-    t.string   "xrole"
+    t.string   "xrole_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"

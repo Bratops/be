@@ -27,11 +27,10 @@
 #
 
 class User < ActiveRecord::Base
-  rolify
+  rolify after_add: :update_roles_count, after_remove: :update_roles_count
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
   include Concerns::User::AttributeCheckers
-  before_save :ensure_login_alias!
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -40,6 +39,7 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:facebook, :google]
          #:timeoutable,
 
+  belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
   has_one :user_info
   belongs_to :group
   delegate :school, to: :group, allow_nil: true
@@ -63,7 +63,8 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
-    xrole ""
+    roles_count 0
+    xrole_id
     provider ""
     uid "", index: true, validates: {
       uniqueness: { case_sensitive: true }, unless: :provider_blank? }
@@ -81,10 +82,19 @@ class User < ActiveRecord::Base
   end
 
   def current_role? role
-    self.xrole == role.to_s
+    self.xrole_id == role.id
+  end
+
+  def xrole_named? role_name
+    !self.xrole.nil? && self.xrole.name == role.to_s
   end
 
   def has_many_roles?
     self.roles.count > 1
+  end
+
+  private
+  def update_roles_count
+    self.roles_count = self.roles.count
   end
 end

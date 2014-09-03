@@ -60,6 +60,13 @@
       fail:
         title: 登出失敗
         body: 請確認已登入
+    role:
+      success:
+        title: 切換身份完成
+        body: 已切換至%{role}
+      error:
+        title: 切換身份失敗
+        body: 請確認您有足夠權限
   registration:
     create:
       success:
