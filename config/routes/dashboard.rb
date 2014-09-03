@@ -4,7 +4,6 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     resources :dashboard, only: [] do
       collection do
         get "menu" => "dashboard#menu"
-        get "submenu" => "dashboard#submenu"
       end
     end
 

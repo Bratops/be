@@ -4,7 +4,11 @@ class UserInfoSerializer < ActiveModel::Serializer
   has_many :roles
 
   def name
-    object.user_info.name
+    if object.user_info
+      object.user_info.name
+    else
+      "~~~"
+    end
   end
 
   def role

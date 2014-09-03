@@ -1,4 +1,4 @@
-class V1::SessionController < Devise::SessionsController
+class V1::User::SessionController < Devise::SessionsController
   include V1::FrontendHelper
   include Devise::Controllers::Helpers
   #skip_before_filter :authenticate_user!, :only => [:create, :new]

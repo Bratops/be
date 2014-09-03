@@ -63,7 +63,7 @@
     role:
       success:
         title: 切換身份完成
-        body: 已切換至%{role}
+        body: ""
       error:
         title: 切換身份失敗
         body: 請確認您有足夠權限

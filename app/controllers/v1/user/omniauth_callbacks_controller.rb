@@ -1,4 +1,4 @@
-class V1::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include V1::FrontendHelper
   include V1::DeviseJsonAdapter
 

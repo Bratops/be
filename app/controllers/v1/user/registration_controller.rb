@@ -1,4 +1,4 @@
-class V1::RegistrationController < Devise::RegistrationsController
+class V1::User::RegistrationController < Devise::RegistrationsController
   include V1::FrontendHelper
   resource_description do
     short "Registration"

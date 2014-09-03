@@ -1,9 +1,10 @@
 class Menu < ActiveRecord::Base
-  acts_as_nested_set order_column: :pos, counter_cache: :children_count, dependent: :destroy
+  acts_as_nested_set order_column: :pos,
+    counter_cache: :children_count
   resourcify
 
   structure do
-    klass 0
+    klass "admin"  # 0: menu, 1: ...
     name ""
     desc ""
     icon ""
