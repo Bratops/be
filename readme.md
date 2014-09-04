@@ -4,7 +4,18 @@
 ### TODO
 - Controller i18n
 - Fix user registration with school/user_info model
-- Check api well documented
+- User managements
+  - query user info
+  - modify users (batch)
+  - notify users
+- Task managements
+  - basic CRUD
+  - statistical info
+- Contest managements
+  - normal test
+  - mini test
+  - custom test
+  - in-group test
 
 ### Cache schema
 - rails

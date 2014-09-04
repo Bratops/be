@@ -8,6 +8,9 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     end
 
     namespace :admin do
+      resource :users, only: [] do
+        get "/" => "users#index"
+      end
       resources :user, only: [] do
         collection do
           get "list/:attr" => "user#list"

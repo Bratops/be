@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   # solution_for
   # undefined method `respond_with'
+  include CanCan::ControllerAdditions
   include ActionController::ImplicitRender
   include ActionController::MimeResponds
   # solution_for
@@ -42,7 +43,8 @@ class ApplicationController < ActionController::API
   end
 
   def msg mtype
-    { status: mtype,
+    {
+      status: mtype,
       msg: {
         body: I18n.t(:body, scope: "application.auth.#{mtype}"),
         title: I18n.t(:title, scope: "application.auth.#{mtype}"),
@@ -53,4 +55,24 @@ class ApplicationController < ActionController::API
   def user_info_json
     UserInfoSerializer.new(current_user).to_json
   end
+
+  private
+  def current_ability
+    controller_name_segments = params[:controller].split('/')
+    controller_name_segments.pop
+    controller_namespace = controller_name_segments.join('/').camelize
+    Ability.new(current_user, controller_namespace)
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    msg = "Access denied on #{exception.action} #{exception.subject.inspect}"
+    Rails.logger.debug msg
+    ExceptionNotifier.notify_exception(exception,
+      env: request.env, data: {message: msg})
+    render status: :forbidden, json: {
+      msg: msg("error"),
+      status: "error"
+    }
+  end
 end
+

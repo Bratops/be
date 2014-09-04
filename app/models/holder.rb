@@ -19,7 +19,7 @@ class Holder < ActiveRecord::Base
     name "", validates: [ :presence, :uniqueness ]
 
     schools_count 0
-    groups_count 0
+    ugroups_count 0
     users_count 0
     # timestamps
   end

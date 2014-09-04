@@ -15,8 +15,9 @@
 # **`users_count`**  | `integer`          |
 #
 
-class Group < ActiveRecord::Base
-  has_many :users
+class Ugroup < ActiveRecord::Base
+  has_many :enrollments
+  has_many :users, through: :enrollments, dependent: :destroy
   belongs_to :school
   counter_culture [:school, :location]
   counter_culture [:school, :holder]
@@ -26,8 +27,14 @@ class Group < ActiveRecord::Base
     name  ""
     group_type 0    # 0: class, 1: team
 
+    enrollments_count 0
     users_count 0
+
     timestamps
+  end
+
+  def enroll user
+    self.enrollments.find_or_create_by(user_id: user.id, ugroup_id: self.id)
   end
 end
 

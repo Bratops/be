@@ -15,8 +15,8 @@ module Concerns::User::Rolify
     self.xrole_id == role.id
   end
 
-  def xrole_named? role_name
-    !self.xrole.nil? && self.xrole.name == role.to_s
+  def role_named? role
+    !self.xrole.nil? && (self.xrole.name == role.to_s)
   end
 
   def has_many_roles?
