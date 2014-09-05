@@ -3,9 +3,7 @@ class Enrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :ugroup
   counter_culture [:user]
-  counter_culture [:user, :ugroups]
   counter_culture [:ugroup]
-  counter_culture [:ugroup, :users]
 
   structure do
     timestamps

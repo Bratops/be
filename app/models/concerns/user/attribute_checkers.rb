@@ -7,7 +7,7 @@ module Concerns::User::AttributeCheckers
   module ClassMethods
     def ensure_attr
       before_create :ensure_login_alias!
-      before_create :ensure_xrole!
+      after_create :ensure_xrole!
     end
   end
 
@@ -26,6 +26,8 @@ module Concerns::User::AttributeCheckers
   end
 
   def ensure_xrole!
-    self.xrole_id = Role.find_by(name: "user").id
+    self.add_role :user
+    self.xrole_id = self.roles.find_by(name: "user").id
+    self.save
   end
 end

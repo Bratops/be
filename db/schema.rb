@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904161308) do
+ActiveRecord::Schema.define(version: 20140905140218) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -167,6 +167,8 @@ ActiveRecord::Schema.define(version: 20140904161308) do
     t.integer "role_id"
   end
 
+  add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id"
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id"
 
 end

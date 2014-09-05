@@ -20,16 +20,16 @@ class << self
 
   def create_teacher row
     sc = School.find_by(name: row["school"])
-    puts sc.name, sc.id, "--"
+    puts "#{sc.name}--#{row["name"]}"
     if sc.present?
       pw = Devise.friendly_token[3,24]
-      us = User.mock(
+      us = User.new(
         created_at: row["date"],
         email: row["email"], reset_password_token: nil,
         password: pw, password_confirmation: pw)
       us.user_info = UserInfo.mock(name: row["name"], phone: row["phone"])
       us.save
-      us.add_role :teacher
+      us.make_teacher!
       sc.add_teacher us
     else
       puts "cant find school at #{row}"
@@ -38,7 +38,7 @@ class << self
   end
 
   def print_error row, obj
-    if obj.errors
+    if obj.errors.size > 0
       puts "---> #{row["school"]}:#{row["name"]}- #{obj.errors.messages}"
     end
   end
@@ -53,6 +53,8 @@ class << self
 end
 
 User.where("id != 76").delete_all
+Role.delete_all
+UserRole.delete_all
 Enrollment.delete_all
 Ugroup.delete_all
 #add_user "admin"
