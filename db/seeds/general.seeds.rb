@@ -2,7 +2,7 @@ AgeLevel.delete_all
 Holder.delete_all
 Location.delete_all
 School.delete_all
-Group.delete_all
+Ugroup.delete_all
 
 AgeLevel.mock(name: "國小").save
 AgeLevel.mock(name: "國中").save

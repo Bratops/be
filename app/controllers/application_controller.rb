@@ -25,14 +25,14 @@ class ApplicationController < ActionController::API
   def authenticate_user_from_token!
     login = request.headers[ENV["login_key"]].presence
     token = request.headers[ENV["token_key"]].presence
-    # TODO fix to accept normal name account
     user = login && User.find_by(login_alias: login)
 
     # Notice how we use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
     if user && Devise.secure_compare(user.authentication_token, token)
-      sign_in(user, store: false)
+      sign_in(user, bypass: true)
+      #just pass here
     else
       warden.custom_failure!
       render json: {

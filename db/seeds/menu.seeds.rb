@@ -4,6 +4,8 @@ adm = Menu.create!(name: "dashboard_admin", desc: "Admin available menu items", 
 adm.move_to_child_of(root)
 p = Menu.create!(name: "使用者資訊", icon: "user", pos: 0, link: "users")
 p.desc = "管理使用者資料"; p.save!; p.move_to_child_of(adm)
+p = Menu.create!(name: "選單項目", icon: "bars", pos: 0, link: "menu")
+p.desc = "依使用者權限編輯選單內容"; p.save!; p.move_to_child_of(adm)
 p = Menu.create!(name: "題目資訊", icon: "tasks", pos: 1, link: "tasks")
 p.desc = "管理題目資料"; p.save!; p.move_to_child_of(adm)
 p = Menu.create!(name: "設定", icon: "cog", pos: 2, link: "pref")
