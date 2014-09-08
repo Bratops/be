@@ -5,7 +5,7 @@ class Menu < ActiveRecord::Base
 
   structure do
     klass "admin"  # 0: menu, 1: ...
-    name "", validates: { length: { in: 2..10 }}
+    name "", validates: { length: { in: 2..20 }}
     desc ""
     icon ""
     link ""

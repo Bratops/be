@@ -81,15 +81,15 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { host: ENV["host_email"] }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
 
   Be::Application.config.middleware.use ExceptionNotification::Rack,
     email: {
-      email_prefix: "[Brasbe - Exception]",
-      sender_address: [ENV["notifier_address"]],
-      exception_recipients: [ENV["notified_address"]]
+      email_prefix: "[Brasbe Prod - Exception]",
+      sender_address: [ENV["sender_email"]],
+      exception_recipients: [ENV["notify_email"]]
     },
     hipchat: {
       api_token: ENV["hipchat_token"],

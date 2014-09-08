@@ -34,9 +34,11 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   # Don't care if the mailer can't send.
+  config.action_mailer.default_url_options = { host: ENV["host_email"] }
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV["host_email"] }
+
   config.action_mailer.smtp_settings = {
     address:              "smtp.gmail.com",
     port:                 587,
@@ -45,11 +47,13 @@ Rails.application.configure do
     password:             Rails.application.secrets.gmail_pass,
     authentication:       "plain",
     enable_starttls_auto: true  }
-  config.action_mailer.raise_delivery_errors = true
   Be::Application.config.middleware.use ExceptionNotification::Rack,
-    email: {
-      email_prefix: "[Brasbe - Exception]",
-      sender_address: [ENV["notifier_address"]],
-      exception_recipients: [ENV["notified_address"]]
+    hipchat: {
+      api_token: ENV["hipchat_token"],
+      room_name: ENV["hipchat_room"],
+      from: ENV["hipchat_from"],
+      api_version: "v2",
+      notify: true,
+      color: "red",
     }
 end
