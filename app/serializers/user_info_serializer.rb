@@ -1,17 +1,24 @@
 class UserInfoSerializer < ActiveModel::Serializer
+  # object should from user
   root false
-  attributes :name, :role, :roles
-  has_many :roles
+  attributes :name, :email, :phone, :id, :school
 
-  def name
-    if object.user_info
-      object.user_info.name
-    else
-      "~~~"
-    end
+  def school
+    return object.ugroups[0].school.name if has_school(object)
+    "No School"
   end
 
-  def role
-    "guest" || object.xrole.name
+  def phone
+    return object.user_info.phone if object.user_info
+    "No Data"
+  end
+
+  def name
+    return object.user_info.name if object.user_info
+    "No name"
+  end
+
+  def has_school obj
+    (obj.ugroups.count > 0) && (obj.ugroups[0].school)
   end
 end

@@ -43,14 +43,9 @@ class User < ActiveRecord::Base
          #:timeoutable,
 
   belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
-  has_one :user_info
-  belongs_to :group
-  delegate :school, to: :group, allow_nil: true
-  counter_culture [:group, :school, :location]
-  counter_culture [:group, :school, :holder]
-  counter_culture [:group, :school, :age_level]
-  counter_culture [:group, :school]
-  counter_culture [:group]
+  has_one :user_info, dependent: :destroy
+  has_many :enrollments
+  has_many :ugroups, through: :enrollments, dependent: :destroy
 
   scope :find_by_alias, ->(ali){where(login_alias: ali)}
 
@@ -66,7 +61,10 @@ class User < ActiveRecord::Base
     sign_in_count 0
     timestamps
 
+    enrollments_count 0
+    ugroups_count 0
     roles_count 0
+
     xrole_id
     provider ""
     uid "", index: true, validates: {

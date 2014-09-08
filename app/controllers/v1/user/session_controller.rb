@@ -35,6 +35,7 @@ class V1::User::SessionController < Devise::SessionsController
       find_for_database_authentication(login_alias: user_params[:login_alias])
     if res
       valid = res.valid_password?(user_params[:password])
+      sign_in(res, store: false)
       if valid
         res.reset_authentication_token!
         res.ensure_authentication_token!

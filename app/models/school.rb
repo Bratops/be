@@ -19,8 +19,9 @@
 #
 
 class School < ActiveRecord::Base
-  has_many :groups
-  has_many :users, through: :groups
+  has_many :ugroups
+  has_many :enrollments, through: :ugroups
+  has_many :users, through: :enrollments
   belongs_to :location
   belongs_to :holder
   belongs_to :age_level
@@ -32,23 +33,25 @@ class School < ActiveRecord::Base
     moeid "", validates: {presence: true, format: /\A\w{4,6}\z/  }
 
     users_count 0
-    groups_count 0
+    ugroups_count 0
     timestamps
   end
 
   def alumnus
-    self.groups.where(name: "alumnus").first
+    self.ugroups.where(name: "alumnus").first
   end
 
-  before_create :ensure_default_group
-  def ensure_default_group
-    gp = Group.mock(name: "alumnus")
-    gp.save
-    self.groups << gp
+  def add_ugroup name, user
+    sg = self.ugroups.find_or_create_by(name: name)
+    sg.enroll user
   end
 
-  def update_counter
-    self.counter_culture_fix_counts
+  def add_alumnus user
+    self.add_ugroup "alumnus", user
+  end
+
+  def add_teacher user
+    self.add_ugroup "teacher", user
   end
 end
 

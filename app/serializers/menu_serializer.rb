@@ -1,5 +1,11 @@
 class MenuSerializer < ActiveModel::Serializer
   root false
+
   attributes :name, :pos, :icon, :link, :desc
-  has_many :children, serializer: MenuSerializer
+  attribute :id
+  has_many :children, key: "nodes", serializer: MenuSerializer
+
+  def id
+    scope[:edit].nil? ? nil : object.id
+  end
 end

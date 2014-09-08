@@ -11,38 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903094014) do
+ActiveRecord::Schema.define(version: 20140905140218) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
     t.integer "schools_count"
-    t.integer "groups_count"
     t.integer "users_count"
+    t.integer "ugroups_count"
   end
 
-  create_table "groups", force: true do |t|
-    t.string   "name"
-    t.integer  "group_type"
+  create_table "enrollments", force: true do |t|
+    t.integer  "user_id"
     t.datetime "updated_at"
     t.datetime "created_at"
-    t.integer  "school_id"
-    t.integer  "users_count"
+    t.integer  "ugroup_id"
   end
 
-  add_index "groups", ["school_id"], name: "index_groups_on_school_id"
+  add_index "enrollments", ["ugroup_id"], name: "index_enrollments_on_ugroup_id"
+  add_index "enrollments", ["user_id"], name: "index_enrollments_on_user_id"
 
   create_table "holders", force: true do |t|
     t.string  "name"
     t.integer "schools_count"
-    t.integer "groups_count"
     t.integer "users_count"
+    t.integer "ugroups_count"
   end
 
   create_table "locations", force: true do |t|
     t.string  "name"
-    t.integer "groups_count",  null: false
     t.integer "schools_count", null: false
     t.integer "users_count"
+    t.integer "ugroups_count"
   end
 
   create_table "menus", force: true do |t|
@@ -83,11 +82,11 @@ ActiveRecord::Schema.define(version: 20140903094014) do
     t.string   "moeid"
     t.datetime "updated_at"
     t.datetime "created_at"
-    t.integer  "groups_count"
     t.integer  "location_id"
     t.integer  "age_level_id"
     t.integer  "holder_id"
     t.integer  "users_count"
+    t.integer  "ugroups_count"
   end
 
   add_index "schools", ["age_level_id"], name: "index_schools_on_age_level_id"
@@ -107,6 +106,18 @@ ActiveRecord::Schema.define(version: 20140903094014) do
     t.datetime "updated_at"
     t.datetime "created_at"
   end
+
+  create_table "ugroups", force: true do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.integer  "group_type"
+    t.integer  "enrollments_count"
+    t.integer  "users_count"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "ugroups", ["school_id"], name: "index_ugroups_on_school_id"
 
   create_table "user_infos", force: true do |t|
     t.string   "name"
@@ -135,16 +146,16 @@ ActiveRecord::Schema.define(version: 20140903094014) do
     t.string   "authentication_token"
     t.string   "login_alias"
     t.string   "suid"
-    t.integer  "group_id"
     t.string   "provider"
     t.string   "uid"
     t.string   "xrole_id"
     t.integer  "roles_count"
+    t.integer  "enrollments_count"
+    t.integer  "ugroups_count"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["group_id"], name: "index_users_on_group_id"
   add_index "users", ["login_alias"], name: "index_users_on_login_alias"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["suid"], name: "index_users_on_suid"
@@ -156,6 +167,8 @@ ActiveRecord::Schema.define(version: 20140903094014) do
     t.integer "role_id"
   end
 
+  add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id"
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id"
 
 end

@@ -5,6 +5,7 @@ class V1::CacheController < V1::BaseController
 
   def cache_with key, opts={}
     lk = "#{controller_name}.#{action_name}.#{key}"
+    puts lk
     Rails.cache.fetch lk, opts do
       yield
     end

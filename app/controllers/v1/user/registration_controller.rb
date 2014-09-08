@@ -86,15 +86,11 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     resource.password_confirmation = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
     resource.user_info = UserInfo.mock(user_info_params)
-    sa = School.find_by(school_params).alumnus
-    sa.users << resource
-    if sa.save
-      if params[:user][:as_teacher]
-        resource.add_role :teacher_applicant
-      end
-      return resource
-    else
-      return nil
+    sc = School.find_by(school_params)
+    sc.add_alumnus(resource)
+    if params[:user][:as_teacher]
+      resource.add_role :teacher_applicant
     end
+    return resource
   end
 end

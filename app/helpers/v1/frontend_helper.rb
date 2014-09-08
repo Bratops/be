@@ -7,10 +7,12 @@ module V1::FrontendHelper
     }}
   end
 
-  def jmsg status
+  def jmsg status, emsg={}
+    scope = "#{controller_name}.#{action_name}.#{status}"
+    bvar = { scope: scope }.merge(emsg)
     {
-      title: I18n.t(:title, scope: "#{controller_name}.#{action_name}.#{status}"),
-      body: I18n.t(:body, scope: "#{controller_name}.#{action_name}.#{status}")
+      title: I18n.t(:title, scope: scope),
+      body: I18n.t(:body, bvar)
     }
   end
 end
