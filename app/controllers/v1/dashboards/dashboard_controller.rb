@@ -19,7 +19,7 @@ class V1::Dashboards::DashboardController < V1::CacheController
     key = "dashboard_#{params[:edit]}"
     menu = Menu.find_by(name: key).children
     #Rails.cache.delete(sk)
-    @menu = ActiveModel::ArraySerializer.new(menu, each_serializer: MenuSerializer)
+    @menu = ActiveModel::ArraySerializer.new(menu, each_serializer: MenuSerializer, scope: params)
   end
 
   def load_menu
@@ -27,7 +27,7 @@ class V1::Dashboards::DashboardController < V1::CacheController
     menu = cache_with key, expires_in: 1.day do
       Menu.find_by(name: key).children
     end
-    @menu = ActiveModel::ArraySerializer.new(menu, each_serializer: MenuSerializer)
+    @menu = ActiveModel::ArraySerializer.new(menu, each_serializer: MenuSerializer, scope: params)
   end
 
   def authorized_user!

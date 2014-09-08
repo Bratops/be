@@ -16,6 +16,11 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
           get "list/:attr" => "user#list"
         end
       end
+      resources :menu, only: [] do
+        collection do
+          post "" => "menu#update"
+        end
+      end
     end
 
     namespace :manager do
