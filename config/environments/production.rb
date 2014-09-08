@@ -98,5 +98,16 @@ Rails.application.configure do
       api_version: "v2",
       notify: true,
       color: "red",
+      message_template: ->(ex) {
+        bk = ex.backtrace[1].split(":")
+        bki = bk[1].to_i
+        ek = File.read(bk[0]).lines[(bki-3)..(bki+1)].join("<br>").gsub(" ", "&nbsp;")
+        code = "<br>code: <br>#{ek}<br>"
+        bks = ex.backtrace[0..5].reject{|b| b.include? "rbenv"}
+        bks = bks.join("<br>").sub(/^.*(app)/, "")
+        heading = "Prod Exception: <#{ex.class}>: #{ex.message}"
+        bkt = "on: <br>#{bks}"
+        heading + code + bkt
+      }
     }
 end

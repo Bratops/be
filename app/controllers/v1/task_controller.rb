@@ -7,7 +7,6 @@ class V1::TaskController < V1::CacheController
   api :GET, "/task/:id", "Show task by given :id"
   param_group :task
   def show
-    0/1
     ck = "#{controller_name}.#{action_name}.#{params[:id]}"
     task = Rails.cache.fetch ck do
       y, r, t = params[:id].split('-')
