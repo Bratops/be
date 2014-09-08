@@ -37,7 +37,7 @@ class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       user.ensure_authentication_token!
       sign_in(user, store: false)
     else
-      session["devise.#{provider}_auth_data"] = request.env["omniauth.auth"]
+      session["devise.oauth_data"] = request.env["omniauth.auth"]
     end
     {
       user: UserSerializer.new(user).as_json,
