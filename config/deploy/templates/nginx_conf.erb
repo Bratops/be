@@ -4,7 +4,7 @@ upstream unicorn_<%= fetch(:application) %> {
 
 <% if fetch(:nginx_use_ssl) %>
 server {
-  listen 80;
+  listen 88;
   rewrite ^(.*) https://$host$1 permanent;
 }
 <% end %>
@@ -16,7 +16,7 @@ server {
   ssl_certificate /etc/ssl/certs/<%= fetch(:nginx_ssl_certificate) %>;
   ssl_certificate_key /etc/ssl/private/<%= fetch(:nginx_ssl_certificate_key) %>;
 <% else %>
-  listen 80;
+  listen 88;
 <% end %>
 
   server_name <%= fetch(:nginx_server_name) %>;
