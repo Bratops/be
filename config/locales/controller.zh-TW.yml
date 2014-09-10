@@ -57,7 +57,7 @@
     create:
       success:
         title: 登入成功
-        body: 將導入主畫面
+        body: ''
       fail:
         title: 登入失敗
         body: 請檢查密碼與賬號是否一致

@@ -3,6 +3,7 @@ module Concerns::User::Rolify
 
   included do
     rolify after_add: :update_roles_count, after_remove: :update_roles_count
+    belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
   end
 
   def current_role? role
@@ -60,5 +61,4 @@ module Concerns::User::Rolify
   def update_roles_count(role)
     self.roles_count = self.roles.count
   end
-
 end

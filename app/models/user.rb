@@ -29,9 +29,9 @@
 class User < ActiveRecord::Base
   include Concerns::User::Rolify
   include Concerns::User::Groups
+  include Concerns::User::AttributeCheckers
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
-  include Concerns::User::AttributeCheckers
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -39,13 +39,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :google]
          #:timeoutable,
-
-  belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
-  has_one :user_info, dependent: :destroy
-  has_many :enrollments
-  has_many :ugroups, through: :enrollments, dependent: :destroy
-
-  scope :find_by_alias, ->(ali){where(login_alias: ali)}
 
   structure do
     encrypted_password ""

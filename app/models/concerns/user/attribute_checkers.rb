@@ -4,6 +4,9 @@ module Concerns::User::AttributeCheckers
   included do
     before_create :ensure_login_alias!
     after_create :ensure_xrole!
+
+    has_one :user_info, dependent: :destroy
+    scope :find_by_alias, ->(ali){where(login_alias: ali)}
   end
 
   def ensure_login_alias!

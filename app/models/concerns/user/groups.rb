@@ -3,6 +3,8 @@ module Concerns::User::Groups
 
   included do
     belongs_to :current_group, class_name: "Ugroup"
+    has_many :enrollments
+    has_many :ugroups, through: :enrollments, dependent: :destroy
   end
 
   def add_group group

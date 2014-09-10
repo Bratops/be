@@ -4,9 +4,15 @@
       models:
         common: &common
           taken: "已被使用"
+          blank: "不可空白"
+          invalid: "不合法"
         user:
           attributes:
+            password:
+              too_short: 太短
             uid:
+              <<: *common
+            suid:
               <<: *common
             email:
               <<: *common
