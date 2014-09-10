@@ -2,11 +2,13 @@ module Concerns::Omniauthable
   extend ActiveSupport::Concern
   module ClassMethods
     def from_omniauth(auth)
-      find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
-        user.email = auth.info.email || "#{auth.uid}@#{auth.provider}.uid"
+      email = auth.info.email || "#{auth.uid}@#{auth.provider}.uid"
+      find_or_create_by(email: email) do |user|
         pk = Devise.friendly_token[0,20]
         user.password = pk
         user.password_confirmation = pk
+        user.provider = auth.provider
+        user.uid = auth.uid
       end
     end
 

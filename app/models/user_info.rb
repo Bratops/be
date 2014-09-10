@@ -4,8 +4,13 @@ class UserInfo < ActiveRecord::Base
     name ""
     phone ""
     gender 0
+    birth :datetime
 
     timestamps
+  end
+
+  def required
+    self.name.blank?
   end
 end
 

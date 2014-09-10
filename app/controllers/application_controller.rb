@@ -69,7 +69,7 @@ class ApplicationController < ActionController::API
     mssg = "Access denied on #{bk} \n at ##{ex.action} with User: #{current_user.id}, #{current_user.email}"
     Rails.logger.info mssg
     ExceptionNotifier.notify_exception(ex, env: request.env, data: {message: mssg})
-    render status: :forbidden, json: msg("error")
+    render status: :forbidden, json: ad_msg()
   end
 end
 

@@ -23,9 +23,8 @@ class Ability
   end
 
   def scope_manager_abilities user
-    scope_admin_abilities user
     if user.role_named? :manager
-      can :manage, :all
+      has_manager_ability
     end
   end
 
@@ -40,11 +39,13 @@ class Ability
       can :manage, :all
     else
       can :read, Menu.with_role(user.xrole.name)
+      can :read, Msg
       can :read, :landing
     end
   end
 
-  def manager_ability
+  def has_manager_ability
+    can :manage, Msg
   end
 
   def has_teacher_ability_for(user)

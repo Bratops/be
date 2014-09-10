@@ -1,6 +1,8 @@
 api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
   scope module: :dashboards, format: false do
 
+    resources :msgs, only: [:index]
+
     resources :dashboard, only: [] do
       collection do
         get "menu" => "dashboard#menu"
@@ -24,6 +26,7 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     end
 
     namespace :manager do
+      resources :msgs, only: [:index, :create, :update, :destroy]
     end
 
     namespace :teacher do

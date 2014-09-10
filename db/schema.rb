@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909200057) do
+ActiveRecord::Schema.define(version: 20140910183902) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 20140909200057) do
   add_index "menus", ["lft"], name: "index_menus_on_lft"
   add_index "menus", ["parent_id"], name: "index_menus_on_parent_id"
   add_index "menus", ["rgt"], name: "index_menus_on_rgt"
+
+  create_table "msgs", force: true do |t|
+    t.string   "title"
+    t.string   "body"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -131,6 +140,7 @@ ActiveRecord::Schema.define(version: 20140909200057) do
     t.datetime "updated_at"
     t.datetime "created_at"
     t.integer  "user_id"
+    t.datetime "birth"
   end
 
   add_index "user_infos", ["user_id"], name: "index_user_infos_on_user_id"

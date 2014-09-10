@@ -10,6 +10,7 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     #match "/auth/:provider", to: "omniauth_callbacks#passthru", via: [:get, :post], as: :user_omniauth_authorize
     #match "/auth/:provider/callback", to: nil, via: [:get, :post], as: :user_omniauth_callback
     get "/session/role" => "user/session#role"
+    get "/session"     => "user/session#show"
     post "/session"     => "user/session#create"
     delete "/session"   => "user/session#destroy"
     post "/user"        => "user/registration#create"

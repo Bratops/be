@@ -54,6 +54,10 @@
         title: 驗證失敗
         body: 您沒有權限
   session:
+    show:
+      success:
+        title: 登入成功
+        body: ''
     create:
       success:
         title: 登入成功
@@ -94,3 +98,7 @@
     fail_app:
       title: 登入失敗
       body: 請檢查密碼與賬號是否一致
+  exception:
+    access_deny:
+      title: 沒有權限
+      body: 您無存取%{resource}的權限
