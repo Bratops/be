@@ -64,15 +64,12 @@ class ApplicationController < ActionController::API
     Ability.new(current_user, controller_namespace)
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    msg = "Access denied on #{exception.action} #{exception.subject.inspect}"
-    Rails.logger.debug msg
-    ExceptionNotifier.notify_exception(exception,
-      env: request.env, data: {message: msg})
-    render status: :forbidden, json: {
-      msg: msg("error"),
-      status: "error"
-    }
+  rescue_from CanCan::AccessDenied do |ex|
+    bk = ex.backtrace[0]
+    mssg = "Access denied on #{bk} \n at ##{ex.action} with User: #{current_user.id}, #{current_user.email}"
+    Rails.logger.info mssg
+    ExceptionNotifier.notify_exception(ex, env: request.env, data: {message: mssg})
+    render status: :forbidden, json: msg("error")
   end
 end
 

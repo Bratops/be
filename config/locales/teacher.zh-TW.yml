@@ -1,0 +1,27 @@
+"zh-TW":
+  teacher:
+    ugroups:
+      create:
+        success:
+          title: "新班級'%{group_name}'已建立"
+          body: 請學生以班級代碼加入班級.
+        error:
+          title: "新班級建立過程有誤"
+          body: 請檢查資料是否正確.%{error}
+        warning:
+          title: "班級'%{group_name}'已存在"
+          body: 請確認班級名稱不重複
+      update:
+        success:
+          title: "班級'%{group_name}'已更新"
+          body: 請學生以班級代碼加入班級.
+        error:
+          title: "找不到班級資訊"
+          body: 請檢查資料是否正確.%{error}
+      destroy:
+        success:
+          title: "班級'%{group_name}'已移除"
+          body: ""
+        error:
+          title: "找不到班級資訊"
+          body: 請檢查資料是否正確

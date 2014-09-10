@@ -4,10 +4,12 @@ class Ability
   def initialize(user, controller_namespace)
     user ||= User.new # guest user (not logged in)
     case controller_namespace
-    when "admin"
+    when "V1::Dashboards::Admin"
       scope_admin_abilities user
-    when "manager"
+    when "V1::Dashboards::Manager"
       scope_manager_abilities user
+    when "V1::Dashboards::Teacher"
+      scope_teacher_abilities user
     else
       general_abilities user
     end
@@ -27,24 +29,27 @@ class Ability
     end
   end
 
+  def scope_teacher_abilities user
+    if user.role_named? :teacher
+      has_teacher_ability_for user
+    end
+  end
+
   def general_abilities user
     if user.role_named? :admin
       can :manage, :all
-    elsif user.role_named? :manager
-      mamager_ability
-    elsif user.role_named? :teacher
-      teacher_ability
     else
+      can :read, Menu.with_role(user.xrole.name)
       can :read, :landing
     end
   end
 
   def manager_ability
-    can :read, Menu.with_role(:manager)
   end
 
-  def teacher_ability
-    can :read, Menu.with_role(:teacher)
+  def has_teacher_ability_for(user)
+    can :create, Ugroup
+    can :manage, Ugroup, id: Ugroup.with_role(:teacher, user).pluck(:id)
   end
 
   def namespace

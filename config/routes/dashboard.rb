@@ -27,6 +27,8 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     end
 
     namespace :teacher do
+      resources :ugroups, except: [:edit, :new] do
+      end
     end
 
     namespace :student do

@@ -1,13 +1,8 @@
 module Concerns::User::Rolify
   extend ActiveSupport::Concern
 
-  include do
-  end
-
-  module ClassMethods
-    def user_rolify
-      rolify after_add: :update_roles_count, after_remove: :update_roles_count
-    end
+  included do
+    rolify after_add: :update_roles_count, after_remove: :update_roles_count
   end
 
   def current_role? role
@@ -31,28 +26,39 @@ module Concerns::User::Rolify
   def make_admin!
     self.roles = []
     add_roles [:admin, :manager, :teacher, :student, :user]
+    self.xrole = Role.find_by(name: :admin)
     self.save
   end
 
   def make_manager!
     self.roles = []
     add_roles [:manager, :teacher, :student, :user]
+    self.xrole = Role.find_by(name: :manager)
     self.save
   end
 
   def make_teacher!
-    self.roles = []
-    self.add_role :teacher
-    self.save
+    make_user :teacher
   end
 
   def make_student!
+    make_user :student
+  end
+
+  def make_user!
+    make_user :user
+  end
+
+  private
+  def make_user role
     self.roles = []
-    self.add_role :student
+    self.add_role role
+    self.xrole = Role.find_by(name: role)
     self.save
   end
-  private
+
   def update_roles_count(role)
     self.roles_count = self.roles.count
   end
+
 end
