@@ -5,7 +5,7 @@ class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   skip_before_filter :authenticate_user_from_token!
 
   def facebook
-    # You need to implement the method below in your model (e.g. app/models/user.rb)
+    # todo check invalid user (id nil)
     user = User.from_omniauth(request.env["omniauth.auth"])
     render json: post_auth(user, "facebook"), status: :created
   end

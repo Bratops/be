@@ -24,6 +24,6 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def require_info
-    !object.user_info
+    object.user_info && object.user_info.required
   end
 end

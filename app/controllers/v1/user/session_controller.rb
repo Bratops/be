@@ -54,6 +54,15 @@ class V1::User::SessionController < Devise::SessionsController
     end
   end
 
+  def show
+    render json: {
+      user: UserSerializer.new(current_user).as_json,
+      status: "success",
+      redirect: "dashboard",
+      msg: msg(true)[:msg]
+    }, status: 200
+  end
+
   api :DELETE, "/session", "Delete login session"
   param :token, String, "Token generated from session#create"
   example "
