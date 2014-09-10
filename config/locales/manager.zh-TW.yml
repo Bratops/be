@@ -1,0 +1,24 @@
+"zh-TW":
+  manager:
+    msgs:
+      create:
+        success:
+          title: 新訊息已建立
+          body: 請至首頁確認
+        error:
+          title: 建立新訊息失敗
+          body: 請確認資料無誤
+      update:
+        success:
+          title: 訊息已更新
+          body: 請至首頁確認
+        error:
+          title: 訊息更新失敗
+          body: 請確認資料無誤
+      destroy:
+        success:
+          title: 訊息已刪除
+          body: 請至首頁確認
+        error:
+          title: 訊息刪除失敗
+          body: 請確認資料無誤
