@@ -1,14 +1,9 @@
 module Concerns::User::AttributeCheckers
   extend ActiveSupport::Concern
 
-  include do
-  end
-
-  module ClassMethods
-    def ensure_attr
-      before_create :ensure_login_alias!
-      after_create :ensure_xrole!
-    end
+  included do
+    before_create :ensure_login_alias!
+    after_create :ensure_xrole!
   end
 
   def ensure_login_alias!

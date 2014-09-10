@@ -28,12 +28,10 @@
 
 class User < ActiveRecord::Base
   include Concerns::User::Rolify
+  include Concerns::User::Groups
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
   include Concerns::User::AttributeCheckers
-  user_rolify
-  auth_token
-  ensure_attr
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

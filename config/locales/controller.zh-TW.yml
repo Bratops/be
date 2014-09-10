@@ -52,7 +52,7 @@
         body: ""
       error:
         title: 驗證失敗
-        body: 請登入
+        body: 您沒有權限
   session:
     create:
       success:

@@ -52,8 +52,8 @@ class << self
   end
 end
 
-after :general do
-  #User.where("id != 76").delete_all
+#after :general do
+  #User.where("id != 91").delete_all
   #Role.delete_all
   #UserRole.delete_all
   #Enrollment.delete_all
@@ -61,4 +61,4 @@ after :general do
   #add_user "admin"
   #add_users "manager", 3
   add_teachers
-end
+#end

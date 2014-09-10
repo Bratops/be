@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905140218) do
+ActiveRecord::Schema.define(version: 20140909200057) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -110,11 +110,16 @@ ActiveRecord::Schema.define(version: 20140905140218) do
   create_table "ugroups", force: true do |t|
     t.integer  "school_id"
     t.string   "name"
-    t.integer  "group_type"
     t.integer  "enrollments_count"
     t.integer  "users_count"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.datetime "exdate"
+    t.integer  "extime"
+    t.integer  "grade"
+    t.integer  "klass"
+    t.string   "note"
+    t.string   "gcode"
   end
 
   add_index "ugroups", ["school_id"], name: "index_ugroups_on_school_id"
@@ -152,9 +157,11 @@ ActiveRecord::Schema.define(version: 20140905140218) do
     t.integer  "roles_count"
     t.integer  "enrollments_count"
     t.integer  "ugroups_count"
+    t.integer  "current_group_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
+  add_index "users", ["current_group_id"], name: "index_users_on_current_group_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["login_alias"], name: "index_users_on_login_alias"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

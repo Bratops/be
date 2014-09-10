@@ -44,6 +44,7 @@ class School < ActiveRecord::Base
   def add_ugroup name, user
     sg = self.ugroups.find_or_create_by(name: name)
     sg.enroll user
+    sg
   end
 
   def add_alumnus user
@@ -51,7 +52,8 @@ class School < ActiveRecord::Base
   end
 
   def add_teacher user
-    self.add_ugroup "teacher", user
+    sg = self.add_ugroup "teacher", user
+    user.set_current_group sg
   end
 end
 
