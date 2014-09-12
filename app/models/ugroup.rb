@@ -16,10 +16,9 @@
 #
 
 class Ugroup < ActiveRecord::Base
+  include Concerns::Group::Enrolls
   resourcify
 
-  has_many :enrollments
-  has_many :users, through: :enrollments, dependent: :destroy
   belongs_to :school
 
   counter_culture [:school, :location]
@@ -53,8 +52,5 @@ class Ugroup < ActiveRecord::Base
     self.save
   end
 
-  def enroll user
-    self.enrollments.find_or_create_by(user_id: user.id, ugroup_id: self.id)
-  end
 end
 

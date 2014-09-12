@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910183902) do
+ActiveRecord::Schema.define(version: 20140911224847) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(version: 20140910183902) do
     t.datetime "updated_at"
     t.datetime "created_at"
     t.integer  "ugroup_id"
+    t.integer  "gender"
+    t.string   "name"
+    t.integer  "seat"
+    t.string   "suid"
+    t.string   "status"
   end
 
   add_index "enrollments", ["ugroup_id"], name: "index_enrollments_on_ugroup_id"

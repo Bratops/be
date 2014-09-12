@@ -33,7 +33,6 @@ Rails.application.routes.draw do
   draw :session
   draw :dashboard
   api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
-    resources :msgs
     # for generator
   end
 
