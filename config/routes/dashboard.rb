@@ -31,6 +31,11 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
 
     namespace :teacher do
       resources :ugroups, except: [:edit, :new] do
+        member do
+          post "enroll" => "ugroups#enroll"
+          get "enrollments" => "ugroups#enrolls"
+          post "enrollments" => "ugroups#del_enrolls"
+        end
       end
     end
 

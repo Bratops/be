@@ -25,3 +25,18 @@
         error:
           title: "找不到班級資訊"
           body: 請檢查資料是否正確
+      enroll:
+        status:
+          not_found: 找不到班級資料
+          error: 資料錯誤，請檢查
+          repeated: 資料重複
+          success: 已建立
+          added: 已建立
+          joined: 已加入
+      del_enrolls:
+        error:
+          title: 刪除失敗
+          body: 請稍後再重試
+        success:
+          title: 資料已刪除
+          body: ""

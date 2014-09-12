@@ -1,9 +1,10 @@
 class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
   include V1::FrontendHelper
+  before_filter :auth, except: [:index, :create]
 
   def index
-    ug = Ugroup.with_role(:teacher, current_user)
-    us = ActiveModel::ArraySerializer.new(ug, each_serializer: UgroupSerializer)
+    ugs = Ugroup.with_role(:teacher, current_user)
+    us = ActiveModel::ArraySerializer.new(ugs, each_serializer: UgroupSerializer)
     render json: us
   end
 
@@ -28,21 +29,16 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
     }
   end
 
-  def show
-  end
-
   def update
-    ug = Ugroup.find_by_id(params[:id])
-    authorize! :update, ug
     data = nil
-    unless ug
+    unless @ug
       sts = "error"
       msgv = {error: ""}
     else
-      suc = ug.update(ugroup_params)
+      suc = @ug.update(ugroup_params)
       sts = suc ? "success" : "error"
-      msgv = suc ? { group_name: ugroup_params["name"] } : { error: ug.errors.messages }
-      data = suc ? ug : nil
+      msgv = suc ? { group_name: ugroup_params["name"] } : { error: @ug.errors.messages }
+      data = suc ? @ug : nil
     end
     render json: {
       msg: tmsg(sts, current_user.xrole.name, msgv),
@@ -51,10 +47,8 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
   end
 
   def destroy
-    ug = Ugroup.find_by_id(params[:id])
-    authorize! :destroy, ug
-    ugn = ug.name
-    suc = ug.delete
+    ugn = @ug.name
+    suc = @ug.delete
     sts = suc ? "success" : "error"
     msgv = suc ? { group_name: ugn } : {}
     render json: {
@@ -62,7 +56,60 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
     }
   end
 
+  def enrolls
+    ens = @ug.enrollments
+    ens = ActiveModel::ArraySerializer.new(ens, each_serializer: EnrollmentSerializer)
+    render json: ens
+  end
+
+  def enroll
+    ero = {}
+    eid = nil
+    sts = no_res @ug do
+      en = @ug.update_enrollment user_params
+      if en.errors.blank?
+        sts = (en.created_at == en.updated_at) ? :success : :repeated
+        eid = en.id
+      else
+        sts = :error
+        ero = en.errors.keys.inject({}){|h, k| h[k] = true; h}
+      end
+      sts
+    end
+    render json: {
+      user: {
+        id: eid,
+        status:{
+          name: I18n.t(sts, scope: "teacher.ugroups.enroll.status"),
+          value: sts == :success ? "added" : "error"
+        }, error: ero
+      } }
+  end
+
+  def del_enrolls
+    ens = @ug.enrollments.where(status: "added")
+    ens.delete(params[:ids])
+    ens.reload
+    render json: {
+      msg: tmsg("success", current_user.xrole.name),
+      keep: ens.pluck(:id)
+    }
+  end
+
   private
+
+  def no_res res
+    unless res
+      return :not_found
+    else
+      return yield
+    end
+  end
+
+  def user_params
+    params.require(:user).permit(:suid, :name, :gender, :seat)
+  end
+
   def ugroup_params
     params.require(:grp).permit(
       :name, :klass, :exdate, :extime, :grade, :note)
@@ -79,5 +126,10 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
       end
     end
     { status: suc, data: ug }
+  end
+
+  def auth
+    @ug = Ugroup.find_by_id(params[:id])
+    authorize! :manage, @ug
   end
 end
