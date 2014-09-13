@@ -12,11 +12,20 @@ module Concerns::Group::Enrolls
   end
 
   def enroll user
-    self.enrollments.find_or_create_by(user_id: user.id, ugroup_id: self.id)
+    opts = { user: user }
+    en = self.enrollments.find_by(opts)
+    unless en
+      en = self.enrollments.new(opts)
+      en.save(validate: false)
+    end
+    en
   end
 
-  def enroll! user, opt={}
-    en = self.enrollments.find_by(opt)
-    en && en.update(user_id: user.id)
+  def deroll user
+    if user.current_group_is self
+      user.set_no_group
+    end
+    en = self.enrollments.find_by(user: user)
+    en.delete
   end
 end

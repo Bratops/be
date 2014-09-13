@@ -27,6 +27,9 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
 
     namespace :manager do
       resources :msgs, only: [:index, :create, :update, :destroy]
+      resource :users, only: [] do
+        get "list/:kind" => "users#list"
+      end
     end
 
     namespace :teacher do

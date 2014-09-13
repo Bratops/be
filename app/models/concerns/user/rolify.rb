@@ -6,6 +6,20 @@ module Concerns::User::Rolify
     belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
   end
 
+  module ClassMethods
+    def admin
+      with_role(:admin).first
+    end
+
+    def manager
+      with_role(:manager).first
+    end
+
+    def teachers
+      with_role(:teacher)
+    end
+  end
+
   def current_role? role
     self.xrole_id == role.id
   end

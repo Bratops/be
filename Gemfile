@@ -29,6 +29,7 @@ gem "counter_culture", "~> 0.1.23"
 gem "seedbank", "~> 0.3.0"
 gem "faker", "~> 1.4.3"
 gem "awesome_nested_set", "~> 3.0.1"
+gem "yaml_db", "~> 0.2.3"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 

@@ -51,6 +51,5 @@ class Ugroup < ActiveRecord::Base
     self.ensure_gcode
     self.save
   end
-
 end
 
