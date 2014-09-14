@@ -36,4 +36,9 @@ module Concerns::User::Groups
       self.save
     end
   end
+
+  def bebras_group
+    sc = School.find_by(moedi: "0004")
+    sc
+  end
 end

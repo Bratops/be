@@ -46,6 +46,9 @@ class Ability
 
   def has_manager_ability
     can :manage, Msg
+    can :list, User
+    can :manage, User.with_role(:student)
+    can :manage, User.with_role(:teacher)
   end
 
   def has_teacher_ability_for(user)

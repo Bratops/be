@@ -1,5 +1,5 @@
 class V1::User::SessionController < Devise::SessionsController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   include Devise::Controllers::Helpers
   #skip_before_filter :authenticate_user!, :only => [:create, :new]
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]

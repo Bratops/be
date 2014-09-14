@@ -14,10 +14,11 @@ class ApplicationController < ActionController::API
 
   before_filter :authenticate_user_from_token!
 
+  include V1::MessageHelper
   def landing
     render json: {
       status: "success",
-      msg: msg("success")[:msg]
+      msg: msg(true)[:msg]
     }, status: 200
   end
 
@@ -35,21 +36,8 @@ class ApplicationController < ActionController::API
       #just pass here
     else
       warden.custom_failure!
-      render json: {
-        status: "error",
-        msg: msg("error")[:msg]
-      }, status: 401
+      render json: ad_msg(), status: 401
     end
-  end
-
-  def msg mtype
-    {
-      status: mtype,
-      msg: {
-        body: I18n.t(:body, scope: "application.auth.#{mtype}"),
-        title: I18n.t(:title, scope: "application.auth.#{mtype}"),
-      }
-    }
   end
 
   def user_info_json

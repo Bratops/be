@@ -1,5 +1,5 @@
 class V1::User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   include V1::DeviseJsonAdapter
 
   skip_before_filter :authenticate_user_from_token!

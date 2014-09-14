@@ -1,5 +1,5 @@
 class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   before_filter :auth, except: [:index, :create]
 
   def index

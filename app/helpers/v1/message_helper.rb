@@ -1,4 +1,4 @@
-module V1::FrontendHelper
+module V1::MessageHelper
   def msg status
     key = status ? "success" : "fail"
     return { msg: {

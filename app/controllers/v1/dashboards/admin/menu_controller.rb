@@ -1,5 +1,5 @@
 class V1::Dashboards::Admin::MenuController < V1::BaseController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   before_filter :authorize_user!
 
   api "POST", "/dashboard/admin/menu", "update menu items"
