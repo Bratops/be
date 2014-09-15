@@ -16,8 +16,29 @@ module Concerns::User::Groups
     if sg
       self.current_group = sg
       self.save
+    else
+      group.enroll self
+      self.current_group = group
+      self.save
     end
     sg
   end
 
+  def current_group_is group
+    self.current_group.id == group.id
+  end
+
+  def leave_current_group
+    sg = self.current_group
+    en = self.enrollments.where(ugroup: sg)
+    if en.delete
+      self.current_group = nil
+      self.save
+    end
+  end
+
+  def bebras_group
+    sc = School.find_by(moedi: "0004")
+    sc
+  end
 end

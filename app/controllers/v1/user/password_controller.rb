@@ -1,6 +1,6 @@
 class V1::User::PasswordController < Devise::SessionsController
   include Devise::Controllers::Helpers
-  include V1::FrontendHelper
+  include V1::MessageHelper
   skip_before_filter :authenticate_user_from_token!, :only => [:request_link, :reset]
 
   resource_description do

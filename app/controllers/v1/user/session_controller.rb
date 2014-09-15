@@ -1,5 +1,5 @@
 class V1::User::SessionController < Devise::SessionsController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   include Devise::Controllers::Helpers
   #skip_before_filter :authenticate_user!, :only => [:create, :new]
   # TODO skip_authorization_check only: [:create, :failure, :show_current_user, :options, :new]
@@ -93,11 +93,8 @@ class V1::User::SessionController < Devise::SessionsController
   api :GET, "/session/role", "switch current user's current role"
   param :role_id, Integer, "the role based id switch to"
   def role
-    oldr = current_user.xrole
-    xrole = current_user.roles.find(params[:role_id])
-    current_user.xrole = xrole || oldr
     state = "success"
-    if !current_user.save
+    if !current_user.switch_to(params[:role_id])
       state = "error"
       logger.error current_user.errors.messages
     end

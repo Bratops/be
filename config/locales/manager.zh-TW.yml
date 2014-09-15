@@ -22,3 +22,12 @@
         error:
           title: 訊息刪除失敗
           body: 請確認資料無誤
+    users:
+      approve:
+        success:
+          body: 已確認
+          title: 教師身份
+        error:
+          body: 發生錯誤
+          title: 教師身份
+

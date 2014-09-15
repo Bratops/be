@@ -27,6 +27,10 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
 
     namespace :manager do
       resources :msgs, only: [:index, :create, :update, :destroy]
+      resource :users, only: [] do
+        get "list/:kind" => "users#list"
+        post "approve_teacher" => "users#approve"
+      end
     end
 
     namespace :teacher do
@@ -43,6 +47,11 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     end
 
     namespace :user do
+      resources :ugroups, only: [] do
+        collection do
+          post "join" => "ugroups#join"
+        end
+      end
     end
   end
 end

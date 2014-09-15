@@ -9,6 +9,8 @@ class Menu < ActiveRecord::Base
     desc ""
     icon ""
     link ""
+    tube ""
+    info_link ""
     pos 0
 
     children_count 0

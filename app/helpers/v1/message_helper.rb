@@ -1,4 +1,4 @@
-module V1::FrontendHelper
+module V1::MessageHelper
   def msg status
     key = status ? "success" : "fail"
     return { msg: {
@@ -41,6 +41,7 @@ module V1::FrontendHelper
   end
 
   private
+
   def msg_base state, scope, var
     bvar = { scope: scope }.merge(var)
     {

@@ -1,7 +1,7 @@
 class MenuSerializer < ActiveModel::Serializer
   root false
 
-  attributes :name, :pos, :icon, :link, :desc
+  attributes :name, :pos, :icon, :link, :desc, :tube
   attribute :id
   has_many :children, key: "nodes", serializer: MenuSerializer
 

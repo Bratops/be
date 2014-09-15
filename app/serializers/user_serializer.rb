@@ -8,7 +8,8 @@ class UserSerializer < ActiveModel::Serializer
   has_many :roles, each_serializer: RoleSerializer
 
   def roles
-    object.roles.where(resource_type: nil, resource_id: nil)
+    object.roles.where(resource_type: nil, resource_id: nil).
+      where("name != 'teacher_applicant'")
   end
 
   def auth_token

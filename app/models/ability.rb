@@ -10,6 +10,8 @@ class Ability
       scope_manager_abilities user
     when "V1::Dashboards::Teacher"
       scope_teacher_abilities user
+    when "V1::Dashboards::User"
+      scope_user_abilities user
     else
       general_abilities user
     end
@@ -34,6 +36,11 @@ class Ability
     end
   end
 
+  def scope_user_abilities user
+    return unless user.role_named? :user
+    can :join, Ugroup
+  end
+
   def general_abilities user
     if user.role_named? :admin
       can :manage, :all
@@ -46,6 +53,10 @@ class Ability
 
   def has_manager_ability
     can :manage, Msg
+    can :list, User
+    can :manage, User.with_role(:student)
+    can :manage, User.with_role(:teacher)
+    can :manage, User.with_role(:teacher_applicant)
   end
 
   def has_teacher_ability_for(user)

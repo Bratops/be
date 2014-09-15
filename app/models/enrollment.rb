@@ -7,7 +7,7 @@ class Enrollment < ActiveRecord::Base
   counter_culture [:ugroup]
 
   structure do
-    name "", validates: { length: { in: 2..6 }}
+    name "", validates: { length: { in: 2..26 }}
     gender 0, validates: { inclusion: { in: 0..1}}  # 0 female
     suid "", validates: { length: { minimum: 4}}
     seat 0, default: nil
@@ -21,6 +21,12 @@ class Enrollment < ActiveRecord::Base
       name: I18n.t(self.status, scope: "teacher.ugroups.enroll.status"),
       value: self.status
     }
+  end
+
+  def join_user user
+    self.user = user
+    self.status = "joined"
+    self.save
   end
 end
 

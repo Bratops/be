@@ -1,0 +1,14 @@
+"zh-TW":
+  user:
+    ugroups:
+      join:
+        success:
+          body: 加入班級
+          title: 驗證完成
+        error:
+          body: 請檢查資料是否正確
+          title: 驗證錯誤
+        warning:
+          body: 已加入班級
+          title: 重複驗證
+

@@ -1,5 +1,5 @@
 class V1::Dashboards::Admin::MenuController < V1::BaseController
-  include V1::FrontendHelper
+  include V1::MessageHelper
   before_filter :authorize_user!
 
   api "POST", "/dashboard/admin/menu", "update menu items"
@@ -41,7 +41,8 @@ class V1::Dashboards::Admin::MenuController < V1::BaseController
   end
 
   def menu_param
-    menu_attr = [:id, :pos, :name, :icon, :link, :desc, :destroy]
+    menu_attr = [:id, :pos, :name, :icon, :link,
+                 :tube, :info_link, :desc, :destroy]
     params.permit(menu: menu_attr).require(:menu)
   end
 
