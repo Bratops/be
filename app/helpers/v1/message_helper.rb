@@ -41,6 +41,7 @@ module V1::MessageHelper
   end
 
   private
+
   def msg_base state, scope, var
     bvar = { scope: scope }.merge(var)
     {

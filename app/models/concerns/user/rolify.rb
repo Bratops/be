@@ -32,6 +32,13 @@ module Concerns::User::Rolify
     self.roles.count > 1
   end
 
+  def switch_to role
+    oldr = self.xrole
+    _role = self.roles.find_by(id: role)
+    self.xrole = _role || oldr
+    self.save
+  end
+
   def add_roles roles
     roles.each do |ro|
       self.add_role ro

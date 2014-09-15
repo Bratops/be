@@ -1,14 +1,28 @@
 class V1::Dashboards::Manager::UsersController < V1::BaseController
   include V1::MessageHelper
-  before_filter :authorize_user, except: [:list]
-
   def list
     authorize! :list, User
     data = load_user params[:kind]
     render status: 200, json: data
   end
 
+  def approve
+    u = User.find(params[:id])
+    authorize! :manage, u
+    sta = "error"
+    if u.is_teacher_applicant
+      u.make_teacher!
+      sc = u.ugroups.find_by(name: "alumnus").school
+      sc.add_teacher u
+      sta = "success"
+    end
+    render json: {
+      msg: tmsg(sta, current_user.xrole.name),
+    }
+  end
+
   private
+
   def load_user role
     user = User.with_role(role)
     data = user.where("user_id != ?", current_user.id).
@@ -20,7 +34,4 @@ class V1::Dashboards::Manager::UsersController < V1::BaseController
     }
   end
 
-  def authorize_user
-    authorize! :manage, User
-  end
 end

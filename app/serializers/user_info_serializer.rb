@@ -2,6 +2,7 @@ class UserInfoSerializer < ActiveModel::Serializer
   # object should from user
   root false
   attributes :name, :email, :phone, :id, :school
+  has_one :xrole, key: :role, serializer: RoleSerializer
 
   def school
     return object.ugroups[0].school.name if has_school(object)
@@ -21,4 +22,5 @@ class UserInfoSerializer < ActiveModel::Serializer
   def has_school obj
     (obj.ugroups.count > 0) && (obj.ugroups[0].school)
   end
+
 end

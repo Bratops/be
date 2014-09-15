@@ -17,7 +17,7 @@ module Concerns::User::Groups
       self.current_group = sg
       self.save
     else
-      group.enroll! self
+      group.enroll self
       self.current_group = group
       self.save
     end

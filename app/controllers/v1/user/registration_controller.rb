@@ -83,13 +83,14 @@ class V1::User::RegistrationController < Devise::RegistrationsController
   def update_resource(resource)
     rk = Devise.friendly_token[0,20]
     resource.password = rk
-    resource.password_confirmation = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
     resource.user_info = UserInfo.mock(user_info_params)
     sc = School.find_by(school_params)
     sc.add_alumnus(resource)
     if params[:user][:as_teacher]
-      resource.add_role :teacher_applicant
+      rn = :teacher_applicant
+      resource.add_role rn
+      resource.switch_to Role.find_by(name: rn, resource_id: nil)
     end
     return resource
   end

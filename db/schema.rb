@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911224847) do
+ActiveRecord::Schema.define(version: 20140914115142) do
 
   create_table "age_levels", force: true do |t|
     t.string  "name"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20140911224847) do
     t.integer  "depth"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.string   "info_link"
+    t.string   "tube"
   end
 
   add_index "menus", ["lft"], name: "index_menus_on_lft"

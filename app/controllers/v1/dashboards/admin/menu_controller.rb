@@ -41,7 +41,8 @@ class V1::Dashboards::Admin::MenuController < V1::BaseController
   end
 
   def menu_param
-    menu_attr = [:id, :pos, :name, :icon, :link, :desc, :destroy]
+    menu_attr = [:id, :pos, :name, :icon, :link,
+                 :tube, :info_link, :desc, :destroy]
     params.permit(menu: menu_attr).require(:menu)
   end
 

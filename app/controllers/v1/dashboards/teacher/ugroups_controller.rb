@@ -107,7 +107,7 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
   end
 
   def user_params
-    params.require(:user).permit(:suid, :name, :gender, :seat)
+    params.require(:user).permit(:id, :suid, :name, :gender, :seat)
   end
 
   def ugroup_params

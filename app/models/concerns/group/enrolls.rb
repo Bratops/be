@@ -7,7 +7,13 @@ module Concerns::Group::Enrolls
 
   def update_enrollment data
     opt = data.merge!({:status => "added"})
-    en = self.enrollments.find_or_create_by(opt)
+    en = self.enrollments.find_by_id(data[:id])
+    opt.delete :id
+    if en
+      en.update(opt)
+    else
+      en.create(opt)
+    end
     en
   end
 
