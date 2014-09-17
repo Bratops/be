@@ -1,13 +1,20 @@
+b
+  = @user.uname
+  | 您好,
+p 我們已建立您的使用者資料，
+
+- reset = "http://#{ENV["host_front"]}/password/edit?reset_password_token=#{@token}"
 p
-  | #{@user.uname} 教師您好：
-
+  | 請由下方鏈結更新密碼:
+  br
+  b = link_to reset, reset
+  / edit_password_url(@resource, reset_password_token: @token)
 p
-  br 您的身份已經過驗證，
-  br 請先於瀏覽器登出本服務再重新登入即可開始加入報名。
-
-
+  br 如您註冊為教師身份
+  br 我們將由負責人確認身份後另行通知
+  br 謝謝您的合作
 br
-br
+
 p
   | 2014
   a(href=@home) 台灣Bebras

@@ -32,7 +32,7 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     # resource.skip_confirmation!  # must be confirmable
     ret = resource.save
     if ret
-      resource = resource_class.send_reset_password_instructions(resource)
+      SessionMailer.create(resource).deliver
       sign_in(resource, store: false)
     else
       warden.custom_failure!
@@ -90,7 +90,7 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     if params[:user][:as_teacher]
       rn = :teacher_applicant
       resource.add_role rn
-      resource.switch_to Role.find_by(name: rn, resource_id: nil)
+      resource.switch_to Role.find_by(name: :user, resource_id: nil)
     end
     return resource
   end
