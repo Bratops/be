@@ -55,6 +55,19 @@ set :hipchat_options, {
   api_version: "v2" # Set "v2" to send messages with API v2
 }
 
+# cap3 db dump
+require 'capistrano-db-tasks'
+# if you want to remove the local dump file after loading
+#set :db_local_clean, true
+# if you want to remove the dump file from the server after downloading
+#set :db_remote_clean, true
+# If you want to import assets, you can change default asset dir (default = system)
+# This directory must be in your shared directory on the server
+set :assets_dir, %w(public/assets)
+set :local_assets_dir, %w(public/assets)
+# if you want to work on a specific local environment (default = ENV['RAILS_ENV'] || 'development')
+#set :locals_rails_env, "production"
+
 namespace :deploy do
 
   desc 'Restart application'

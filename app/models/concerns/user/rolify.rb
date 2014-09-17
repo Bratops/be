@@ -59,6 +59,10 @@ module Concerns::User::Rolify
     self.save
   end
 
+  def make_teacher_app!
+    make_user :teacher_applicant
+  end
+
   def make_teacher!
     make_user :teacher
   end

@@ -15,6 +15,7 @@ class V1::Dashboards::Manager::UsersController < V1::BaseController
       sc = u.ugroups.find_by(name: "alumnus").school
       sc.add_teacher u
       sta = "success"
+      SessionMailer.create(u).deliver
     end
     render json: {
       msg: tmsg(sta, current_user.xrole.name),
