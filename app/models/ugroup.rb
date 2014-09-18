@@ -1,20 +1,3 @@
-# ## Schema Information
-#
-# Table name: `groups`
-#
-# ### Columns
-#
-# Name               | Type               | Attributes
-# ------------------ | ------------------ | ---------------------------
-# **`id`**           | `integer`          | `not null, primary key`
-# **`name`**         | `string(255)`      |
-# **`group_type`**   | `integer`          |
-# **`updated_at`**   | `datetime`         |
-# **`created_at`**   | `datetime`         |
-# **`school_id`**    | `integer`          |
-# **`users_count`**  | `integer`          |
-#
-
 class Ugroup < ActiveRecord::Base
   include Concerns::Group::Enrolls
   resourcify

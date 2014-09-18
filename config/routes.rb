@@ -1,26 +1,3 @@
-# == Route Map
-#
-#                 Prefix Verb   URI Pattern                                         Controller#Action
-# apipie_apipie_checksum GET    /api-doc/apipie_checksum(.:format)                  apipie/apipies#apipie_checksum {:format=>"json"}
-#          apipie_apipie GET    /api-doc(/:version)(/:resource)(/:method)(.:format) apipie/apipies#index {:version=>/[^\/]+/, :resource=>/[^\/]+/, :method=>/[^\/]+/}
-#            group_index GET    /group(.:format)                                    v1/group#index
-#                        POST   /group(.:format)                                    v1/group#create
-#              new_group GET    /group/new(.:format)                                v1/group#new
-#             edit_group GET    /group/:id/edit(.:format)                           v1/group#edit
-#                  group GET    /group/:id(.:format)                                v1/group#show
-#                        PATCH  /group/:id(.:format)                                v1/group#update
-#                        PUT    /group/:id(.:format)                                v1/group#update
-#                        DELETE /group/:id(.:format)                                v1/group#destroy
-#                session POST   /session(.:format)                                  v1/session#create
-#                        DELETE /session(.:format)                                  v1/session#destroy
-#                   user POST   /user(.:format)                                     v1/registration#create
-#                        DELETE /user(.:format)                                     v1/registration#destroy
-#             sweep_task GET    /task/:id/sweep(.:format)                           v1/task#sweep
-#        list_task_index GET    /task/list(.:format)                                v1/task#list
-#                   task GET    /task/:id(.:format)                                 v1/task#show
-#                   root GET    /                                                   application#landing
-
-
 class ActionDispatch::Routing::Mapper
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))

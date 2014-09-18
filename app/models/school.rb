@@ -1,23 +1,3 @@
-# ## Schema Information
-#
-# Table name: `schools`
-#
-# ### Columns
-#
-# Name                | Type               | Attributes
-# ------------------- | ------------------ | ---------------------------
-# **`id`**            | `integer`          | `not null, primary key`
-# **`name`**          | `string(255)`      |
-# **`moeid`**         | `string(255)`      |
-# **`updated_at`**    | `datetime`         |
-# **`created_at`**    | `datetime`         |
-# **`groups_count`**  | `integer`          |
-# **`location_id`**   | `integer`          |
-# **`age_level_id`**  | `integer`          |
-# **`holder_id`**     | `integer`          |
-# **`users_count`**   | `integer`          |
-#
-
 class School < ActiveRecord::Base
   has_many :ugroups
   has_many :enrollments, through: :ugroups
