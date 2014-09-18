@@ -28,4 +28,12 @@ module Concerns::User::AttributeCheckers
     self.xrole_id = self.roles.find_by(name: "user").id
     self.save
   end
+
+  def uname
+    if self.user_info
+      self.user_info.name
+    else
+      "no name"
+    end
+  end
 end

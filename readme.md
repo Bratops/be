@@ -59,3 +59,6 @@
 - [ ] [google](https://console.developers.google.com/project//apiui/consent?authuser=0)
   - tos
   - use localhost:3000 to debug
+
+# db
+- [pg config](http://www.amberbit.com/blog/2014/2/4/postgresql-awesomeness-for-rails-developers/)

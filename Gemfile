@@ -24,6 +24,7 @@ gem "omniauth-oauth2", "~> 1.2.0"
 gem "omniauth-google-oauth2", git: "https://github.com/zquestz/omniauth-google-oauth2", ref: "a40a748be080cd3a83808ef98afcbf590d7ffbba"
 
 # model
+gem "pg", "~> 0.17.1"
 gem "migrant", "~> 1.5.0"
 gem "counter_culture", "~> 0.1.23"
 gem "seedbank", "~> 0.3.0"
@@ -38,9 +39,20 @@ gem "will_paginate", "~> 3.0"
 gem "apipie-rails", git: "https://github.com/Apipie/apipie-rails.git", ref: "7e8402c99d1ac726e2c92d16dcc33a3fe1019255"
 gem "maruku" # for apipie-rails
 
+gem "pry", "~> 0.10.1"
+gem "pry-rails", "~> 0.3.2"
+gem "pry-doc", "~> 0.6.0"
+gem "pry-git", "~> 0.2.3"
+gem "pry-stack_explorer", "~> 0.4.9"
+gem "pry-clipboard"
+gem "pry-remote", ">= 0.1.8"
+gem "pry-byebug", "~> 1.3.3"
+gem "hirb", "~> 0.7.2"
+gem "coolline", ">= 0.4.4"
+gem "awesome_print", "~> 1.2"
+
 # Use unicorn as the app server
 group :production do
-  gem "pg", "~> 0.17.1"
   gem "unicorn", "~> 4.8.3"
 end
 
@@ -51,25 +63,13 @@ group :development do
 end
 
 group :development, :test do
-  gem "sqlite3"
-
   gem "capistrano", "~> 3.2.1"
   gem "capistrano-bundler"
   gem "capistrano-rails"
   gem "capistrano-rbenv"
   gem "capistrano3-nginx_unicorn"
+  gem "capistrano-db-tasks", require: false
 
-  gem "pry", "~> 0.10.1"
-  gem "pry-rails", "~> 0.3.2"
-  gem "pry-doc", "~> 0.6.0"
-  gem "pry-git", "~> 0.2.3"
-  gem "pry-stack_explorer", "~> 0.4.9"
-  gem "pry-clipboard"
-  gem "pry-remote", ">= 0.1.8"
-  gem "pry-byebug", "~> 1.3.3"
-  gem "hirb", "~> 0.7.2"
-  gem "coolline", ">= 0.4.4"
-  gem "awesome_print", "~> 1.2"
   gem "railties", ">= 3.0", "< 5.0"
   gem "better_errors", "~> 1.1.0"
   gem "binding_of_caller", "~> 0.7.2"

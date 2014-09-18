@@ -9,7 +9,7 @@ class V1::User::PasswordController < Devise::SessionsController
   end
 
   def mail_test
-    PasswordMailer.test.deliver
+    SessionMailer.test.deliver
     render json: { console: "ok"}, status: 200
   end
 

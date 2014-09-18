@@ -1,8 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
   #embed :ids, include: true
-
   root false
-  attributes :auth_token, :login_alias, :name, :require_info
+  attributes :auth_token, :login_alias, :name, :require_info, :school
 
   has_one :xrole, key: :role, serializer: RoleSerializer
   has_many :roles, each_serializer: RoleSerializer
@@ -26,5 +25,13 @@ class UserSerializer < ActiveModel::Serializer
 
   def require_info
     object.user_info && object.user_info.required
+  end
+
+  def school
+    if object.current_group
+      object.current_group.school.name
+    else
+      "No current school"
+    end
   end
 end
