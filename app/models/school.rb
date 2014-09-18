@@ -55,5 +55,9 @@ class School < ActiveRecord::Base
     sg = self.add_ugroup "teacher", user
     user.set_current_group sg
   end
+
+  def self.bebras_team
+    find_by(moeid: "0004")
+  end
 end
 

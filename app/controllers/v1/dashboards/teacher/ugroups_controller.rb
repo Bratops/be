@@ -67,9 +67,9 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
     eid = nil
     sts = no_res @ug do
       en = @ug.update_enrollment user_params
+      eid = en.id
       if en.errors.blank?
-        sts = (en.created_at == en.updated_at) ? :success : :repeated
-        eid = en.id
+        sts = (en.created_at == en.updated_at) ? :success : :updated
       else
         sts = :error
         ero = en.errors.keys.inject({}){|h, k| h[k] = true; h}
@@ -81,7 +81,7 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
         id: eid,
         status:{
           name: I18n.t(sts, scope: "teacher.ugroups.enroll.status"),
-          value: sts == :success ? "added" : "error"
+          value: [:success, :updated].include?(sts) ? "added" : "error"
         }, error: ero
       } }
   end

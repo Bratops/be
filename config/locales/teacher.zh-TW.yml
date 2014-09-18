@@ -29,7 +29,7 @@
         status:
           not_found: 找不到班級資料
           error: 資料錯誤，請檢查
-          repeated: 資料重複
+          updated: 已更新
           success: 已建立
           added: 已建立
           joined: 已加入

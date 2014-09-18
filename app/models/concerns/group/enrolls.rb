@@ -12,7 +12,7 @@ module Concerns::Group::Enrolls
     if en
       en.update(opt)
     else
-      en.create(opt)
+      en = self.enrollments.create(opt)
     end
     en
   end
