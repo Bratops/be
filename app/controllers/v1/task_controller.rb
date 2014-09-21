@@ -10,7 +10,7 @@ class V1::TaskController < V1::CacheController
     ck = "#{controller_name}.#{action_name}.#{params[:id]}"
     task = Rails.cache.fetch ck do
       y, r, t = params[:id].split('-')
-      task = Task.in_year(y.to_i)
+      task = Task::Info.in_year(y.to_i)
       task = task.where(region: r, tid: t).first
       TaskSerializer.new(task).to_json
     end
@@ -23,7 +23,7 @@ class V1::TaskController < V1::CacheController
     # TODO sweep after create
     ck = "#{controller_name}.#{action_name}"
     tl = Rails.cache.fetch ck do
-      task_list_json Task.all
+      task_list_json Task::Info.all
     end
     render json: tl
   end

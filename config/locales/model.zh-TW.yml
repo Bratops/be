@@ -18,3 +18,18 @@
               <<: *common
             login_alias:
               <<: *common
+        task/info:
+          attributes:
+            tid:
+              <<: *common
+            title:
+              <<: *common
+            body:
+              <<: *common
+            title:
+              <<: *common
+            explain:
+              <<: *common
+            quest:
+              <<: *common
+

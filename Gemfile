@@ -32,6 +32,8 @@ gem "faker", "~> 1.4.3"
 gem "awesome_nested_set", "~> 3.0.1"
 gem "yaml_db", "~> 0.2.3"
 gem "will_paginate", "~> 3.0"
+gem "acts-as-taggable-on", "~> 3.4.1"
+gem "acts_as_votable", "~> 0.10.0"
 # To use ActiveModel has_secure_password
 # gem "bcrypt-ruby", "~> 3.1.2"
 

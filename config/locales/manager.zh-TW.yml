@@ -30,4 +30,15 @@
         error:
           body: 發生錯誤
           title: 教師身份
+    tasks:
+      create:
+        success:
+          title: 新題目
+          body: 已建立
+        warning:
+          title: 新題目
+          body: 已存在,無法建立
+        error:
+          title: 新題目
+          body: 建立時發生錯誤,請檢查欄位%{error}
 

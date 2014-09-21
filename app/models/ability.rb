@@ -57,6 +57,7 @@ class Ability
     can :manage, User.with_role(:student)
     can :manage, User.with_role(:teacher)
     can :manage, User.with_role(:teacher_applicant)
+    can :manage, Task::Info
   end
 
   def has_teacher_ability_for(user)

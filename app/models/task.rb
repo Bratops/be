@@ -1,19 +1,5 @@
-class Task < ActiveRecord::Base
-  structure do
-    name               " New Task                  "
-    body               :text, " A question context.       "
-    quest              :text, " What should be solved?    "
-    explain            :text, " This is what the task is. "
-    info               :text, " Some information          "
-    link               :text, " http://bebras.tw/newtask  "
-    region             " TW                        "
-    tid                "AA-bbbb-cc"
-    old_id             -1
-    timestamps
+module Task
+  def self.table_name_prefix
+    'task_'
   end
-  scope :in_year, lambda {|y| where("created_at >= ? and created_at < ?", Time.mktime(y, 1), Time.mktime(y+1, 1)) }
-#  ttype      :string(255)
-#  tid        :string(255)
-#  slug       :string(255)
 end
-
