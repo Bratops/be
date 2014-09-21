@@ -4,7 +4,7 @@ gem "rails", "4.1.5"
 gem "rails-api", "0.2.1"
 gem "rack-cors", require: "rack/cors"
 gem "figaro", git: "https://github.com/laserlemon/figaro.git", ref: "9f54872dfc1a972b4a971211706272f0f38495f4"
-gem "active_model_serializers", "0.8.1"
+gem "active_model_serializers", "0.8.2"
 gem "versionist", "~> 1.3.0"
 
 # notify

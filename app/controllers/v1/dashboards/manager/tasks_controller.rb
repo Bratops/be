@@ -11,20 +11,32 @@ class V1::Dashboards::Manager::TasksController < V1::BaseController
       create_task
     end
     @err = { error: @task.errors.messages }
+    jtask = ::Manager::TaskSerializer.new(@task)
     render json: {
       msg: tmsg(@sta, current_user.xrole.name, @err),
-      task: @sta == :success ? @task : nil
+      task: @sta == :success ? jtask : nil
     }
   end
 
   def index
-    @tasks = Task::Info.all
+    year = params[:query].to_i
+    @tasks = Task::Info.in_year(year > 0 ? year : Time.now.year)
     aas = ActiveModel::ArraySerializer
-    mts = ManagerTaskSerializer
+    mts = ::Manager::TaskSerializer
     @tasks = aas.new(@tasks, each_serializer: mts)
     render json: @tasks
   end
 
+  def destroy
+    @task = Task::Info.find_by_id(params[:id])
+    if @task
+      @sta = :success
+      @task.destroy
+    end
+    render json: {
+      msg: tmsg(@sta, current_user.xrole.name)
+    }
+  end
   private
   def create_task
     @task = Task::Info.new(task_params)

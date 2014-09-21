@@ -6,6 +6,8 @@ class Task::Info < ActiveRecord::Base
   acts_as_taggable_on :klasses, :keywords, :opens
   acts_as_votable
 
+  scope :in_year, ->(year) { where("created_at BETWEEN ? AND ?", Time.new(year), Time.new(year+1)) }
+
   structure do
     tid       "AA-bbbb-cc", validates: [:presence, :uniqueness], index: true
     title     "New Task", validates: :presence
