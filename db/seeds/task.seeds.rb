@@ -9,7 +9,7 @@ class << self
   end
 
   def make_task data
-    t = Task.mock
+    t = Task::Info.mock
     attrs = %w[name body quest explain info created_at tid region link old_id]
     attrs.zip(data) do |k, v|
       t[k] = v

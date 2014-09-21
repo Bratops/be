@@ -31,7 +31,7 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
         get "list/:kind" => "users#list"
         post "approve_teacher" => "users#approve"
       end
-      resource :tasks, except: [:new, :edit] do
+      resources :tasks, except: [:new, :edit] do
         member do
           get "sweep" => "tasks#sweep"
         end
