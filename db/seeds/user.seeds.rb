@@ -6,7 +6,7 @@ class << self
     u = User.mock(reset_password_sent_at: nil, reset_password_token: nil,
                   email: email, password: pass, password_confirmation: pass)
     ui = UserInfo.mock(name: name)
-    u.user_info = ui
+    u.info = ui
     u.add_role role
     u.save
     puts u.errors.messages
@@ -27,7 +27,7 @@ class << self
         created_at: row["date"],
         email: row["email"], reset_password_token: nil,
         password: pw, password_confirmation: pw)
-      us.user_info = UserInfo.mock(name: row["name"], phone: row["phone"])
+      us.info = Acn::Info.mock(name: row["name"], phone: row["phone"])
       us.save
       us.make_teacher!
       sc.add_teacher us

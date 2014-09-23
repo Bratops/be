@@ -3,7 +3,7 @@ module Concerns::Edu::SchoolAdmin
 
   included do
     has_many :ugroups, class_name: "Edu::Ugroup", foreign_key: :school_id
-    has_many :enrollments, through: :ugroups
+    has_many :enrollments, class_name: "Acn::Enrollment", through: :ugroups
     has_many :users, through: :enrollments
     belongs_to :level, class_name: "Edu::Level"
     belongs_to :loc, class_name: "Edu::Loc"

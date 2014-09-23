@@ -1,7 +1,7 @@
 module Concerns::Edu::GroupEnrolls
   extend ActiveSupport::Concern
   included do
-    has_many :enrollments
+    has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :users, through: :enrollments, dependent: :destroy
   end
 

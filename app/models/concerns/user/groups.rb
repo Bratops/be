@@ -3,7 +3,7 @@ module Concerns::User::Groups
 
   included do
     belongs_to :current_group, class_name: "Edu::Ugroup"
-    has_many :enrollments
+    has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :ugroups, class_name: "Edu::Ugroup", through: :enrollments
   end
 

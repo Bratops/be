@@ -2,7 +2,7 @@ class << self
   def fake_user sid=""
     u = User.new(email: "#{sid}@email.dev")
     u.password = "aabbaabb"
-    u.user_info = UserInfo.new(name: "fake_std_#{sid}")
+    u.info = Acn::Info.new(name: "fake_std_#{sid}")
     u.save
     u.make_user!
   end

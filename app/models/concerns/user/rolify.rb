@@ -2,8 +2,8 @@ module Concerns::User::Rolify
   extend ActiveSupport::Concern
 
   included do
-    rolify after_add: :update_roles_count, after_remove: :update_roles_count
-    belongs_to :xrole, class_name: "Role", foreign_key: :xrole_id
+    rolify role_cname: "Acn::Role", after_add: :update_roles_count, after_remove: :update_roles_count
+    belongs_to :xrole, class_name: "Acn::Role", foreign_key: :xrole_id
   end
 
   module ClassMethods

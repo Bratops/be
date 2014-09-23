@@ -10,12 +10,12 @@ class UserInfoSerializer < ActiveModel::Serializer
   end
 
   def phone
-    return object.user_info.phone if object.user_info
+    return object.info.phone if object.info
     "No Data"
   end
 
   def name
-    return object.user_info.name if object.user_info
+    return object.info.name if object.info
     "No name"
   end
 

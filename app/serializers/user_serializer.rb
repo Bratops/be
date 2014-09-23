@@ -16,15 +16,15 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def name
-    if object.user_info
-      object.user_info.name
+    if object.info
+      object.info.name
     else
       "New Beaver"
     end
   end
 
   def require_info
-    object.user_info && object.user_info.required
+    object.info && object.info.required
   end
 
   def school

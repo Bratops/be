@@ -9,7 +9,7 @@ class V1::Dashboards::User::UgroupsController < V1::BaseController
     if sg
       en = sg.enrollments.find_by(suid)
       puts en.inspect
-      if en && (current_user.user_info.name == en.name)
+      if en && (current_user.info.name == en.name)
         sta = "success"
         en.join_user current_user
       end

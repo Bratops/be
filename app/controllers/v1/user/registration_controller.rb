@@ -84,7 +84,7 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     rk = Devise.friendly_token[0,20]
     resource.password = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
-    resource.user_info = UserInfo.mock(user_info_params)
+    resource.info = Acn::Info.mock(user_info_params)
     sc = School.find_by(school_params)
     sc.add_alumnus(resource)
     if params[:user][:as_teacher]

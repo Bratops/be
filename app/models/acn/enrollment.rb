@@ -1,4 +1,4 @@
-class Enrollment < ActiveRecord::Base
+class Acn::Enrollment < ActiveRecord::Base
   resourcify
   # make user has_many groups instead of has_one group
   belongs_to :user
@@ -29,4 +29,3 @@ class Enrollment < ActiveRecord::Base
     self.save
   end
 end
-
