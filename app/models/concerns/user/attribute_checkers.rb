@@ -5,7 +5,8 @@ module Concerns::User::AttributeCheckers
     before_create :ensure_login_alias!
     after_create :ensure_xrole!
 
-    has_one :user_info, dependent: :destroy
+    has_one :info, class_name: "Acn::Info",
+      dependent: :destroy
     scope :find_by_alias, ->(ali){where(login_alias: ali)}
   end
 
@@ -30,8 +31,8 @@ module Concerns::User::AttributeCheckers
   end
 
   def uname
-    if self.user_info
-      self.user_info.name
+    if self.info
+      self.info.name
     else
       "no name"
     end

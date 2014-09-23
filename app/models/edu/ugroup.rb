@@ -1,17 +1,15 @@
-class Ugroup < ActiveRecord::Base
-  include Concerns::Group::Enrolls
-  resourcify
+class Edu::Ugroup < ActiveRecord::Base
+  include Concerns::Edu::GroupEnrolls
+  resourcify :roles, role_cname: "Acn::Role"
 
-  belongs_to :school
+  belongs_to :school, class_name: "Edu::School"
+  belongs_to :cluster, class_name: "Edu::Cluster"
 
-  counter_culture [:school, :location]
-  counter_culture [:school, :holder]
-  counter_culture [:school, :age_level]
-  counter_culture [:school]
+  counter_culture :school, column_name: "ugroups_count"
+  counter_culture :cluster, column_name: "ugroups_count"
 
   structure do
     name  ""
-    klass 0
     exdate :datetime
     extime 0
     grade 10
@@ -35,4 +33,3 @@ class Ugroup < ActiveRecord::Base
     self.save
   end
 end
-

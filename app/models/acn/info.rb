@@ -1,5 +1,6 @@
-class UserInfo < ActiveRecord::Base
+class Acn::Info < ActiveRecord::Base
   belongs_to :user, touch: true
+
   structure do
     name ""
     phone ""
@@ -13,4 +14,3 @@ class UserInfo < ActiveRecord::Base
     self.name.blank?
   end
 end
-

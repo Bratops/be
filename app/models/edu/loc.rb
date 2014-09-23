@@ -1,7 +1,9 @@
-class AgeLevel < ActiveRecord::Base
-  include Concerns::SchoolSummary
+class Edu::Loc < ActiveRecord::Base
+  include Concerns::Edu::SchoolSummary
+
   structure do
     name "", validates: [ :presence, :uniqueness ]
+    #loc_level 0 # N.E.W.S.
 
     schools_count 0
     ugroups_count 0
@@ -9,4 +11,3 @@ class AgeLevel < ActiveRecord::Base
     # timestamps
   end
 end
-

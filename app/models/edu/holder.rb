@@ -1,5 +1,6 @@
-class Holder < ActiveRecord::Base
-  include Concerns::SchoolSummary
+class Edu::Holder < ActiveRecord::Base
+  include Concerns::Edu::SchoolSummary
+
   structure do
     name "", validates: [ :presence, :uniqueness ]
 
@@ -9,4 +10,3 @@ class Holder < ActiveRecord::Base
     # timestamps
   end
 end
-

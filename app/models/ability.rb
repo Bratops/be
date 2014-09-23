@@ -38,7 +38,7 @@ class Ability
 
   def scope_user_abilities user
     return unless user.role_named? :user
-    can :join, Ugroup
+    can :join, Edu::Ugroup
   end
 
   def general_abilities user
@@ -61,8 +61,8 @@ class Ability
   end
 
   def has_teacher_ability_for(user)
-    can :create, Ugroup
-    can :manage, Ugroup, id: Ugroup.with_role(:teacher, user).pluck(:id)
+    can :create, Edu::Ugroup
+    can :manage, Edu::Ugroup, id: Edu::Ugroup.with_role(:teacher, user).pluck(:id)
   end
 
   def namespace

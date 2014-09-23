@@ -1,17 +1,17 @@
-AgeLevel.delete_all
+Edu::Level.delete_all
 Holder.delete_all
 Location.delete_all
 School.delete_all
-Ugroup.delete_all
+Edu::Ugroup.delete_all
 
-AgeLevel.mock(name: "國小").save
-AgeLevel.mock(name: "國中").save
-AgeLevel.mock(name: "高中").save
-AgeLevel.mock(name: "高職").save
-AgeLevel.mock(name: "大學").save
-AgeLevel.mock(name: "研究所").save
-AgeLevel.mock(name: "社會人士").save
-AgeLevel.mock(name: "資訊專業人士").save
+Edu::Level.mock(name: "國小").save
+Edu::Level.mock(name: "國中").save
+Edu::Level.mock(name: "高中").save
+Edu::Level.mock(name: "高職").save
+Edu::Level.mock(name: "大學").save
+Edu::Level.mock(name: "研究所").save
+Edu::Level.mock(name: "社會人士").save
+Edu::Level.mock(name: "資訊專業人士").save
 
 Holder.mock(name: "私立").save
 Holder.mock(name: "市立").save
@@ -56,7 +56,7 @@ class << self
 
   def level_val kls
     km = { ele: "國小", sen: "國中", jun: "高中", voc: "高職", uni: "大學"}
-    AgeLevel.find_by(name: km[kls])
+    Edu::Level.find_by(name: km[kls])
   end
 
   @@kls_reg = {
@@ -71,8 +71,8 @@ class << self
     rg = @@kls_reg[kls].match(row["name"])
     ss = School.mock(moeid: row["moeid"], name: row["name"])
     ss.holder = holder_val(rg[:holder])
-    ss.age_level = level_val(kls)
-    ss.location = Location.find_by(name: row["county"][4..-1])
+    ss.level = level_val(kls)
+    ss.loc = Edu::Loc.find_by(name: row["county"][4..-1])
     ss.save
     ss
   end

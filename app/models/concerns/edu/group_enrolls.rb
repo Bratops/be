@@ -1,7 +1,7 @@
-module Concerns::Group::Enrolls
+module Concerns::Edu::GroupEnrolls
   extend ActiveSupport::Concern
   included do
-    has_many :enrollments
+    has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :users, through: :enrollments, dependent: :destroy
   end
 
@@ -25,6 +25,12 @@ module Concerns::Group::Enrolls
       en.save(validate: false)
     end
     en
+  end
+
+  def enroll_new user
+    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "added"}
+    en = self.enrollments.new(data)
+    en.save
   end
 
   def deroll user
