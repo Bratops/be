@@ -54,8 +54,8 @@ end
 
 #after :general do
   #User.where("id != 91").delete_all
-  #Role.delete_all
-  #UserRole.delete_all
+  #Acn::Role.delete_all
+  #Acn::UserRole.delete_all
   #Enrollment.delete_all
   #Edu::Ugroup.delete_all
   #add_user "admin"

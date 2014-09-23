@@ -90,7 +90,7 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     if params[:user][:as_teacher]
       rn = :teacher_applicant
       resource.add_role rn
-      resource.switch_to Role.find_by(name: :user, resource_id: nil)
+      resource.switch_to Acn::Role.find_by(name: :user, resource_id: nil)
     end
     return resource
   end

@@ -27,6 +27,12 @@ module Concerns::Edu::GroupEnrolls
     en
   end
 
+  def enroll_new user
+    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "added"}
+    en = self.enrollments.new(data)
+    en.save
+  end
+
   def deroll user
     if user.current_group_is self
       user.set_no_group

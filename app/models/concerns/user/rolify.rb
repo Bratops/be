@@ -48,14 +48,14 @@ module Concerns::User::Rolify
   def make_admin!
     self.roles = []
     add_roles [:admin, :manager, :teacher, :student, :user]
-    self.xrole = Role.find_by(name: :admin)
+    self.xrole = Acn::Role.find_by(name: :admin)
     self.save
   end
 
   def make_manager!
     self.roles = []
     add_roles [:manager, :teacher, :student, :user]
-    self.xrole = Role.find_by(name: :manager)
+    self.xrole = Acn::Role.find_by(name: :manager)
     self.save
   end
 
@@ -79,7 +79,7 @@ module Concerns::User::Rolify
   def make_user role
     self.roles = []
     self.add_role role
-    self.xrole = Role.find_by(name: role)
+    self.xrole = Acn::Role.find_by(name: role)
     self.save
   end
 

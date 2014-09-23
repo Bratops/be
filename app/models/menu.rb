@@ -1,7 +1,7 @@
 class Menu < ActiveRecord::Base
   acts_as_nested_set order_column: :pos,
     counter_cache: :children_count
-  resourcify
+  resourcify :roles, role_cname: "Acn::Role"
 
   structure do
     klass "admin"  # 0: menu, 1: ...

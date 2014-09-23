@@ -112,7 +112,7 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
 
   def ugroup_params
     params.require(:grp).permit(
-      :name, :klass, :exdate, :extime, :grade, :note)
+      :name, :cluster_id, :exdate, :extime, :grade, :note)
   end
 
   def create_ugroup

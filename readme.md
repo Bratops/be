@@ -65,3 +65,28 @@
 - [view](http://rietta.com/blog/2013/11/28/rails-and-sql-views-for-a-report/)
 - [ent viwes](http://dan.chak.org/enterprise-rails/chapter-11-view-backed-models/)
 - [rename table](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html)
+
+
+### User not enrolled
+014302-210229
+034314-211320
+034314-211279
+020404-119095
+061316-013002
+210306-011413
+210306-011006
+210306-011731
+403301-10200335
+190302-210180
+190302-210193
+393301-10235081
+393301-10235190
+313302-s10230074
+313302-s10230119
+313302-10235188
+091308-010153
+091308-010025
+091308-010079
+091308-010373
+070F01 series
+011329 series

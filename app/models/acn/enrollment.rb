@@ -1,10 +1,11 @@
 class Acn::Enrollment < ActiveRecord::Base
-  resourcify
+  resourcify :roles, role_cname: "Acn::Role"
   # make user has_many groups instead of has_one group
   belongs_to :user
   belongs_to :ugroup, class_name: "Edu::Ugroup"
-  counter_culture [:user]
-  counter_culture [:ugroup]
+  counter_culture :user, column_name: "enrollments_count"
+  counter_culture :ugroup, column_name: "enrollments_count"
+  counter_culture [:ugroup, :cluster], column_name: "groups_users_count"
 
   structure do
     name "", validates: { length: { in: 2..26 }}

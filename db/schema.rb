@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923094259) do
+ActiveRecord::Schema.define(version: 20140923181712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,12 @@ ActiveRecord::Schema.define(version: 20140923094259) do
   add_index "acn_roles", ["name"], name: "index_acn_roles_on_name", using: :btree
   add_index "acn_roles", ["resource_id"], name: "index_acn_roles_on_resource_id", using: :btree
   add_index "acn_roles", ["resource_type", "resource_id"], name: "index_acn_roles_on_resource_type_and_resource_id", using: :btree
+
+  create_table "edu_clusters", force: true do |t|
+    t.string  "name"
+    t.integer "ugroups_count"
+    t.integer "groups_users_count"
+  end
 
   create_table "edu_holders", force: true do |t|
     t.string  "name"
@@ -103,11 +109,12 @@ ActiveRecord::Schema.define(version: 20140923094259) do
     t.datetime "exdate"
     t.integer  "extime"
     t.integer  "grade"
-    t.integer  "klass"
+    t.integer  "cluster_id"
     t.string   "note"
     t.string   "gcode"
   end
 
+  add_index "edu_ugroups", ["cluster_id"], name: "index_edu_ugroups_on_cluster_id", using: :btree
   add_index "edu_ugroups", ["school_id"], name: "index_edu_ugroups_on_school_id", using: :btree
 
   create_table "menus", force: true do |t|
