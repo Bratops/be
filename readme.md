@@ -64,3 +64,4 @@
 - [pg config](http://www.amberbit.com/blog/2014/2/4/postgresql-awesomeness-for-rails-developers/)
 - [view](http://rietta.com/blog/2013/11/28/rails-and-sql-views-for-a-report/)
 - [ent viwes](http://dan.chak.org/enterprise-rails/chapter-11-view-backed-models/)
+- [rename table](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html)

@@ -2,8 +2,8 @@ class V1::Dashboards::User::UgroupsController < V1::BaseController
   include V1::MessageHelper
 
   def join
-    authorize! :join, Ugroup
-    sc = School.find_by(moeid)
+    authorize! :join, Edu::Ugroup
+    sc = Edu::School.find_by(moeid)
     sg = sc.ugroups.find_by(gcode)
     sta = "error"
     if sg
@@ -33,5 +33,4 @@ class V1::Dashboards::User::UgroupsController < V1::BaseController
   def suid
     params.require(:grp).permit(:suid)
   end
-
 end

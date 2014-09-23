@@ -2,9 +2,9 @@ module Concerns::User::Groups
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :current_group, class_name: "Ugroup"
+    belongs_to :current_group, class_name: "Edu::Ugroup"
     has_many :enrollments
-    has_many :ugroups, through: :enrollments, dependent: :destroy
+    has_many :ugroups, class_name: "Edu::Ugroup", through: :enrollments
   end
 
   def add_group group

@@ -2,7 +2,7 @@ class Enrollment < ActiveRecord::Base
   resourcify
   # make user has_many groups instead of has_one group
   belongs_to :user
-  belongs_to :ugroup
+  belongs_to :ugroup, class_name: "Edu::Ugroup"
   counter_culture [:user]
   counter_culture [:ugroup]
 

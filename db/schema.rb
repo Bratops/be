@@ -11,17 +11,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921093332) do
+ActiveRecord::Schema.define(version: 20140923085458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "age_levels", force: true do |t|
+  create_table "edu_holders", force: true do |t|
     t.string  "name"
     t.integer "schools_count"
     t.integer "users_count"
     t.integer "ugroups_count"
   end
+
+  create_table "edu_levels", force: true do |t|
+    t.string  "name"
+    t.integer "schools_count"
+    t.integer "users_count"
+    t.integer "ugroups_count"
+  end
+
+  create_table "edu_locs", force: true do |t|
+    t.string  "name"
+    t.integer "schools_count", null: false
+    t.integer "users_count"
+    t.integer "ugroups_count"
+  end
+
+  create_table "edu_schools", force: true do |t|
+    t.string   "name"
+    t.string   "moeid"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.integer  "loc_id"
+    t.integer  "level_id"
+    t.integer  "holder_id"
+    t.integer  "users_count"
+    t.integer  "ugroups_count"
+  end
+
+  add_index "edu_schools", ["holder_id"], name: "index_edu_schools_on_holder_id", using: :btree
+  add_index "edu_schools", ["level_id"], name: "index_edu_schools_on_level_id", using: :btree
+  add_index "edu_schools", ["loc_id"], name: "index_edu_schools_on_loc_id", using: :btree
+
+  create_table "edu_ugroups", force: true do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.integer  "enrollments_count"
+    t.integer  "users_count"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.datetime "exdate"
+    t.integer  "extime"
+    t.integer  "grade"
+    t.integer  "klass"
+    t.string   "note"
+    t.string   "gcode"
+  end
+
+  add_index "edu_ugroups", ["school_id"], name: "index_edu_ugroups_on_school_id", using: :btree
 
   create_table "enrollments", force: true do |t|
     t.integer  "user_id"
@@ -37,20 +84,6 @@ ActiveRecord::Schema.define(version: 20140921093332) do
 
   add_index "enrollments", ["ugroup_id"], name: "index_enrollments_on_ugroup_id", using: :btree
   add_index "enrollments", ["user_id"], name: "index_enrollments_on_user_id", using: :btree
-
-  create_table "holders", force: true do |t|
-    t.string  "name"
-    t.integer "schools_count"
-    t.integer "users_count"
-    t.integer "ugroups_count"
-  end
-
-  create_table "locations", force: true do |t|
-    t.string  "name"
-    t.integer "schools_count", null: false
-    t.integer "users_count"
-    t.integer "ugroups_count"
-  end
 
   create_table "menus", force: true do |t|
     t.integer  "parent_id"
@@ -95,22 +128,6 @@ ActiveRecord::Schema.define(version: 20140921093332) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
   add_index "roles", ["resource_id"], name: "index_roles_on_resource_id", using: :btree
   add_index "roles", ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id", using: :btree
-
-  create_table "schools", force: true do |t|
-    t.string   "name"
-    t.string   "moeid"
-    t.datetime "updated_at"
-    t.datetime "created_at"
-    t.integer  "location_id"
-    t.integer  "age_level_id"
-    t.integer  "holder_id"
-    t.integer  "users_count"
-    t.integer  "ugroups_count"
-  end
-
-  add_index "schools", ["age_level_id"], name: "index_schools_on_age_level_id", using: :btree
-  add_index "schools", ["holder_id"], name: "index_schools_on_holder_id", using: :btree
-  add_index "schools", ["location_id"], name: "index_schools_on_location_id", using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"
@@ -170,23 +187,6 @@ ActiveRecord::Schema.define(version: 20140921093332) do
   add_index "task_infos", ["cached_weighted_score"], name: "index_task_infos_on_cached_weighted_score", using: :btree
   add_index "task_infos", ["cached_weighted_total"], name: "index_task_infos_on_cached_weighted_total", using: :btree
   add_index "task_infos", ["tid"], name: "index_task_infos_on_tid", using: :btree
-
-  create_table "ugroups", force: true do |t|
-    t.integer  "school_id"
-    t.string   "name"
-    t.integer  "enrollments_count"
-    t.integer  "users_count"
-    t.datetime "updated_at"
-    t.datetime "created_at"
-    t.datetime "exdate"
-    t.integer  "extime"
-    t.integer  "grade"
-    t.integer  "klass"
-    t.string   "note"
-    t.string   "gcode"
-  end
-
-  add_index "ugroups", ["school_id"], name: "index_ugroups_on_school_id", using: :btree
 
   create_table "user_infos", force: true do |t|
     t.string   "name"

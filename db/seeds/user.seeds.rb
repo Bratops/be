@@ -57,7 +57,7 @@ end
   #Role.delete_all
   #UserRole.delete_all
   #Enrollment.delete_all
-  #Ugroup.delete_all
+  #Edu::Ugroup.delete_all
   #add_user "admin"
   #add_users "manager", 3
   add_teachers

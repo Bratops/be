@@ -3,15 +3,15 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
   before_filter :auth, except: [:index, :create]
 
   def index
-    ugs = Ugroup.with_role(:teacher, current_user)
+    ugs = Edu::Ugroup.with_role(:teacher, current_user)
     us = ActiveModel::ArraySerializer.new(ugs, each_serializer: UgroupSerializer)
     render json: us
   end
 
   def create
-    authorize! :create, Ugroup
+    authorize! :create, Edu::Ugroup
     suc = false
-    ugs = Ugroup.with_role(:teacher, current_user)
+    ugs = Edu::Ugroup.with_role(:teacher, current_user)
     ug = ugs.find_by(name: ugroup_params["name"])
     data = nil
     if ug
@@ -117,7 +117,7 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
 
   def create_ugroup
     suc = false
-    ug = Ugroup.create(ugroup_params)
+    ug = Edu::Ugroup.create(ugroup_params)
     if ug
       ug.school = current_user.current_group.school
       if ug.save
@@ -129,7 +129,7 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
   end
 
   def auth
-    @ug = Ugroup.find_by_id(params[:id])
+    @ug = Edu::Ugroup.find_by_id(params[:id])
     authorize! :manage, @ug
   end
 end

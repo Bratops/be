@@ -1,4 +1,4 @@
-module Concerns::Group::Enrolls
+module Concerns::Edu::GroupEnrolls
   extend ActiveSupport::Concern
   included do
     has_many :enrollments

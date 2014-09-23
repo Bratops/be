@@ -1,12 +1,12 @@
-class Ugroup < ActiveRecord::Base
-  include Concerns::Group::Enrolls
+class Edu::Ugroup < ActiveRecord::Base
+  include Concerns::Edu::GroupEnrolls
   resourcify
 
-  belongs_to :school
+  belongs_to :school, class_name: "Edu::School"
 
-  counter_culture [:school, :location]
+  counter_culture [:school, :loc]
   counter_culture [:school, :holder]
-  counter_culture [:school, :age_level]
+  counter_culture [:school, :level]
   counter_culture [:school]
 
   structure do
@@ -35,4 +35,3 @@ class Ugroup < ActiveRecord::Base
     self.save
   end
 end
-
