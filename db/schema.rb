@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923181712) do
+ActiveRecord::Schema.define(version: 20140924151406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,14 +168,38 @@ ActiveRecord::Schema.define(version: 20140923181712) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "task_authors", force: true do |t|
+    t.integer "country_id"
+    t.string  "name"
+    t.string  "email"
+    t.integer "tasks_count"
+  end
+
+  add_index "task_authors", ["country_id"], name: "index_task_authors_on_country_id", using: :btree
+
+  create_table "task_auths", force: true do |t|
+    t.integer  "author_id"
+    t.integer  "task_id"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "task_auths", ["author_id"], name: "index_task_auths_on_author_id", using: :btree
+  add_index "task_auths", ["task_id"], name: "index_task_auths_on_task_id", using: :btree
+
   create_table "task_choices", force: true do |t|
     t.text    "content"
     t.integer "index"
-    t.integer "task_choice_id"
+    t.integer "task_info_id"
     t.boolean "answer"
   end
 
-  add_index "task_choices", ["task_choice_id"], name: "index_task_choices_on_task_choice_id", using: :btree
+  add_index "task_choices", ["task_info_id"], name: "index_task_choices_on_task_info_id", using: :btree
+
+  create_table "task_countries", force: true do |t|
+    t.string  "name"
+    t.integer "authors_count"
+  end
 
   create_table "task_infos", force: true do |t|
     t.string   "title"
@@ -196,6 +220,7 @@ ActiveRecord::Schema.define(version: 20140923181712) do
     t.integer  "cached_weighted_score",   default: 0
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
+    t.integer  "auths_count"
   end
 
   add_index "task_infos", ["cached_votes_down"], name: "index_task_infos_on_cached_votes_down", using: :btree

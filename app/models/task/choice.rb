@@ -1,6 +1,6 @@
 class Task::Choice < ActiveRecord::Base
-  belongs_to :choice_for, class_name: "Task::Info",
-    foreign_key: :task_choice_id
+  belongs_to :task, class_name: "Task::Info",
+    foreign_key: :task_info_id
 
   structure do
     index 0
