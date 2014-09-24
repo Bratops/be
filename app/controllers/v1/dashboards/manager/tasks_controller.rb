@@ -37,22 +37,66 @@ class V1::Dashboards::Manager::TasksController < V1::BaseController
       msg: tmsg(@sta, current_user.xrole.name)
     }
   end
+
+  def show
+    task = Task::Info.find_by_id(params[:id])
+    render json: ::Manager::RawTaskSerializer.new(task)
+  end
+
+  def update
+    @task = Task::Info.find_by(id: task_params[:id])
+    unless @task
+      @sta = :warning
+    else
+      update_task
+    end
+    @err = { error: @task.errors.messages }
+    jtask = ::Manager::TaskSerializer.new(@task)
+    render json: {
+      msg: tmsg(@sta, current_user.xrole.name, @err),
+      task: @sta == :success ? jtask : nil
+    }
+  end
+
   private
   def create_task
     @task = Task::Info.new(task_params)
     choices_params.each do |ch|
       @task.choices << Task::Choice.new(ch)
     end
+    update_tags
+    update_ratings
+  end
+
+  def update_task
+    @task.update(task_params)
+    update_choices
+    update_tags
+    update_ratings
+  end
+
+  def update_ratings
+    saved = @task.save
+    @sta = saved ? :success : :error
+    return unless saved
+    rating_params.each do |h|
+      @task.vote_by voter: current_user, vote_scope: "#{h[:key]}_official", vote_weight: h[:value]
+    end
+  end
+
+  def update_tags
     tags_params.each do |k, v|
       tl = v.map{|h| h[:text]}.join(",")
       @task.send("#{k.singularize}_list=", tl)
     end
     saved = @task.save
     @sta = saved ? :success : :error
-    if saved
-      rating_params.each do |h|
-        @task.vote_by voter: current_user, vote_scope: "#{h[:key]}_official", vote_weight: h[:value]
-      end
+  end
+
+  def update_choices
+    choices_params.each do |ch|
+      id = ch.delete :id
+      Task::Choice.update(id, ch)
     end
   end
 
@@ -68,18 +112,18 @@ class V1::Dashboards::Manager::TasksController < V1::BaseController
 
   def tags_params
     params.require(:task).permit(
-      opens: [:text], keywords: [:text], klass: [:text]
+      opens: [:text], keywords: [:text], klasses: [:text]
     )
   end
 
   def choices_params
     params.require(:task).permit(
-      choices: [:index, :content, :answer]
+      choices: [:id, :index, :content, :answer]
     )[:choices]
   end
 
   def task_params
-    params.require(:task).permit(
+    params.require(:task).permit( :id,
       :tid, :title, :body, :explain, :quest, :info,
       :link, :region
     )
