@@ -38,7 +38,7 @@ module Concerns::User::Groups
   end
 
   def bebras_group
-    sc = School.find_by(moeid: "0004")
+    sc = Edu::School.find_by(moeid: "0004")
     sc
   end
 end

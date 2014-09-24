@@ -1,7 +1,7 @@
 Edu::Level.delete_all
-Holder.delete_all
-Location.delete_all
-School.delete_all
+Edu::Holder.delete_all
+Edu::Loc.delete_all
+Edu::School.delete_all
 Edu::Ugroup.delete_all
 
 Edu::Level.mock(name: "國小").save
@@ -13,33 +13,33 @@ Edu::Level.mock(name: "研究所").save
 Edu::Level.mock(name: "社會人士").save
 Edu::Level.mock(name: "資訊專業人士").save
 
-Holder.mock(name: "私立").save
-Holder.mock(name: "市立").save
-Holder.mock(name: "縣立").save
-Holder.mock(name: "國立").save
+Edu::Holder.mock(name: "私立").save
+Edu::Holder.mock(name: "市立").save
+Edu::Holder.mock(name: "縣立").save
+Edu::Holder.mock(name: "國立").save
 
-Location.mock(name: "臺北市").save
-Location.mock(name: "新北市").save
-Location.mock(name: "臺中市").save
-Location.mock(name: "臺南市").save
-Location.mock(name: "高雄市").save
-Location.mock(name: "基隆市").save
-Location.mock(name: "新竹市").save
-Location.mock(name: "嘉義市").save
-Location.mock(name: "桃園縣").save
-Location.mock(name: "新竹縣").save
-Location.mock(name: "苗栗縣").save
-Location.mock(name: "彰化縣").save
-Location.mock(name: "南投縣").save
-Location.mock(name: "雲林縣").save
-Location.mock(name: "嘉義縣").save
-Location.mock(name: "屏東縣").save
-Location.mock(name: "宜蘭縣").save
-Location.mock(name: "臺東縣").save
-Location.mock(name: "花蓮縣").save
-Location.mock(name: "澎湖縣").save
-Location.mock(name: "金門縣").save
-Location.mock(name: "連江縣").save
+Edu::Loc.mock(name: "臺北市").save
+Edu::Loc.mock(name: "新北市").save
+Edu::Loc.mock(name: "臺中市").save
+Edu::Loc.mock(name: "臺南市").save
+Edu::Loc.mock(name: "高雄市").save
+Edu::Loc.mock(name: "基隆市").save
+Edu::Loc.mock(name: "新竹市").save
+Edu::Loc.mock(name: "嘉義市").save
+Edu::Loc.mock(name: "桃園縣").save
+Edu::Loc.mock(name: "新竹縣").save
+Edu::Loc.mock(name: "苗栗縣").save
+Edu::Loc.mock(name: "彰化縣").save
+Edu::Loc.mock(name: "南投縣").save
+Edu::Loc.mock(name: "雲林縣").save
+Edu::Loc.mock(name: "嘉義縣").save
+Edu::Loc.mock(name: "屏東縣").save
+Edu::Loc.mock(name: "宜蘭縣").save
+Edu::Loc.mock(name: "臺東縣").save
+Edu::Loc.mock(name: "花蓮縣").save
+Edu::Loc.mock(name: "澎湖縣").save
+Edu::Loc.mock(name: "金門縣").save
+Edu::Loc.mock(name: "連江縣").save
 
 class << self
   def holder_val data
@@ -69,7 +69,7 @@ class << self
 
   def create_school row, kls
     rg = @@kls_reg[kls].match(row["name"])
-    ss = School.mock(moeid: row["moeid"], name: row["name"])
+    ss = Edu::School.mock(moeid: row["moeid"], name: row["name"])
     ss.holder = holder_val(rg[:holder])
     ss.level = level_val(kls)
     ss.loc = Edu::Loc.find_by(name: row["county"][4..-1])

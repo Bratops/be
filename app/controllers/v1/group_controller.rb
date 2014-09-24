@@ -10,7 +10,7 @@ class V1::GroupController < V1::CacheController
     Rails.cache.delete(publist_key)
     mem = Rails.cache.fetch publist_key do
       if params[:res] == "school"
-        sl = School.where("name like ?", "%#{params[:query]}%").limit(10)
+        sl = Edu::School.where("name like ?", "%#{params[:query]}%").limit(10)
         list_json SimpleSchoolSerializer, sl
       end
     end

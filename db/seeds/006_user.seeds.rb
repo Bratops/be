@@ -19,7 +19,7 @@ class << self
   end
 
   def create_teacher row
-    sc = School.find_by(name: row["school"])
+    sc = Edu::School.find_by(name: row["school"])
     puts "#{sc.name}--#{row["name"]}"
     if sc.present?
       pw = Devise.friendly_token[3,24]
