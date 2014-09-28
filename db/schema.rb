@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924151406) do
+ActiveRecord::Schema.define(version: 20140928171944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,22 @@ ActiveRecord::Schema.define(version: 20140924151406) do
   add_index "acn_roles", ["name"], name: "index_acn_roles_on_name", using: :btree
   add_index "acn_roles", ["resource_id"], name: "index_acn_roles_on_resource_id", using: :btree
   add_index "acn_roles", ["resource_type", "resource_id"], name: "index_acn_roles_on_resource_type_and_resource_id", using: :btree
+
+  create_table "contest_infos", force: true do |t|
+    t.string   "name"
+    t.integer  "grading"
+    t.datetime "sdate"
+    t.datetime "edate"
+    t.integer  "tasks_count"
+  end
+
+  create_table "contest_tasks", force: true do |t|
+    t.integer "task_id"
+    t.integer "contest_id"
+  end
+
+  add_index "contest_tasks", ["contest_id"], name: "index_contest_tasks_on_contest_id", using: :btree
+  add_index "contest_tasks", ["task_id"], name: "index_contest_tasks_on_task_id", using: :btree
 
   create_table "edu_clusters", force: true do |t|
     t.string  "name"
@@ -208,7 +224,6 @@ ActiveRecord::Schema.define(version: 20140924151406) do
     t.text     "explain"
     t.text     "info"
     t.text     "link"
-    t.string   "region"
     t.string   "tid"
     t.integer  "old_id"
     t.datetime "updated_at"
@@ -221,6 +236,7 @@ ActiveRecord::Schema.define(version: 20140924151406) do
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
     t.integer  "auths_count"
+    t.integer  "contests_count"
   end
 
   add_index "task_infos", ["cached_votes_down"], name: "index_task_infos_on_cached_votes_down", using: :btree

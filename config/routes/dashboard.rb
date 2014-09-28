@@ -35,6 +35,14 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
         member do
           get "sweep" => "tasks#sweep"
         end
+        collection do
+          get "list" => "tasks#list"
+        end
+      end
+      resources :contests, except: [:new, :edit] do
+        collection do
+          get "tasks" => "contests#tasks"
+        end
       end
     end
 
