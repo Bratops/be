@@ -58,7 +58,19 @@ class V1::Dashboards::Manager::TasksController < V1::BaseController
     }
   end
 
+  def list
+    @tasks = Task::Info.joins(:votes_for).
+      select("task_infos.id, tid, title, task_infos.created_at, vote_weight").
+      where("vote_scope = '#{params[:rating].downcase}_official'").
+      where("vote_weight > 0").all
+    aas = ActiveModel::ArraySerializer
+    mts = ::Manager::Contest::TaskSerializer
+    @tasks = aas.new(@tasks, each_serializer: mts)
+    render json: @tasks
+  end
+
   private
+
   def create_task
     @task = Task::Info.new(task_params)
     choices_params.each do |ch|

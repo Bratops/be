@@ -30,6 +30,21 @@
         error:
           body: 發生錯誤
           title: 教師身份
+    contests:
+      create:
+        success:
+          title: 新測驗
+          body: 已建立
+        error:
+          title: 新測驗
+          body: 無法建立
+      destroy:
+        success:
+          title: 測驗已刪除
+          body: 辛苦了
+        error:
+          title: 刪除失敗
+          body: 測驗不存在?
     tasks:
       update:
         success:

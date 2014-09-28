@@ -2,6 +2,12 @@ class Task::Info < ActiveRecord::Base
   acts_as_taggable_on :klasses, :keywords, :opens
   acts_as_votable
 
+  has_many :contest_items, class_name: "Contest::Task",
+    dependent: :destroy,
+    foreign_key: :task_id
+
+  has_many :contests, through: :contest_items, class_name: "Contest::Info"
+
   has_many :authors, class_name: "Task::Auth",
     dependent: :destroy,
     foreign_key: :task_id
@@ -24,6 +30,7 @@ class Task::Info < ActiveRecord::Base
     timestamps
 
     auths_count 0
+    contests_count 0
 
     cached_votes_total 0, index: true
     cached_votes_score 0, index: true
