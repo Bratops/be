@@ -26,11 +26,21 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
     end
 
     namespace :manager do
-      resources :msgs, only: [:index, :create, :update, :destroy]
+      resources :files, only: [:destroy, :index] do
+        collection do
+          get "upload"    => "files#upload_info"
+          post "upload"   => "files#upload"
+        end
+      end
+
+      resources :msgs, only: [:index, :create, :update, :destroy] do
+      end
+
       resource :users, only: [] do
         get "list/:kind" => "users#list"
         post "approve_teacher" => "users#approve"
       end
+
       resources :tasks, except: [:new, :edit] do
         member do
           get "sweep" => "tasks#sweep"
@@ -39,6 +49,7 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
           get "list" => "tasks#list"
         end
       end
+
       resources :contests, except: [:new, :edit] do
         collection do
           get "tasks" => "contests#tasks"

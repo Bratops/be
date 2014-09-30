@@ -41,6 +41,7 @@ class V1::Dashboards::Manager::MsgsController < V1::BaseController
   end
 
   private
+
   def auth
     authorize! :manage, Msg
   end

@@ -1,6 +1,12 @@
 apipie
 root 'application#landing'
 
+resources :files, only: [] do
+  collection do
+    get ":code" => "v1/dashboards/manager/files#download"
+  end
+end
+
 api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
   resources :group, only: [] do
     collection do
