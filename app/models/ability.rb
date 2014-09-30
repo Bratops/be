@@ -59,6 +59,7 @@ class Ability
     can :manage, User.with_role(:teacher_applicant)
     can :manage, Task::Info
     can :manage, Contest
+    can :manage, SysFile
   end
 
   def has_teacher_ability_for(user)

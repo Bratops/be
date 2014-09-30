@@ -1,5 +1,13 @@
 "zh-TW":
   manager:
+    files:
+      upload:
+        success:
+          title: 檔案已上傳
+          body: ''
+        error:
+          title: 檔案上傳失敗
+          body: ''
     msgs:
       create:
         success:

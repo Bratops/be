@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928171944) do
+ActiveRecord::Schema.define(version: 20140929203351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,13 @@ ActiveRecord::Schema.define(version: 20140928171944) do
     t.datetime "end_time"
     t.datetime "updated_at"
     t.datetime "created_at"
+  end
+
+  create_table "sys_files", force: true do |t|
+    t.string  "name"
+    t.string  "share"
+    t.string  "fcode"
+    t.integer "down_count"
   end
 
   create_table "taggings", force: true do |t|
