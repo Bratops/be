@@ -7,6 +7,6 @@ class Manager::Contest::TaskSerializer < ActiveModel::Serializer
   end
 
   def rating
-    object.vote_weight
+    object[:vote_weight]
   end
 end

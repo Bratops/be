@@ -3,9 +3,10 @@ class User::ContestInfoSerializer < ActiveModel::Serializer
   attributes :id, :name, :task_count, :score
 
   def task_count
-
+    object.tasks_count
   end
 
   def score
+    object.score
   end
 end

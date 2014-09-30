@@ -1,0 +1,10 @@
+"zh-TW":
+  admin:
+    menu:
+      update:
+        success:
+          title: 來自菜單的消息
+          body: 更新完成
+        error:
+          title: 來自菜單的消息
+          body: "更新失敗,請檢查%{field}"
