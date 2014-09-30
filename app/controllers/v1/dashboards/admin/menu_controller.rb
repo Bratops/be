@@ -14,7 +14,7 @@ class V1::Dashboards::Admin::MenuController < V1::BaseController
         rc = root.children.find(m[:id])
         suc = suc && rc.update(m.slice! :id, :destroy)
         if m[:destroy]
-          suc = suc && rc.delete
+          suc = suc && rc.destroy
         end
       else
         suc = suc && root.children.create(m.slice! :id)

@@ -46,6 +46,13 @@
         error:
           title: 新測驗
           body: 無法建立
+      update:
+        success:
+          title: 測驗
+          body: 已更新
+        error:
+          title: 測驗
+          body: 更新出錯
       destroy:
         success:
           title: 測驗已刪除

@@ -76,6 +76,9 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
           post "join" => "ugroups#join"
         end
       end
+
+      resources :contests, only: [:index] do
+      end
     end
   end
 end

@@ -3,10 +3,13 @@ module Concerns::Edu::GroupEnrolls
   included do
     has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :users, through: :enrollments, dependent: :destroy
+
+    belongs_to :school, class_name: "Edu::School"
+    counter_culture :school, column_name: "ugroups_count"
   end
 
   def update_enrollment data
-    opt = data.merge!({:status => "added"})
+    opt = data.merge!({:status => "joined"})
     en = self.enrollments.find_by_id(data[:id])
     opt.delete :id
     if en
@@ -28,7 +31,7 @@ module Concerns::Edu::GroupEnrolls
   end
 
   def enroll_new user
-    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "added"}
+    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "joined"}
     en = self.enrollments.new(data)
     en.save
   end
@@ -40,4 +43,5 @@ module Concerns::Edu::GroupEnrolls
     en = self.enrollments.find_by(user: user)
     en.delete
   end
+
 end

@@ -2,10 +2,7 @@ class Edu::Ugroup < ActiveRecord::Base
   include Concerns::Edu::GroupEnrolls
   resourcify :roles, role_cname: "Acn::Role"
 
-  belongs_to :school, class_name: "Edu::School"
   belongs_to :cluster, class_name: "Edu::Cluster"
-
-  counter_culture :school, column_name: "ugroups_count"
   counter_culture :cluster, column_name: "ugroups_count"
 
   structure do

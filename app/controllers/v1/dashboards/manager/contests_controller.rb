@@ -19,6 +19,14 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
     }
   end
 
+  def update
+    update_contest
+    render json: {
+      msg: tmsg(@sta, current_user.xrole.name),
+      data: @contest
+    }
+  end
+
   def destroy
     contest = Contest::Info.find_by_id(params[:id])
     if contest.destroy
@@ -46,6 +54,25 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
     @sta = :error
   end
 
+  def update_contest
+    @contest = Contest::Info.find_by_id(params[:id])
+    if @contest && @contest.update(contest_params)
+      update_task_items
+      @sta = :success
+      @contest = ::Manager::Contest::RawSerializer.new(@contest)
+    end
+  end
+
+  def update_task_items
+    tids = @contest.task_items.pluck :task_id
+    removed = tids - tasks_params
+    @contest.task_items.where(task_id: removed).delete_all
+    added = tasks_params - tids
+    added.each do |tp|
+      @contest.task_items.create(task_id: tp)
+    end
+  end
+
   def create_contest
     @contest = Contest::Info.new(contest_params)
     if @contest.save
@@ -61,7 +88,7 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
   end
 
   def contest_params
-    params.require(:contest).permit( :id,
+    params.require(:contest).permit(
       :name, :grading, :sdate, :edate
     )
   end
