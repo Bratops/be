@@ -41,4 +41,8 @@ module Concerns::User::Groups
     sc = Edu::School.find_by(moeid: "0004")
     sc
   end
+
+  def nondone_enrolls
+    self.enrollments.where("status != 'done'")
+  end
 end

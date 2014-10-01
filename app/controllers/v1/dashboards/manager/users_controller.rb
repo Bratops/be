@@ -28,7 +28,7 @@ class V1::Dashboards::Manager::UsersController < V1::BaseController
     user = User.with_role(role)
     data = user.where("user_id != ?", current_user.id).
         paginate(page: params[:page], per_page: params[:per_page])
-    data = ActiveModel::ArraySerializer.new(data, each_serializer: UserInfoSerializer)
+    data = ActiveModel::ArraySerializer.new(data, each_serializer: ::User::InfoSerializer)
     {
       users: data,
       total: user.count - 1

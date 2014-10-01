@@ -5,9 +5,15 @@ module Concerns::Edu::SchoolAdmin
     has_many :ugroups, class_name: "Edu::Ugroup", foreign_key: :school_id
     has_many :enrollments, class_name: "Acn::Enrollment", through: :ugroups
     has_many :users, through: :enrollments
+
     belongs_to :level, class_name: "Edu::Level"
+    counter_culture :level, column_name: "schools_count"
+
     belongs_to :loc, class_name: "Edu::Loc"
+    counter_culture :loc, column_name: "schools_count"
+
     belongs_to :holder, class_name: "Edu::Holder"
+    counter_culture :holder, column_name: "schools_count"
   end
 
   def alumnus

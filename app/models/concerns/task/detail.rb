@@ -1,4 +1,4 @@
-module Concerns::Task::Info
+module Concerns::Task::Detail
   extend ActiveSupport::Concern
   included do
   end

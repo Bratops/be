@@ -1,11 +1,16 @@
 class Acn::Enrollment < ActiveRecord::Base
+  include Concerns::Edu::Enrolls
   resourcify :roles, role_cname: "Acn::Role"
-  # make user has_many groups instead of has_one group
   belongs_to :user
-  belongs_to :ugroup, class_name: "Edu::Ugroup"
   counter_culture :user, column_name: "enrollments_count"
+
+  belongs_to :ugroup, class_name: "Edu::Ugroup"
   counter_culture :ugroup, column_name: "enrollments_count"
-  counter_culture [:ugroup, :cluster], column_name: "groups_users_count"
+  counter_culture [:ugroup, :cluster], column_name: "enrollments_count"
+  counter_culture [:ugroup, :school], column_name: "enrollments_count"
+  counter_culture [:ugroup, :school, :level], column_name: "enrollments_count"
+  counter_culture [:ugroup, :school, :loc], column_name: "enrollments_count"
+  counter_culture [:ugroup, :school, :holder], column_name: "enrollments_count"
 
   structure do
     name "", validates: { length: { in: 2..26 }}
@@ -15,18 +20,5 @@ class Acn::Enrollment < ActiveRecord::Base
     status "added"
 
     timestamps
-  end
-
-  def status_hash
-    {
-      name: I18n.t(self.status, scope: "teacher.ugroups.enroll.status"),
-      value: self.status
-    }
-  end
-
-  def join_user user
-    self.user = user
-    self.status = "joined"
-    self.save
   end
 end

@@ -3,10 +3,21 @@ module Concerns::Edu::GroupEnrolls
   included do
     has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :users, through: :enrollments, dependent: :destroy
+
+    belongs_to :cluster, class_name: "Edu::Cluster"
+    counter_culture :cluster, column_name: "ugroups_count"
+
+    belongs_to :school, class_name: "Edu::School"
+    counter_culture :school, column_name: "ugroups_count"
+    counter_culture [:school, :level], column_name: "ugroups_count"
+    counter_culture [:school, :loc], column_name: "ugroups_count"
+    counter_culture [:school, :holder], column_name: "ugroups_count"
+
+    before_create :ensure_gcode
   end
 
   def update_enrollment data
-    opt = data.merge!({:status => "added"})
+    opt = data.merge!({:status => "joined"})
     en = self.enrollments.find_by_id(data[:id])
     opt.delete :id
     if en
@@ -28,7 +39,7 @@ module Concerns::Edu::GroupEnrolls
   end
 
   def enroll_new user
-    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "added"}
+    data = {user: user, name: user.info.name, gender: user.info.gender, suid: user.suid, status: "joined"}
     en = self.enrollments.new(data)
     en.save
   end
@@ -39,5 +50,15 @@ module Concerns::Edu::GroupEnrolls
     end
     en = self.enrollments.find_by(user: user)
     en.delete
+  end
+
+  def ensure_gcode
+    # start from 3, with 6 chars
+    self.gcode = Devise.friendly_token[3,6]
+  end
+
+  def ensure_gcode!
+    self.ensure_gcode
+    self.save
   end
 end

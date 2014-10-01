@@ -14,7 +14,7 @@ class V1::Dashboards::Admin::MenuController < V1::BaseController
         rc = root.children.find(m[:id])
         suc = suc && rc.update(m.slice! :id, :destroy)
         if m[:destroy]
-          suc = suc && rc.delete
+          suc = suc && rc.destroy
         end
       else
         suc = suc && root.children.create(m.slice! :id)
@@ -30,8 +30,7 @@ class V1::Dashboards::Admin::MenuController < V1::BaseController
     end
     status = suc ? "success" : "error"
     render status: 200, json: {
-      status: status,
-      msg: jmsg(status, {field: emsg.to_s})
+      msg: tmsg(status, current_user.xrole.name, {field: emsg.to_s})
     }
   end
 

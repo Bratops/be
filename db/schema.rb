@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929203351) do
+ActiveRecord::Schema.define(version: 20141001144618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,12 +56,67 @@ ActiveRecord::Schema.define(version: 20140929203351) do
   add_index "acn_roles", ["resource_id"], name: "index_acn_roles_on_resource_id", using: :btree
   add_index "acn_roles", ["resource_type", "resource_id"], name: "index_acn_roles_on_resource_type_and_resource_id", using: :btree
 
+  create_table "contest_ans", force: true do |t|
+    t.integer "ans_sheet_id"
+    t.integer "task_id"
+    t.string  "ansable_type"
+    t.integer "ansable_id"
+    t.integer "status"
+    t.integer "skip"
+    t.integer "timespan"
+    t.string  "time_stamps"
+  end
+
+  add_index "contest_ans", ["ans_sheet_id"], name: "index_contest_ans_on_ans_sheet_id", using: :btree
+  add_index "contest_ans", ["ansable_id"], name: "index_contest_ans_on_ansable_id", using: :btree
+  add_index "contest_ans", ["ansable_type", "ansable_id"], name: "index_contest_ans_on_ansable_type_and_ansable_id", using: :btree
+  add_index "contest_ans", ["task_id"], name: "index_contest_ans_on_task_id", using: :btree
+
+  create_table "contest_ans_sheets", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "ugroup_id"
+    t.integer  "contest_id"
+    t.integer  "score"
+    t.integer  "pr"
+    t.integer  "timespan"
+    t.integer  "ans_count"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "contest_ans_sheets", ["contest_id"], name: "index_contest_ans_sheets_on_contest_id", using: :btree
+  add_index "contest_ans_sheets", ["ugroup_id"], name: "index_contest_ans_sheets_on_ugroup_id", using: :btree
+  add_index "contest_ans_sheets", ["user_id"], name: "index_contest_ans_sheets_on_user_id", using: :btree
+
+  create_table "contest_ansable_fills", force: true do |t|
+    t.string "content"
+  end
+
+  create_table "contest_ansable_multi_ans", force: true do |t|
+    t.integer "multi_id"
+    t.integer "choice_id"
+  end
+
+  add_index "contest_ansable_multi_ans", ["choice_id"], name: "index_contest_ansable_multi_ans_on_choice_id", using: :btree
+  add_index "contest_ansable_multi_ans", ["multi_id"], name: "index_contest_ansable_multi_ans_on_multi_id", using: :btree
+
+  create_table "contest_ansable_multis", force: true do |t|
+  end
+
+  create_table "contest_ansable_singles", force: true do |t|
+    t.integer "choice_id"
+  end
+
+  add_index "contest_ansable_singles", ["choice_id"], name: "index_contest_ansable_singles_on_choice_id", using: :btree
+
   create_table "contest_infos", force: true do |t|
     t.string   "name"
     t.integer  "grading"
     t.datetime "sdate"
     t.datetime "edate"
     t.integer  "tasks_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contest_tasks", force: true do |t|
@@ -75,27 +130,27 @@ ActiveRecord::Schema.define(version: 20140929203351) do
   create_table "edu_clusters", force: true do |t|
     t.string  "name"
     t.integer "ugroups_count"
-    t.integer "groups_users_count"
+    t.integer "enrollments_count"
   end
 
   create_table "edu_holders", force: true do |t|
     t.string  "name"
     t.integer "schools_count"
-    t.integer "users_count"
+    t.integer "enrollments_count"
     t.integer "ugroups_count"
   end
 
   create_table "edu_levels", force: true do |t|
     t.string  "name"
     t.integer "schools_count"
-    t.integer "users_count"
+    t.integer "enrollments_count"
     t.integer "ugroups_count"
   end
 
   create_table "edu_locs", force: true do |t|
     t.string  "name"
-    t.integer "schools_count", null: false
-    t.integer "users_count"
+    t.integer "schools_count",     null: false
+    t.integer "enrollments_count"
     t.integer "ugroups_count"
   end
 
@@ -107,7 +162,7 @@ ActiveRecord::Schema.define(version: 20140929203351) do
     t.integer  "loc_id"
     t.integer  "level_id"
     t.integer  "holder_id"
-    t.integer  "users_count"
+    t.integer  "enrollments_count"
     t.integer  "ugroups_count"
   end
 
@@ -119,7 +174,6 @@ ActiveRecord::Schema.define(version: 20140929203351) do
     t.integer  "school_id"
     t.string   "name"
     t.integer  "enrollments_count"
-    t.integer  "users_count"
     t.datetime "updated_at"
     t.datetime "created_at"
     t.datetime "exdate"
@@ -244,6 +298,8 @@ ActiveRecord::Schema.define(version: 20140929203351) do
     t.float    "cached_weighted_average", default: 0.0
     t.integer  "auths_count"
     t.integer  "contests_count"
+    t.integer  "ans_count"
+    t.integer  "type"
   end
 
   add_index "task_infos", ["cached_votes_down"], name: "index_task_infos_on_cached_votes_down", using: :btree
