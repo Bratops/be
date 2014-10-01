@@ -1,5 +1,13 @@
 "zh-TW":
   user:
+    contests:
+      index:
+        error:
+          title: 錯誤
+          body: 取得測驗列表時發生錯誤
+        warning:
+          title: 說明
+          body: 未達報名時間，不開放測驗
     ugroups:
       join:
         success:

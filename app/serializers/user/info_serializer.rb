@@ -1,4 +1,4 @@
-class UserInfoSerializer < ActiveModel::Serializer
+class User::InfoSerializer < ActiveModel::Serializer
   # object should from user
   root false
   attributes :name, :email, :phone, :id, :school

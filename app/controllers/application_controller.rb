@@ -41,7 +41,7 @@ class ApplicationController < ActionController::API
   end
 
   def user_info_json
-    UserInfoSerializer.new(current_user).to_json
+    ::User::InfoSerializer.new(current_user).to_json
   end
 
   private

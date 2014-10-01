@@ -1,6 +1,9 @@
 module Concerns::Contest::Info
   extend ActiveSupport::Concern
   included do
+    has_many :task_items, class_name: "Contest::Task",
+      dependent: :destroy,
+      foreign_key: :contest_id
     has_many :tasks, through: :task_items, class_name: "Task::Info"
   end
 
@@ -26,4 +29,10 @@ module Concerns::Contest::Info
       #pluck("task_infos.id", :tid, :title, "task_infos.created_at", "vote_weight as rating")
   end
 
+  module ClassMethods
+    def opening
+      today = Time.now
+      where("edate > ? and sdate < ?", today, today)
+    end
+  end
 end

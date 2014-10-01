@@ -1,4 +1,4 @@
-class User::ContestInfoSerializer < ActiveModel::Serializer
+class Contest::InfSerializer < ActiveModel::Serializer
   root false
   attributes :id, :name, :task_count, :score
 

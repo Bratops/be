@@ -4,8 +4,16 @@ module Concerns::Edu::GroupEnrolls
     has_many :enrollments, class_name: "Acn::Enrollment"
     has_many :users, through: :enrollments, dependent: :destroy
 
+    belongs_to :cluster, class_name: "Edu::Cluster"
+    counter_culture :cluster, column_name: "ugroups_count"
+
     belongs_to :school, class_name: "Edu::School"
     counter_culture :school, column_name: "ugroups_count"
+    counter_culture [:school, :level], column_name: "ugroups_count"
+    counter_culture [:school, :loc], column_name: "ugroups_count"
+    counter_culture [:school, :holder], column_name: "ugroups_count"
+
+    before_create :ensure_gcode
   end
 
   def update_enrollment data
@@ -44,4 +52,13 @@ module Concerns::Edu::GroupEnrolls
     en.delete
   end
 
+  def ensure_gcode
+    # start from 3, with 6 chars
+    self.gcode = Devise.friendly_token[3,6]
+  end
+
+  def ensure_gcode!
+    self.ensure_gcode
+    self.save
+  end
 end

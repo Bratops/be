@@ -27,4 +27,27 @@ module Concerns::Edu::Enrolls
     self.link_user
     self.save
   end
+
+  def status_hash
+    {
+      name: I18n.t(self.status, scope: "teacher.ugroups.enroll.status"),
+      value: self.status
+    }
+  end
+
+  def contestable
+    self.ugroup.exdate.today? &&
+      self.ugroup.extime == timecode
+  end
+
+  private
+
+  def timecode
+    tm = Time.now.change(hour: 12, min: 30, sec: 0)
+    ta = Time.now.change(hour: 18, min: 0, sec: 0)
+    return 0 if Time.now < tm
+    return 1 if ta > Time.now && Time.now < tm
+    return 2
+  end
+
 end

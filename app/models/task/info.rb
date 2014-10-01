@@ -8,6 +8,8 @@ class Task::Info < ActiveRecord::Base
 
   has_many :contests, through: :contest_items, class_name: "Contest::Info"
 
+  has_many :answers, class_name: "Contest::Ans", dependent: :destroy
+
   has_many :authors, class_name: "Task::Auth",
     dependent: :destroy,
     foreign_key: :task_id
@@ -27,10 +29,13 @@ class Task::Info < ActiveRecord::Base
     info      :text, " Some information          "
     link      :text, " http://bebras.tw/newtask  "
     old_id    -1
-    timestamps
+    type      0  # choice, blank filling, multi-select
 
     auths_count 0
+    ans_count 0
     contests_count 0
+
+    timestamps
 
     cached_votes_total 0, index: true
     cached_votes_score 0, index: true

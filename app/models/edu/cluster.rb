@@ -4,8 +4,8 @@ class Edu::Cluster < ActiveRecord::Base
   structure do
     name "", validates: [ :presence, :uniqueness ]
 
+    enrollments_count 0
     ugroups_count 0
-    groups_users_count 0
     # timestamps
   end
 end

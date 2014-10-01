@@ -1,9 +1,7 @@
 class Edu::Ugroup < ActiveRecord::Base
   include Concerns::Edu::GroupEnrolls
+  include Concerns::Edu::Contestable
   resourcify :roles, role_cname: "Acn::Role"
-
-  belongs_to :cluster, class_name: "Edu::Cluster"
-  counter_culture :cluster, column_name: "ugroups_count"
 
   structure do
     name  ""
@@ -14,19 +12,7 @@ class Edu::Ugroup < ActiveRecord::Base
     gcode ""
 
     enrollments_count 0
-    users_count 0
 
     timestamps
-  end
-
-  before_create :ensure_gcode
-  def ensure_gcode
-    # start from 3, with 6 chars
-    self.gcode = Devise.friendly_token[3,6]
-  end
-
-  def ensure_gcode!
-    self.ensure_gcode
-    self.save
   end
 end
