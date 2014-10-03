@@ -1,10 +1,15 @@
 class UserSerializer < ActiveModel::Serializer
   #embed :ids, include: true
   root false
-  attributes :auth_token, :login_alias, :name, :require_info, :school
+  attributes :auth_token, :login_alias, :name
+  attributes :gender, :require_info, :school
 
   has_one :xrole, key: :role, serializer: RoleSerializer
   has_many :roles, each_serializer: RoleSerializer
+
+  def gender
+    object.info.gender if object.info
+  end
 
   def roles
     object.roles.where(resource_type: nil, resource_id: nil).

@@ -46,7 +46,7 @@ module Concerns::Edu::Enrolls
     tm = Time.now.change(hour: 12, min: 30, sec: 0)
     ta = Time.now.change(hour: 18, min: 0, sec: 0)
     return 0 if Time.now < tm
-    return 1 if ta > Time.now && Time.now < tm
+    return 1 if ta > Time.now && Time.now > tm
     return 2
   end
 
