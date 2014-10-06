@@ -6,5 +6,13 @@ class Contest::Task < ActiveRecord::Base
   counter_culture :contest, column_name: "tasks_count"
 
   structure do
+    rating 0
+  end
+
+  def update_ratings
+    gs = self.contest.grading_str
+    rat = self.task.grade_rating gs
+    self.rating = rat
+    self.save
   end
 end

@@ -59,6 +59,10 @@ module Concerns::User::Rolify
     self.save
   end
 
+  def is_teacher_applicant
+    self.has_role? "teacher_applicant"
+  end
+
   def make_teacher_app!
     make_user :teacher_applicant
   end
