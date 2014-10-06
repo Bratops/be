@@ -1,10 +1,12 @@
 class Contest::Ans < ActiveRecord::Base
   belongs_to :ans_sheet, class_name: "Contest::AnsSheet"
+  counter_culture :ans_sheet, column_name: "ans_count"
 
   belongs_to :task, class_name: "Task::Info"
   counter_culture :task, column_name: "ans_count"
 
-  belongs_to :ansable, polymorphic: true
+  belongs_to :ansable, polymorphic: true,
+    dependent: :destroy
 
   structure do
     status 0 # open, skipped, confirmed
@@ -13,6 +15,6 @@ class Contest::Ans < ActiveRecord::Base
 
     ansable_type ""
 
-    time_stamps
+    timestamps
   end
 end

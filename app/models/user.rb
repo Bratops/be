@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include Concerns::User::Rolify
   include Concerns::User::Groups
   include Concerns::User::AttributeCheckers
-  include Concerns::User::Console
+  include Concerns::User::Contests
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
 

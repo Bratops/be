@@ -64,22 +64,26 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
   end
 
   def update_task_items
+    return unless Contest::AnsSheet.find_by(contest: @contest).nil?
     tids = @contest.task_items.pluck :task_id
     removed = tids - tasks_params
     @contest.task_items.where(task_id: removed).delete_all
     added = tasks_params - tids
-    added.each do |tp|
-      @contest.task_items.create(task_id: tp)
-    end
+    update_task_ratings added
   end
 
   def create_contest
     @contest = Contest::Info.new(contest_params)
     if @contest.save
-      tasks_params.each do |tp|
-        @contest.task_items.create(task_id: tp)
-      end
+      update_task_ratings task_params
       @sta = :success
+    end
+  end
+
+  def update_task_ratings tids
+    tids.each do |tp|
+      rat = Task::Info.find(tp).grade_rating @contest.grading_str
+      @contest.task_items.create(task_id: tp, rating: rat)
     end
   end
 

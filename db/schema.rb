@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001144618) do
+ActiveRecord::Schema.define(version: 20141005202922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,14 +57,15 @@ ActiveRecord::Schema.define(version: 20141001144618) do
   add_index "acn_roles", ["resource_type", "resource_id"], name: "index_acn_roles_on_resource_type_and_resource_id", using: :btree
 
   create_table "contest_ans", force: true do |t|
-    t.integer "ans_sheet_id"
-    t.integer "task_id"
-    t.string  "ansable_type"
-    t.integer "ansable_id"
-    t.integer "status"
-    t.integer "skip"
-    t.integer "timespan"
-    t.string  "time_stamps"
+    t.integer  "ans_sheet_id"
+    t.integer  "task_id"
+    t.string   "ansable_type"
+    t.integer  "ansable_id"
+    t.integer  "status"
+    t.integer  "skip"
+    t.integer  "timespan"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "contest_ans", ["ans_sheet_id"], name: "index_contest_ans_on_ans_sheet_id", using: :btree
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20141001144618) do
   create_table "contest_tasks", force: true do |t|
     t.integer "task_id"
     t.integer "contest_id"
+    t.integer "rating"
   end
 
   add_index "contest_tasks", ["contest_id"], name: "index_contest_tasks_on_contest_id", using: :btree
