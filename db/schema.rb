@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141005202922) do
+ActiveRecord::Schema.define(version: 20141006165733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20141005202922) do
     t.integer  "ans_count"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.integer  "skips"
   end
 
   add_index "contest_ans_sheets", ["contest_id"], name: "index_contest_ans_sheets_on_contest_id", using: :btree

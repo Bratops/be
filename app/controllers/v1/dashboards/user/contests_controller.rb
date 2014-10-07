@@ -35,7 +35,10 @@ class V1::Dashboards::User::ContestsController < V1::CacheController
       @answer = Contest::Ans.create(full_ans_params.merge(data))
       fill_answer
       rating_task
-      @sta = :success if @answer.save
+      if @answer.save
+        @anss.grading_if_finished 1
+        @sta = :success
+      end
     end
   end
 
