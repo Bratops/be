@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006165733) do
+ActiveRecord::Schema.define(version: 20141008083757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,69 @@ ActiveRecord::Schema.define(version: 20141006165733) do
     t.datetime "updated_at"
     t.datetime "created_at"
   end
+
+  create_table "survey_ans", force: true do |t|
+    t.integer "quest_id"
+    t.integer "ans_id"
+  end
+
+  add_index "survey_ans", ["ans_id"], name: "index_survey_ans_on_ans_id", using: :btree
+  add_index "survey_ans", ["quest_id"], name: "index_survey_ans_on_quest_id", using: :btree
+
+  create_table "survey_ans_choices", force: true do |t|
+    t.integer "ans_id"
+    t.integer "choice_id"
+  end
+
+  add_index "survey_ans_choices", ["ans_id"], name: "index_survey_ans_choices_on_ans_id", using: :btree
+  add_index "survey_ans_choices", ["choice_id"], name: "index_survey_ans_choices_on_choice_id", using: :btree
+
+  create_table "survey_ans_sets", force: true do |t|
+    t.integer "survey_id"
+    t.integer "user_id"
+  end
+
+  add_index "survey_ans_sets", ["survey_id"], name: "index_survey_ans_sets_on_survey_id", using: :btree
+  add_index "survey_ans_sets", ["user_id"], name: "index_survey_ans_sets_on_user_id", using: :btree
+
+  create_table "survey_choices", force: true do |t|
+    t.integer  "quest_id"
+    t.integer  "order"
+    t.string   "content"
+    t.boolean  "commentable"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "survey_choices", ["quest_id"], name: "index_survey_choices_on_quest_id", using: :btree
+
+  create_table "survey_comments", force: true do |t|
+    t.integer "ans_id"
+    t.string  "content"
+  end
+
+  add_index "survey_comments", ["ans_id"], name: "index_survey_comments_on_ans_id", using: :btree
+
+  create_table "survey_infos", force: true do |t|
+    t.integer  "contest_id"
+    t.string   "name"
+    t.string   "info"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "survey_infos", ["contest_id"], name: "index_survey_infos_on_contest_id", using: :btree
+
+  create_table "survey_quests", force: true do |t|
+    t.integer  "survey_id"
+    t.integer  "order"
+    t.string   "content"
+    t.integer  "type"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "survey_quests", ["survey_id"], name: "index_survey_quests_on_survey_id", using: :btree
 
   create_table "sys_files", force: true do |t|
     t.string  "name"

@@ -60,6 +60,7 @@ class Ability
     can :manage, Task::Info
     can :manage, Contest
     can :manage, SysFile
+    can :manage, Survey
   end
 
   def has_teacher_ability_for(user)
