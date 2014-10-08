@@ -1,5 +1,13 @@
 "zh-TW":
   manager:
+    surveys:
+      create:
+        success:
+          title: 問卷
+          body: 建立成功
+        error:
+          title: 問卷
+          body: 建立時發生錯誤
     files:
       upload:
         success:

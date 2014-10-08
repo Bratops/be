@@ -1,7 +1,7 @@
 module Concerns::Edu::Enrolls
   extend ActiveSupport::Concern
   included do
-    before_create :link_user
+    #before_create :link_user
   end
 
   def join_user user

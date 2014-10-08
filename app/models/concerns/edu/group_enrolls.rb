@@ -24,6 +24,7 @@ module Concerns::Edu::GroupEnrolls
       en.update(opt)
     else
       en = self.enrollments.create(opt)
+      en.link_user!
     end
     en
   end
@@ -32,7 +33,8 @@ module Concerns::Edu::GroupEnrolls
     opts = { user: user }
     en = self.enrollments.find_by(opts)
     unless en
-      en = self.enrollments.new(opts)
+      en = self.enrollments.new(name: user.info.name, gender: 0, suid: "000000")
+      en.user = user
       en.save(validate: false)
     end
     en
