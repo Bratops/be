@@ -1,13 +1,18 @@
 class Survey::Quest < ActiveRecord::Base
   belongs_to :survey, class_name: "Survey::Info"
 
-  has_many :ans, class_name: "Survey::Ans"
-  has_many :choices, class_name: "Survey::Choice"
+  has_many :ans, class_name: "Survey::Ans",
+    foreign_key: :ans_id, dependent: :destroy
+
+  has_many :choices, class_name: "Survey::Choice",
+    foreign_key: :quest_id, dependent: :destroy
+
+  accepts_nested_attributes_for :choices, allow_destroy: true
 
   structure do
     order 0
     content ""
-    type 0 # single, multiple
+    qtype 0 # single, multiple
 
     timestamps
   end

@@ -8,6 +8,20 @@
         error:
           title: 問卷
           body: 建立時發生錯誤
+      update:
+        success:
+          title: 問卷
+          body: 更新成功
+        error:
+          title: 問卷
+          body: 編輯時發生錯誤，已公佈之問卷無法編輯題目
+      destroy:
+        success:
+          title: 問卷
+          body: 刪除成功
+        error:
+          title: 問卷
+          body: 刪除時發生錯誤，已公佈之問卷無法刪除
     files:
       upload:
         success:
