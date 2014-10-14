@@ -1,5 +1,6 @@
 class Survey::Quest < ActiveRecord::Base
   belongs_to :survey, class_name: "Survey::Info"
+  counter_culture :survey, column_name: "quests_count"
 
   has_many :ans, class_name: "Survey::Ans",
     foreign_key: :ans_id, dependent: :destroy

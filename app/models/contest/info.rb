@@ -3,6 +3,9 @@ class Contest::Info < ActiveRecord::Base
   has_many :ans_sheets, class_name: "Contest::AnsSheet",
     foreign_key: "contest_id"
 
+  has_one :survey, class_name: "Survey::Info",
+    foreign_key: "contest_id"
+
   structure do
     name   "new contest", validates: [:presence]
     grading 4

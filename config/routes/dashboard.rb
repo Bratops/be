@@ -79,6 +79,12 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
         end
       end
 
+      resources :surveys, only: [:show] do
+        collection do
+          post "submit" => "surveys#submit"
+        end
+      end
+
       resources :contests, only: [:index] do
         collection do
           post "current" => "contests#current"
