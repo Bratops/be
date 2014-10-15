@@ -13,6 +13,7 @@ class Survey::Info < ActiveRecord::Base
     name "new contest", validates: [:presence]
     info ""
 
+    quests_count 0
     timestamps
   end
 end

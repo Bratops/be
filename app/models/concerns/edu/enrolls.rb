@@ -36,8 +36,9 @@ module Concerns::Edu::Enrolls
   end
 
   def contestable
-    self.ugroup.exdate.today? &&
-      self.ugroup.extime == timecode
+    is_today = self.ugroup.exdate.today?
+    is_sec = (self.ugroup.extime == timecode)
+    is_today && is_sec
   end
 
   private
@@ -49,5 +50,4 @@ module Concerns::Edu::Enrolls
     return 1 if ta > Time.now && Time.now > tm
     return 2
   end
-
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008095641) do
+ActiveRecord::Schema.define(version: 20141015191652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -223,10 +223,10 @@ ActiveRecord::Schema.define(version: 20141008095641) do
 
   create_table "survey_ans", force: true do |t|
     t.integer "quest_id"
-    t.integer "ans_id"
+    t.integer "ans_set_id"
   end
 
-  add_index "survey_ans", ["ans_id"], name: "index_survey_ans_on_ans_id", using: :btree
+  add_index "survey_ans", ["ans_set_id"], name: "index_survey_ans_on_ans_set_id", using: :btree
   add_index "survey_ans", ["quest_id"], name: "index_survey_ans_on_quest_id", using: :btree
 
   create_table "survey_ans_choices", force: true do |t|
@@ -240,8 +240,11 @@ ActiveRecord::Schema.define(version: 20141008095641) do
   create_table "survey_ans_sets", force: true do |t|
     t.integer "survey_id"
     t.integer "user_id"
+    t.integer "ans_count"
+    t.integer "contest_ans_sheet_id"
   end
 
+  add_index "survey_ans_sets", ["contest_ans_sheet_id"], name: "index_survey_ans_sets_on_contest_ans_sheet_id", using: :btree
   add_index "survey_ans_sets", ["survey_id"], name: "index_survey_ans_sets_on_survey_id", using: :btree
   add_index "survey_ans_sets", ["user_id"], name: "index_survey_ans_sets_on_user_id", using: :btree
 
@@ -257,11 +260,11 @@ ActiveRecord::Schema.define(version: 20141008095641) do
   add_index "survey_choices", ["quest_id"], name: "index_survey_choices_on_quest_id", using: :btree
 
   create_table "survey_comments", force: true do |t|
-    t.integer "ans_id"
+    t.integer "ans_choice_id"
     t.string  "content"
   end
 
-  add_index "survey_comments", ["ans_id"], name: "index_survey_comments_on_ans_id", using: :btree
+  add_index "survey_comments", ["ans_choice_id"], name: "index_survey_comments_on_ans_choice_id", using: :btree
 
   create_table "survey_infos", force: true do |t|
     t.integer  "contest_id"
@@ -269,6 +272,7 @@ ActiveRecord::Schema.define(version: 20141008095641) do
     t.string   "info"
     t.datetime "updated_at"
     t.datetime "created_at"
+    t.integer  "quests_count"
   end
 
   add_index "survey_infos", ["contest_id"], name: "index_survey_infos_on_contest_id", using: :btree

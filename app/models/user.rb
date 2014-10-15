@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   include Concerns::TokenAuthenticable
   include Concerns::Omniauthable
 
+  has_many :survey_sheets, class_name: "Survey::AnsSet"
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

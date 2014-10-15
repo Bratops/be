@@ -1,5 +1,13 @@
 "zh-TW":
   user:
+    survey:
+      show:
+        success:
+          title: ""
+          body: ""
+        error:
+          title: OOPS
+          body: 次測驗無問卷
     contests:
       index:
         error:
