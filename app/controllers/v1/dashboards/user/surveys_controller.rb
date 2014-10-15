@@ -4,7 +4,7 @@ class V1::Dashboards::User::SurveysController < V1::BaseController
   def current
     find_current_survey_sheet
     if @survey
-      svy = ::User::Survey::InfoSerializer.new(@survey)
+      svy = ::Survey::InfoSerializer.new(@survey)
       data = { data: @survey_sheet.id, survey: svy, msg: cmsg(:success) }
     else
       data = {data: nil, survey: nil, msg: cmsg(:error) }
