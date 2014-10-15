@@ -12,7 +12,7 @@ module Concerns::Edu::Enrolls
 
   def link_user
     sid = "#{self.ugroup.school.moeid}-#{self.suid}"
-    u = User.find_by(email: "#{sid}@bebras.tw", login_alias: sid)
+    u = User.find_by(email: "#{sid}@bebras.tw", login_alias: sid.downcase)
     if u.nil?
       u = User.create(email: "#{sid}@bebras.tw", login_alias: sid, password: "#{self.ugroup.gcode}#{self.suid}")
       if u

@@ -16,6 +16,20 @@ module Concerns::Edu::GroupEnrolls
     before_create :ensure_gcode
   end
 
+  def batch_link_users
+    self.enrollments.each do |en|
+      en.link_user!
+    end
+  end
+
+  def batch_reset_eupw
+    self.enrollments.each do |en|
+      user = en.user
+      user.password = self.gcode + en.suid
+      user.save
+    end
+  end
+
   def update_enrollment data
     opt = data.merge!({:status => "joined"})
     en = self.enrollments.find_by_id(data[:id])

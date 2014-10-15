@@ -39,6 +39,8 @@ module V1::User::CurrentContest
     @ans = Contest::AnsSheet.find_or_create_by(new_ans_sheet_params)
     Survey::AnsSet.find_or_create_by(contest_ans_sheet: @ans, survey: @contest.survey, user: current_user)
     @ans.score = -1
+    @ans.save
+    @ans.reload
   end
 
   def find_ans_sheet
@@ -55,5 +57,4 @@ module V1::User::CurrentContest
       contest: @contest,
       ugroup: current_user.nondone_enrolls.first.ugroup }
   end
-
 end
