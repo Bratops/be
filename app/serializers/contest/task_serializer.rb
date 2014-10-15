@@ -3,7 +3,7 @@ class Contest::TaskSerializer < ActiveModel::Serializer
   cached
   attributes :id, :title, :body, :quest, :kind
   attributes :skip, :timespan
-  has_many :choices, serializer: User::Contest::ChoiceSerializer
+  has_many :choices, serializer: Contest::ChoiceSerializer
 
   def kind
     "single"
