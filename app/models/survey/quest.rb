@@ -3,7 +3,7 @@ class Survey::Quest < ActiveRecord::Base
   counter_culture :survey, column_name: "quests_count"
 
   has_many :ans, class_name: "Survey::Ans",
-    foreign_key: :ans_id, dependent: :destroy
+    foreign_key: :ans_set_id, dependent: :destroy
 
   has_many :choices, class_name: "Survey::Choice",
     foreign_key: :quest_id, dependent: :destroy
