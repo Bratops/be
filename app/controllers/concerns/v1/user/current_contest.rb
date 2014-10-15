@@ -12,7 +12,7 @@ module V1::User::CurrentContest
   private
 
   def ans_sheet_info
-    data = { status: @ans.st }
+    data = { status: @ans.status }
     if data[:status] == "testing"
       data[:contest] = ::User::Contest::DoSerializer.new(@contest)
       data[:done_ans] = @ans.answers.pluck(:task_id)
@@ -35,10 +35,15 @@ module V1::User::CurrentContest
     end
   end
 
+  def build_ans_sheet
+    @ans = Contest::AnsSheet.find_or_create_by(new_ans_sheet_params)
+    Survey::AnsSet.find_or_create_by(contest_ans_sheet: @ans, survey: @contest.survey, user: current_user)
+    @ans.score = -1
+  end
+
   def find_ans_sheet
     if @contest
-      @ans = Contest::AnsSheet.find_or_create_by(new_ans_sheet_params)
-      @ans.score = -1
+      build_ans_sheet
     else
       @ans = current_user.current_contest_ans
       @contest = @ans.contest if @ans
