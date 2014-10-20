@@ -11,7 +11,7 @@ class V1::GroupController < V1::CacheController
     mem = Rails.cache.fetch publist_key do
       if params[:res] == "school"
         sl = Edu::School.where("name like ?", "%#{params[:query]}%").limit(10)
-        list_json SimpleSchoolSerializer, sl
+        list_json Common::SchoolSerializer, sl
       end
     end
     render json: mem

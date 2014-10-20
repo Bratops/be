@@ -93,7 +93,7 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
 
   def contest_params
     params.require(:contest).permit(
-      :name, :grading, :sdate, :edate
+      :name, :grading, :sdate, :edate, :demo, :survey_id
     )
   end
 end

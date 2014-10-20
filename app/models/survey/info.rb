@@ -5,7 +5,8 @@ class Survey::Info < ActiveRecord::Base
   has_many :ans_sets, class_name: "Survey::AnsSet"
   has_many :ans, class_name: "Survey::Ans", through: :ans_sets
 
-  belongs_to :contest, class_name: "Contest::Info"
+  has_many :contest, class_name: "Contest::Info",
+    foreign_key: "survey_id"
 
   accepts_nested_attributes_for :quests, allow_destroy: true
 
