@@ -9,6 +9,13 @@ class V1::Dashboards::Manager::SurveysController < V1::BaseController
     render json: aas.new(surveys, each_serializer: mts)
   end
 
+  def list
+    surveys = Survey::Info.where("name like ?", "%#{params[:query]}%")
+    aas = ActiveModel::ArraySerializer
+    mts = ::Manager::Survey::ListSerializer
+    render json: aas.new(surveys, each_serializer: mts)
+  end
+
   def create
     sv = Survey::Info.new(survey_params)
     @sta = :success if sv.save
@@ -51,4 +58,5 @@ class V1::Dashboards::Manager::SurveysController < V1::BaseController
       ]
     )
   end
+
 end
