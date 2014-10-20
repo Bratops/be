@@ -30,7 +30,8 @@ module Concerns::Contest::Score
   private
 
   def finished_in diff
-    (self.ans_count + diff) == self.contest.tasks_count
+    return false unless self.ans_count
+    self.ans_count == (self.contest.tasks_count + diff)
   end
 
   def scoring ansable
