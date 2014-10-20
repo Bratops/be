@@ -18,20 +18,18 @@ class V1::Dashboards::User::ContestsController < V1::CacheController
 
   def setup
     @sta = :error
-    @grading = current_user.nondone_enrolls.first.ugroup.grading
+    en = current_user.nondone_enrolls.first
+    @grading = en ? en.ugroup.grading : -1
+    @contestable = en ? en.contestable : false
   end
 
   def find_contests
     @contests = []
-    if contestable
+    if @contestable
       @sta = :success
       @contests = Contest::Info.where(grading: @grading)
     else
       @sta = :warning
     end
-  end
-
-  def contestable
-    current_user.nondone_enrolls.first.contestable
   end
 end

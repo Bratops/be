@@ -2,7 +2,7 @@ module V1::User::CurrentContest
   extend ActiveSupport::Concern
 
   def current
-    if contestable
+    if @contestable
       find_contest
       find_ans_sheet
     end
