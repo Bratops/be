@@ -10,20 +10,22 @@ task :croutes => :environment do
   routes = make_routes
   widths = widths_of(routes)
 
-  head = header(widths)
-  rrender(routes, widths, head.size)
+  if widths[:names]
+    head = header(widths)
+    rrender(routes, widths, head.size)
+  end
 end
 
 def make_routes
   Rails.application.reload_routes!
-  all_routes = Rails.application.routes.routes.to_a
-  all_routes.reject! { |route| route.defaults[:controller] && route.defaults[:controller].index("rails/") == 0 }
-  all_routes.reject! { |route| route.verb.nil? || route.path.spec.to_s == '/assets' }
-  all_routes.select! { |route| ENV['controller'].nil? || route.defaults[:controller].to_s == ENV['controller'] }
-  all_routes.select! { |route| ENV['verb'].nil? || route.verb === ENV['verb'] }
-  all_routes.select! { |route| ENV['path'].nil? || (route.path.spec.to_s.include? ENV['path']) }
-  all_routes.select! { |route| ENV['action'].nil? || route.defaults[:action].to_s == ENV['action'] }
-  all_routes
+  ar = Rails.application.routes.routes.to_a
+  ar.reject! { |ru| ru.defaults[:controller] && ru.defaults[:controller].index("rails/") == 0 }
+  ar.reject! { |ru| ru.verb.nil? || ru.path.spec.to_s == '/assets' }
+  ar.select! { |ru| ENV['controller'].nil? || ru.defaults[:controller].to_s =~ /#{ENV['controller']}/ }
+  ar.select! { |ru| ENV['verb'].nil? || ru.verb =~ /#{ENV['verb']}/ }
+  ar.select! { |ru| ENV['path'].nil? || (ru.path.spec.to_s.include? ENV['path']) }
+  ar.select! { |ru| ENV['action'].nil? || ru.defaults[:action].to_s =~ /#{ENV['action']}/ }
+  ar
 end
 
 def widths_of routes
