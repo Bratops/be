@@ -4,6 +4,7 @@ class Edu::Ugroup < ActiveRecord::Base
   resourcify :roles, role_cname: "Acn::Role"
 
   def teacher
+    return nil if self.roles.size == 0
     User.joins(:roles).where(acn_roles: {id: self.roles[0].id }).first
   end
 

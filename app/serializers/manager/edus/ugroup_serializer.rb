@@ -3,6 +3,6 @@ class Manager::Edus::UgroupSerializer < ActiveModel::Serializer
   attributes :id, :name, :teacher, :enrollments_count
 
   def teacher
-    object.teacher.info.name
+    object.teacher ? object.teacher.info.name : ""
   end
 end
