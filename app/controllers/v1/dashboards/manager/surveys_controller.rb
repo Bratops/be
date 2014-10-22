@@ -58,5 +58,4 @@ class V1::Dashboards::Manager::SurveysController < V1::BaseController
       ]
     )
   end
-
 end

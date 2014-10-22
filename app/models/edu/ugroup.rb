@@ -3,6 +3,10 @@ class Edu::Ugroup < ActiveRecord::Base
   include Concerns::Edu::Contestable
   resourcify :roles, role_cname: "Acn::Role"
 
+  def teacher
+    User.joins(:roles).where(acn_roles: {id: self.roles[0].id }).first
+  end
+
   structure do
     name  ""
     exdate :datetime
