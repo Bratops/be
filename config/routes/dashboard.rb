@@ -33,7 +33,15 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
         end
       end
 
-      resources :msgs, only: [:index, :create, :update, :destroy] do
+      resources :msgs, only: [:index, :create, :update, :destroy]
+
+      resources :edus, except: [:new, :edit] do
+        member do
+          post "details" => "edus#details"
+        end
+        collection do
+          get "list" => "edus#list"
+        end
       end
 
       resource :users, only: [] do
