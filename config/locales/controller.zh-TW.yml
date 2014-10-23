@@ -78,7 +78,7 @@
         body: 將導入主畫面
       fail:
         title: 註冊失敗
-        body: 請檢查資料是否正確
+        body: Email已被使用
     destroy:
       success:
         title: 登出成功

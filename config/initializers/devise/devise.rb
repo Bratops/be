@@ -255,7 +255,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :facebook, ENV["fb_app_id"], ENV["fb_app_secret"],
     provider_ignores_state: false, display: "page", image_size: "normal",
-    callback_url: "http://#{ENV["host_current_front"]}/oauth/facebook"
+    callback_url: "http://#{ENV["host_front"]}/oauth/facebook"
   config.omniauth :google_oauth2, ENV["g_client_id"], ENV["g_client_secret"],
     redirect_uri: "http://#{ENV["host_googl_back"]}/users/auth/google/callback",
     name: "google",

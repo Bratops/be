@@ -85,6 +85,7 @@ class V1::User::RegistrationController < Devise::RegistrationsController
     resource.password = rk
     resource.login_alias = resource.email.presence || "#{school_params["moeid"]}-#{resource.suid}"
     resource.info = Acn::Info.mock(user_info_params)
+    resource.save
     sc = Edu::School.find_by(school_params)
     sc.add_alumnus(resource)
     if params[:user][:as_teacher]
@@ -92,6 +93,6 @@ class V1::User::RegistrationController < Devise::RegistrationsController
       resource.add_role rn
       resource.switch_to Acn::Role.find_by(name: :user, resource_id: nil)
     end
-    return resource
+    resource
   end
 end
