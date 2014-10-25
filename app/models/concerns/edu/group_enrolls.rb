@@ -1,8 +1,8 @@
 module Concerns::Edu::GroupEnrolls
   extend ActiveSupport::Concern
   included do
-    has_many :enrollments, class_name: "Acn::Enrollment"
-    has_many :users, through: :enrollments, dependent: :destroy
+    has_many :enrollments, class_name: "Acn::Enrollment", dependent: :destroy
+    has_many :users, through: :enrollments
 
     belongs_to :cluster, class_name: "Edu::Cluster"
     counter_culture :cluster, column_name: "ugroups_count"
@@ -14,6 +14,7 @@ module Concerns::Edu::GroupEnrolls
     counter_culture [:school, :holder], column_name: "ugroups_count"
 
     before_create :ensure_gcode
+    accepts_nested_attributes_for :enrollments, allow_destroy: true
   end
 
   def batch_link_users

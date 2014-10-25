@@ -8,6 +8,10 @@ class Edu::Ugroup < ActiveRecord::Base
     User.joins(:roles).where(acn_roles: {id: self.roles[0].id }).first
   end
 
+  def removable
+    true
+  end
+
   structure do
     name  ""
     exdate :datetime
