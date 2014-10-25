@@ -78,6 +78,9 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
           get "enrollments" => "ugroups#enrolls"
           post "enrollments" => "ugroups#del_enrolls"
         end
+        collection do
+          get "clusters" => "ugroups#clusters"
+        end
       end
     end
 
