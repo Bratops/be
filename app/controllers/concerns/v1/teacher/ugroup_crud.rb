@@ -33,7 +33,7 @@ module V1::Teacher::UgroupCRUD
     @args = {}
     if @group && @group.delete
       @sta = :success
-      @args = { group_name: @gropu.name }
+      @args = { group_name: @group.name }
     end
     render json: { msg: cmsg(@sta, @args) }
   end
