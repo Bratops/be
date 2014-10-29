@@ -20,7 +20,7 @@ class V1::Dashboards::User::ContestsController < V1::CacheController
     @sta = :error
     en = current_user.nondone_enrolls.first
     @grading = en ? en.ugroup.grading : -1
-    @contestable = en ? en.contestable : false
+    @contestable = true #en ? en.contestable : false
   end
 
   def find_contests

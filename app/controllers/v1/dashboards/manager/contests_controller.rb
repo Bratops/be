@@ -75,7 +75,7 @@ class V1::Dashboards::Manager::ContestsController < V1::BaseController
   def create_contest
     @contest = Contest::Info.new(contest_params)
     if @contest.save
-      update_task_ratings task_params
+      update_task_ratings tasks_params
       @sta = :success
     end
   end

@@ -43,6 +43,6 @@ module Concerns::User::Groups
   end
 
   def nondone_enrolls
-    self.enrollments.where("status != 'done'")
+    self.enrollments #.where("status != 'done'")
   end
 end
