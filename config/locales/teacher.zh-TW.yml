@@ -1,5 +1,18 @@
 "zh-TW":
   teacher:
+    conregs:
+      create:
+        success:
+          title: 報名完成
+          body: ""
+        error:
+          title: 報名失敗
+          body: ""
+    contests:
+      list:
+        error:
+          title: 班級代碼錯誤
+          body: 找不到班級,無法報名
     ugroups:
       create:
         success:

@@ -13,6 +13,7 @@ module V1::Teacher::UgroupCRUD
     authorize! :create, Edu::Ugroup
     crud_setup
     create_ugroup
+    update_enrolls
     render json: { msg: cmsg(@sta, @args) }
   end
 
@@ -25,6 +26,7 @@ module V1::Teacher::UgroupCRUD
   def update
     find_group
     update_ugroup
+    update_enrolls
     render json: { msg: cmsg(@sta, @args) }
   end
 
@@ -69,15 +71,20 @@ module V1::Teacher::UgroupCRUD
   end
 
   def create_ugroup
-    group = Edu::Ugroup.new(ugroup_params)
-    group.school = current_user.current_group.school
-    if group.save
-      current_user.add_role :teacher, group
+    @group = Edu::Ugroup.new(ugroup_params)
+    @group.school = current_user.current_group.school
+    if @group.save
+      current_user.add_role :teacher, @group
       @sta = :success
-      @args = { group_name: group.name }
+      @args = { group_name: @group.name }
     else
-      @args = { error: group.errors.messages }
+      @args = { error: @group.errors.messages }
     end
   end
 
+  def update_enrolls
+    @group.enrollments.each do |en|
+      en.link_user!
+    end
+  end
 end

@@ -29,6 +29,15 @@ module Concerns::Contest::Info
       #pluck("task_infos.id", :tid, :title, "task_infos.created_at", "vote_weight as rating")
   end
 
+  def valid_start_date
+    today = Date.today
+    if self.sdate < today
+      return today < self.edate ? today : self.edate
+    else
+      self.sdate
+    end
+  end
+
   module ClassMethods
     def opening
       today = Time.now

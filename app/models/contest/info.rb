@@ -5,6 +5,9 @@ class Contest::Info < ActiveRecord::Base
   has_many :ans_sheets, class_name: "Contest::AnsSheet",
     foreign_key: "contest_id"
 
+  has_many :regs, class_name: "Contest::Reg",
+    foreign_key: "contest_id"
+
   belongs_to :survey, class_name: "Survey::Info"
 
   structure do
@@ -16,6 +19,7 @@ class Contest::Info < ActiveRecord::Base
     edate  :datetime
 
     tasks_count 0
+    regs_count 0
 
     timestamps
   end

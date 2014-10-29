@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020005551) do
+ActiveRecord::Schema.define(version: 20141028230918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,9 +121,22 @@ ActiveRecord::Schema.define(version: 20141020005551) do
     t.datetime "updated_at"
     t.integer  "survey_id"
     t.boolean  "demo"
+    t.integer  "regs_count"
   end
 
   add_index "contest_infos", ["survey_id"], name: "index_contest_infos_on_survey_id", using: :btree
+
+  create_table "contest_regs", force: true do |t|
+    t.integer  "contest_id"
+    t.integer  "ugroup_id"
+    t.datetime "exdate"
+    t.integer  "extime"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+  end
+
+  add_index "contest_regs", ["contest_id"], name: "index_contest_regs_on_contest_id", using: :btree
+  add_index "contest_regs", ["ugroup_id"], name: "index_contest_regs_on_ugroup_id", using: :btree
 
   create_table "contest_tasks", force: true do |t|
     t.integer "task_id"
@@ -189,6 +202,7 @@ ActiveRecord::Schema.define(version: 20141020005551) do
     t.integer  "cluster_id"
     t.string   "note"
     t.string   "gcode"
+    t.integer  "regs_count"
   end
 
   add_index "edu_ugroups", ["cluster_id"], name: "index_edu_ugroups_on_cluster_id", using: :btree
