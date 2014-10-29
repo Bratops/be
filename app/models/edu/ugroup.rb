@@ -20,6 +20,7 @@ class Edu::Ugroup < ActiveRecord::Base
     note ""
     gcode ""
 
+    regs_count 0
     enrollments_count 0
 
     timestamps

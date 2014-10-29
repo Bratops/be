@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   draw :common
   draw :session
   draw :dashboard
+  draw :dashboard_manager
   api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw; ver=1"}) do
     # for generator
   end

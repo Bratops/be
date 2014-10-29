@@ -7,6 +7,7 @@ module Concerns::Edu::Contestable
   end
 
   def grading
+    return -1 unless self.grade
     a = [ -1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 4, 4, 4]
     a[self.grade]
   end
