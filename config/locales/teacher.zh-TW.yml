@@ -18,8 +18,8 @@
     contests:
       list:
         error:
-          title: 班級代碼錯誤
-          body: 找不到班級,無法報名
+          title: 無法報名
+          body: 找不到測驗
     ugroups:
       create:
         success:

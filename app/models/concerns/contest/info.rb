@@ -32,7 +32,7 @@ module Concerns::Contest::Info
   def valid_start_date
     today = Date.today
     if self.sdate < today
-      return today < self.edate ? today : self.edate
+      return today < self.edate ? today : (self.edate + 1.day)
     else
       self.sdate
     end
