@@ -14,8 +14,9 @@ class V1::Dashboards::Teacher::ContestsController < V1::BaseController
   private
 
   def load_contests
-    @contests = Contest::Info.where("grading = ?", grading) if params[:gcode]
-    @contests = Contest::Info.where("name like ?", "%#{params[:q]}%").limit(15)
+    @contests = Contest::Info
+    @contests = params[:gcode].present? ? @contests.where("grading = ?", grading) : @contests
+    @contests = @contests.where("name like ?", "%#{params[:q]}%").limit(15)
   end
 
   def grading
