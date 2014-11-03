@@ -14,8 +14,14 @@ class V1::Dashboards::Teacher::ConregsController < V1::BaseController
   end
 
   def update
-    @con = Contest::Reg.find_by(unique_reg)
+    @con = Contest::Reg.find_by(id: params[:id])
     update_conreg
+    render json: { msg: cmsg(@sta) }
+  end
+
+  def destroy
+    @con = Contest::Reg.find_by(id: params[:id])
+    @sta = :success if @con.destroy
     render json: { msg: cmsg(@sta) }
   end
 
@@ -33,11 +39,15 @@ class V1::Dashboards::Teacher::ConregsController < V1::BaseController
   end
 
   def conreg_details
-    params.require(:conreg).permit(:exdate, :extime)
+    params.require(:conreg).permit(:contest_id, :exdate, :extime)
   end
 
   def conreg_params
     params.require(:conreg).permit(:contest_id)
+  end
+
+  def conreg_query
+    params.permit(:contest_id, :exdate, :extime)
   end
 
   def unique_reg
@@ -47,11 +57,15 @@ class V1::Dashboards::Teacher::ConregsController < V1::BaseController
   end
 
   def find_ugroup_id
-    Edu::Ugroup.find_by(gcode: params[:conreg][:gcode]).id
+    gcode = params[:conreg][:gcode]
+    gcode = gcode.present? ? gcode : "*"
+    Edu::Ugroup.find_by(gcode: gcode).id
   end
 
   def load_current_regs
-    ugroups = Edu::Ugroup.with_role :teacher, current_user
-    @regs = Contest::Reg.where(ugroup_id: ugroups.ids)
+    @ugroups = Edu::Ugroup
+    @ugroups = params[:gcode].present? ? @ugroups.where(gcode: params[:gcode]) : @ugroups
+    ugroups = @ugroups.with_role :teacher, current_user
+    @regs = Contest::Reg.where(ugroup_id: ugroups.ids).where(conreg_query)
   end
 end

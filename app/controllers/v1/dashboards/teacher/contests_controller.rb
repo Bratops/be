@@ -2,10 +2,9 @@ class V1::Dashboards::Teacher::ContestsController < V1::BaseController
   include V1::MessageHelper
 
   def list
-    contests = Contest::Info.where("grading = ? and name like ?",
-                                   grading, "%#{params[:q]}%").limit(15)
-    @sta = contests.size > 0 ? :success : :error
-    contests = ActiveModel::ArraySerializer.new(contests, each_serializer: ::Teacher::ContestSerializer)
+    load_contests
+    @sta = @contests.size > 0 ? :success : :error
+    contests = ActiveModel::ArraySerializer.new(@contests, each_serializer: ::Teacher::ContestSerializer)
     render json: {
       msg: cmsg(@sta),
       data: contests
@@ -13,6 +12,12 @@ class V1::Dashboards::Teacher::ContestsController < V1::BaseController
   end
 
   private
+
+  def load_contests
+    @contests = Contest::Info
+    @contests = params[:gcode].present? ? @contests.where("grading = ?", grading) : @contests
+    @contests = @contests.where("name like ?", "%#{params[:q]}%").limit(15)
+  end
 
   def grading
     ugroups = Edu::Ugroup.with_role :teacher, current_user

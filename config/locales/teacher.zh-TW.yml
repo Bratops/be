@@ -8,6 +8,20 @@
         error:
           title: 報名失敗
           body: ""
+      update:
+        success:
+          title: 報名資訊已更新
+          body: ""
+        error:
+          title: 報名資訊更新失敗
+          body: ""
+      destroy:
+        success:
+          title: 取消報名
+          body: ""
+        error:
+          title: 取消報名失敗
+          body: ""
     contests:
       list:
         error:
