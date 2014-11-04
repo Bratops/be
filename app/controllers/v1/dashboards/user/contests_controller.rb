@@ -27,7 +27,7 @@ class V1::Dashboards::User::ContestsController < V1::CacheController
     @contests = []
     if @contestable
       @sta = :success
-      @contests = Contest::Info.where(grading: @grading)
+      @contests = Contest::Info.where(grading: @grading).opening
     else
       @sta = :warning
     end
