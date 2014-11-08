@@ -11,20 +11,13 @@ module Concerns::Edu::Enrolls
   end
 
   def link_user
-    sid = "#{self.ugroup.school.moeid}-#{self.suid}"
-    u = User.find_by(email: "#{sid}@bebras.tw", login_alias: sid.downcase)
-    if u.nil?
-      u = User.create(email: "#{sid}@bebras.tw", login_alias: sid, password: "#{self.ugroup.gcode}#{self.suid}")
-      if u
-        u.info = Acn::Info.create(name: self.name, gender: self.gender)
-        u.save
-      end
-    end
-    self.user = u
+    return if self.user && self.user.has_role?(:teacher)
+    self.user = find_enrolled_user
+    self.user = create_enrolled_user if self.user.nil?
   end
 
   def link_user!
-    self.link_user
+    link_user
     self.save
   end
 
@@ -41,6 +34,24 @@ module Concerns::Edu::Enrolls
     is_today && is_sec
   end
 
+  def reset_password
+    return false if self.user.nil?
+    self.user.password = "#{self.ugroup.gcode}#{self.suid}"
+    self.user.save
+  end
+
+  module ClassMethods
+    def no_student_enroll
+      where(user: nil).where("suid is not null")
+    end
+
+    def link_all_students
+      no_student_enroll.each do |en|
+        en.link_user!
+      end
+    end
+  end
+
   private
 
   def timecode
@@ -49,5 +60,33 @@ module Concerns::Edu::Enrolls
     return 0 if Time.now < tm
     return 1 if ta > Time.now && Time.now > tm
     return 2
+  end
+
+  def sid
+    "#{self.ugroup.school.moeid}-#{self.suid}"
+  end
+
+  def enrollment_params
+    {email: "#{sid}@bebras.tw", login_alias: sid.downcase}
+  end
+
+  def password_param
+    {password: "#{self.ugroup.gcode}#{self.suid}"}
+  end
+
+  def find_enrolled_user
+    User.find_by(enrollment_params)
+  end
+
+  def create_enrolled_user
+    user_params = enrollment_params.merge(password_param)
+    @user = User.create(user_params)
+    create_user_info if @user.errors.empty?
+    @user
+  end
+
+  def create_user_info
+    @user.info = Acn::Info.create(name: self.name, gender: self.gender)
+    @user.save
   end
 end
