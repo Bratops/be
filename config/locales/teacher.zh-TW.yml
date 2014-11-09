@@ -28,6 +28,10 @@
           title: 班級代碼錯誤
           body: 找不到班級,無法報名
     ugroups:
+      reset_passwords:
+        success:
+          title: 密碼已重設
+          body: 請學生以'班級代碼+學號'登入.
       create:
         success:
           title: "新班級'%{group_name}'已建立"

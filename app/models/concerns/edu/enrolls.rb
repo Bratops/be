@@ -50,6 +50,7 @@ module Concerns::Edu::Enrolls
         en.link_user!
       end
     end
+
   end
 
   private

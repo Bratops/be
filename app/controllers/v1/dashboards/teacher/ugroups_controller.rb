@@ -16,6 +16,16 @@ class V1::Dashboards::Teacher::UgroupsController < V1::BaseController
     render json: ens
   end
 
+  def reset_passwords
+    ugroup = Edu::Ugroup.with_role(:teacher, current_user).find_by(id: params[:id])
+    ugroup.enrollments.each do |en|
+      en.reset_password
+    end
+    render json: {
+      msg: cmsg(:success)
+    }
+  end
+
   def enroll
     ero = {}
     eid = nil
