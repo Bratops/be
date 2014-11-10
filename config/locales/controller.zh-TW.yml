@@ -56,7 +56,7 @@
         body: ''
       fail:
         title: 登入失敗
-        body: 請檢查密碼與賬號是否一致
+        body: 請檢查密碼與帳號是否一致
     destroy:
       success:
         title: 登出成功

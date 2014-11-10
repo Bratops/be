@@ -12,7 +12,7 @@ class Edu::Ugroup < ActiveRecord::Base
     true
   end
 
-  scope :general , -> { where("name != 'teacher' or name != 'alumnus'") }
+  scope :general , -> { where("name != 'teacher' and name != 'alumnus'") }
 
   scope :in_year, ->(year) { where("created_at BETWEEN ? AND ?", Time.new(year), Time.new(year+1)) }
 

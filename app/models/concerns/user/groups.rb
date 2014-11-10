@@ -42,7 +42,4 @@ module Concerns::User::Groups
     sc
   end
 
-  def nondone_enrolls
-    self.enrollments #.where("status != 'done'")
-  end
 end

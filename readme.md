@@ -2,20 +2,11 @@
 - [] Ask for contact email
 
 ### TODO
-- Controller i18n
-- Fix user registration with school/user_info model
-- User managements
-  - query user info
-  - modify users (batch)
-  - notify users
-- Task managements
-  - basic CRUD
-  - statistical info
-- Contest managements
-  - normal test
-  - mini test
-  - custom test
-  - in-group test
+
+- user issue
+- ff cant login
+- reset student password
+- user contest list filter
 
 ### Cache schema
 - rails

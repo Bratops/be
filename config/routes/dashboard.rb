@@ -15,6 +15,7 @@ api_version(module: "V1", header: {name: "Accept", value: "application/bebras.tw
           post "enroll" => "ugroups#enroll"
           get "enrollments" => "ugroups#enrolls"
           post "enrollments" => "ugroups#del_enrolls"
+          get "reset_passwords"
         end
         collection do
           get "clusters" => "ugroups#clusters"

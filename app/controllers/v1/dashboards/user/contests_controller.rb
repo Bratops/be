@@ -18,18 +18,10 @@ class V1::Dashboards::User::ContestsController < V1::CacheController
 
   def setup
     @sta = :error
-    en = current_user.nondone_enrolls.first
-    @grading = en ? en.ugroup.grading : -1
-    @contestable = true #en ? en.contestable : false
   end
 
   def find_contests
-    @contests = []
-    if @contestable
-      @sta = :success
-      @contests = Contest::Info.where(grading: @grading).opening
-    else
-      @sta = :warning
-    end
+    @contests = current_user.can_do_contests.opening
+    @sta = @contests.size > 0 ? :success : :warning
   end
 end

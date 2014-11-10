@@ -30,8 +30,7 @@ module Concerns::Contest::Score
   private
 
   def finished_in diff
-    return false unless self.ans_count
-    self.ans_count == (self.contest.tasks_count + diff)
+    self.ans_count == (self.contest.tasks_count - diff)
   end
 
   def scoring ansable
@@ -41,7 +40,7 @@ module Concerns::Contest::Score
       rat = task_ratings[tid]
       _score += correct ? sc_correct[rat] : -1*sc_wrong[rat]
     end
-    _score
+    _score >= 0 ? _score : 0
   end
 
   def ans_corrects at
