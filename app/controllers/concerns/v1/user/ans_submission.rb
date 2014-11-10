@@ -10,17 +10,18 @@ module V1::User::AnsSubmission
   private
 
   def find_ans
-    @anss = Contest::AnsSheet.do_by_user(current_user).first
-    data = {ans_sheet_id: @anss.id}
-    @answer = Contest::Ans.find_by(ans_params.merge(data))
-    unless @answer
-      @answer = Contest::Ans.create(full_ans_params.merge(data))
-      fill_answer
-      rating_task
-      if @answer.save
-        @anss.grading_if_finished 1
-        @sta = :success
-      end
+    @anss = current_user.current_answering
+    @answer = @anss.answers.find_or_create_by(ans_params)
+    update_ans if @answer
+  end
+
+  def update_ans
+    @answer.update(full_ans_params)
+    fill_answer
+    rating_task
+    if @answer.save
+      @anss.grading_if_finished 1
+      @sta = :success
     end
   end
 
@@ -51,10 +52,10 @@ module V1::User::AnsSubmission
   end
 
   def full_ans_params
-    params.require(:ans).permit( :task_id, :skip, :timespan)
+    params.require(:ans).permit(:skip, :timespan)
   end
 
   def ans_params
-    params.require(:ans).permit( :task_id)
+    params.require(:ans).permit(:task_id)
   end
 end

@@ -40,8 +40,10 @@ module Concerns::Contest::Info
 
   module ClassMethods
     def opening
-      today = Time.now
-      where("edate > ? and sdate < ?", today, today)
+      bod = Time.zone.now.beginning_of_day
+      eod = Time.zone.now.end_of_day
+      where("edate >= ? and sdate <= ?", bod, eod)
     end
   end
+
 end

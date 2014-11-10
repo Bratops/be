@@ -28,12 +28,6 @@ module Concerns::Edu::Enrolls
     }
   end
 
-  def contestable
-    is_today = self.ugroup.exdate.today?
-    is_sec = (self.ugroup.extime == timecode)
-    is_today && is_sec
-  end
-
   def reset_password
     return false if self.user.nil?
     self.user.password = "#{self.ugroup.gcode}#{self.suid}"
@@ -54,14 +48,6 @@ module Concerns::Edu::Enrolls
   end
 
   private
-
-  def timecode
-    tm = Time.now.change(hour: 12, min: 30, sec: 0)
-    ta = Time.now.change(hour: 18, min: 0, sec: 0)
-    return 0 if Time.now < tm
-    return 1 if ta > Time.now && Time.now > tm
-    return 2
-  end
 
   def sid
     "#{self.ugroup.school.moeid}-#{self.suid}"
